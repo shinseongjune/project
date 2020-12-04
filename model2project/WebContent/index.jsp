@@ -1,4 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="vo.Member" %>
 <!DOCTYPE html>
+<%
+	Member loginMember = (Member)session.getAttribute("loginMember");
+%>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -10,41 +15,32 @@
 		<!-- header -->
 		<header id="header">
 			<div class="inner clearfix">
-				<h1 class="logo"><a href="#"><img src="./images/logo.png" alt="JUST쇼핑몰"></a></h1>
+				<h1 class="logo"><a href="#"><img src="./images/logo.png" alt="2LW"></a></h1>
 				<nav class="nav">
 					<h2 class="blind">메인메뉴</h2>
 					<ul>
 						<li>
-							<a href="#">주문관리</a>
-							<ul>
-								<li><a href="#">결제목록</a></li>
-								<li><a href="#">결제 취소</a></li>
-							</ul>	
+							<a href="introduce.do">강사소개</a>
 						</li>
 						<li>
-							<a href="#">회원관리</a>
-							<ul>
-								<li><a href="#">회원 리스트</a></li>
-								<li><a href="#">탈퇴 회원 리스트</a></li>
-								<li><a href="#">방문자/가입자/뷰 통계</a></li>
-								<li><a href="#">1:1문의함</a></li>
-								<li><a href="#">메뉴 접근 권한</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">정책관리</a>
-							<ul>
-							</ul>
+							<a href="#">강의목록</a>
 						</li>
 						<li>
 							<a href="#">마이페이지</a>
 							<ul>
-								<li><a href="#">커뮤니티 관리</a></li>
-								<li><a href="#">리뷰 관리</a></li>
-								<li><a href="#">이벤트 관리</a></li>
-								<li><a href="#">자주하는질문 관리</a></li>
-								<li><a href="#">강의 카테고리 관리</a></li>
-								<li><a href="#">메인배너 관리</a></li>
+								<li><a href="editprofile.jsp">개인정보 수정</a></li>
+								<li><a href="favorites.do">즐겨찾기 목록</a></li>
+								<li><a href="review.do">리뷰남기기</a></li>
+								<li><a href="messanger.do">쪽지함</a></li>
+								<li><a href="quit.jsp">회원탈퇴</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">고객센터</a>
+							<ul>
+								<li><a href="#">자주묻는 질문</a></li>
+								<li><a href="#">1:1문의하기</a></li>
+								<li><a href="#">내가 남긴 리뷰 목록</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -95,8 +91,8 @@
 				</div>		
 			</section>
 			<section class="quick">
-				<h4>News</h4>
-				<p><a href="#"><img src="./images/news.png" alt="뉴스 바로가기"></a></p>
+				<h4>news</h4>
+				<p><a href="#"><img src="./images/news.png" alt="악세사리 바로가기"></a></p>
 			</section>
 		</section>
 		<section>
@@ -134,7 +130,7 @@
 				<dd><a href="#"><img src="./images/ico_tw.png" alt="트위터로 이동"></a></dd>
 				<dd><a href="#"><img src="./images/ico_fb.png" alt="페이스북으로 이동"></a></dd>
 			</dl>
-			<p class="copy">copyright &copy; 2LW, All rights reserved.</p>
+			<p class="copy">copyright &copy; JUST Shoppingmall, All rights reserved.</p>
 		</footer>
 		<!-- //footer -->
 	</div>

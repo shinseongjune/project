@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.LoginAction;
+import action.EditProfileAction;
+import action.FavoritesAction;
+import action.JoinAction;
 import vo.ActionForward;
 
 @WebServlet("*.do")
@@ -33,14 +37,31 @@ public class FrontController extends HttpServlet {
 		Action action = null;
 		
 		if(command.contentEquals("/index.do")) {
-			action = new DogListAction();
+			forward = new ActionForward();
+			forward.setPath("/index.jsp");
+		} else if(command.contentEquals("/login.do")) {
+			action = new LoginAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/join.do")) {
+			action = new JoinAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if(command.contentEquals("/editProfile.do")) {
-			action = new editProfileAction();
+			action = new EditProfileAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/favorites.do")) {
+			action = new FavoritesAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

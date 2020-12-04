@@ -23,7 +23,7 @@
 		</div>
 		<div class="loginFormDiv">
 			<div class="loginFormDiv2">
-				<form action="#" method="post">
+				<form action="login.do" method="post">
 					<div>
 						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 					</div>
@@ -31,7 +31,7 @@
 						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 					</div>
 					<div class="loginExtra">
-						<label><input type="checkbox" name="RememberID" /> Remember Me</label>
+						<label><input type="checkbox" name="RememberID" value="remember" /> Remember Me</label>
 						<span class="forgotPW"><a href="#"><h6>Forgot Password?</h6></a></span>
 					</div>
 					<div>
@@ -46,7 +46,7 @@
 						<div class="studentTab on">학생회원</div>
 						<div class="teacherTab">교사회원</div>
 					</div>
-				<form action="#" method="get" class="studentInfo">
+				<form action="join.do" method="post" class="studentInfo">
 					<input type="hidden" name="classify" value="학생" />
 					<div>
 						<div>
@@ -63,15 +63,14 @@
 							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
 						</div>
 						<div class="genderDiv">
-							Gender : <select name="Gender">
-										<option value="남">Male</option>
-										<option value="여">Female</option>
-									 </select>
+							Gender :<br />
+							<input type="radio" name="gender" value="남" checked /> 남<br />
+							<input type="radio" name="gender" value="여" /> 여
 						</div>
 						<input type="submit" value="회원가입" />
 					</div>
 				</form>
-				<form action="#" method="get" class="teacherInfo">
+				<form action="join.do" method="post" class="teacherInfo">
 					<input type="hidden" name="classify" value="교사" />
 					<div>
 						<div>
@@ -88,10 +87,9 @@
 							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
 						</div>
 						<div class="genderDiv">
-							Gender : <select name="Gender">
-										<option value="남">Male</option>
-										<option value="여">Female</option>
-									 </select>
+							Gender :<br />
+							<input type="radio" name="gender" value="남" checked /> 남<br />
+							<input type="radio" name="gender" value="여" /> 여
 						</div>
 						<div>
 							<hr />
