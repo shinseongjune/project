@@ -16,8 +16,8 @@ public class FavoritesAction implements Action {
 		String id = request.getParameter("id");
 		ActionForward forward = new ActionForward();
 		FavoritesListService favoritesListService = new FavoritesListService();
-		ArrayList<Favorites> favoritesList = favoritesListService.getFavoritesList(id);
-		request.setAttribute("favoritesList", favoritesList);
+		ArrayList<Object[]> favorList = favoritesListService.getFavoritesList(id);
+		request.setAttribute("favoritesList", favorList);
 		forward.setPath("./favorites.jsp");
 		return forward;
 	}

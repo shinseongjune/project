@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import vo.Favorites;
+import vo.Lecture;
 import vo.Member;
 
 public class FavoritesDAO {
@@ -34,10 +35,13 @@ public class FavoritesDAO {
 		this.conn = conn;
 	}
 
-	public ArrayList<Favorites> selectFavoritesList(String id) {
-		String sql = "SELECT lecture_num FROM favorites WHERE number = (SELECT number FROM member WHERE id = ?)";
-		ArrayList<Favorites> favoritesList = new ArrayList<Favorites>();
-		Favorites favor = null;
+	public ArrayList<Object[]> selectFavoritesList(String id) {
+		String sql = "SELECT l.lecture_title, m.name FROM lecture l JOIN member m ON l.number = m.number WHERE l.lecture_num IN (SELECT lecture_num FROM favorites WHERE NUMBER = (SELECT NUMBER FROM member WHERE id = ?))";
+		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
+		ArrayList<Member> memList = new ArrayList<Member>(); 
+		ArrayList<Object[]> favorList = new ArrayList<Object[]>();
+		Lecture lec = null;
+		Member mem = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -46,17 +50,21 @@ public class FavoritesDAO {
 			
 			if(rs.next()) {
 				do {
-					favor = new Favorites();
-					favor.setLecture_num(rs.getInt("lecture_num"));
-					favoritesList.add(favor);
+					lec = new Lecture();
+					mem = new Member();
+					lec.setLecture_title(rs.getString("lecture_title"));
+					mem.setName(rs.getString("name"));
+					lecList.add(lec);
+					memList.add(mem);
 				} while(rs.next());
 			}
+			favorList.add(new Object[] {lecList, memList});
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return favoritesList;
+		return favorList;
 	}
 }
