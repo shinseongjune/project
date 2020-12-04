@@ -25,10 +25,10 @@
 			<div class="loginFormDiv2">
 				<form action="#" method="post">
 					<div>
-						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" />
+						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 					</div>
 					<div>
-						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" />
+						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 					</div>
 					<div class="loginExtra">
 						<label><input type="checkbox" name="RememberID" /> Remember Me</label>
@@ -50,17 +50,17 @@
 					<input type="hidden" name="classify" value="학생" />
 					<div>
 						<div>
-							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" />
+							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 						</div>
 						<div>
-							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" />
+							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 						</div>
 						<hr/>
 						<div>
-							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" />
+							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" autocomplete="off" />
 						</div>
 						<div>
-							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" />
+							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
 						</div>
 						<div class="genderDiv">
 							Gender : <select name="Gender">
@@ -75,17 +75,17 @@
 					<input type="hidden" name="classify" value="교사" />
 					<div>
 						<div>
-							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" />
+							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 						</div>
 						<div>
-							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" />
+							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 						</div>
 						<hr/>
 						<div>
-							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" />
+							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" autocomplete="off" />
 						</div>
 						<div>
-							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" />
+							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
 						</div>
 						<div class="genderDiv">
 							Gender : <select name="Gender">
@@ -96,10 +96,10 @@
 						<div>
 							<hr />
 							<div>
-								<input type="text" class="inputSlot" name="major" placeholder="Major" required="required" />
+								<input type="text" class="inputSlot" name="major" placeholder="Major" required="required" autocomplete="off" />
 							</div>
 							<div>
-								<input type="text" class="inputSlot" name="education" placeholder="Education" required="required" />
+								<input type="text" class="inputSlot" name="education" placeholder="Education" required="required" autocomplete="off" />
 							</div>
 						</div>
 						<input type="submit" value="회원가입" />
