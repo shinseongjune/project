@@ -1,4 +1,3 @@
-<%@ page import="vo.Member" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,15 +23,15 @@
 		</div>
 		<div class="loginFormDiv">
 			<div class="loginFormDiv2">
-				<form action="#" method="post">
+				<form action="login.do" method="post">
 					<div>
-						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" />
+						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 					</div>
 					<div>
-						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" />
+						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 					</div>
 					<div class="loginExtra">
-						<label><input type="checkbox" name="RememberID" /> Remember Me</label>
+						<label><input type="checkbox" name="RememberID" value="remember" /> Remember Me</label>
 						<span class="forgotPW"><a href="#"><h6>Forgot Password?</h6></a></span>
 					</div>
 					<div>
@@ -43,41 +42,64 @@
 		</div>
 		<div class="joinFormDiv">
 			<div class="joinFormDiv2">
-				<form action="#" method="post">
 					<div class="tabs2">
 						<div class="studentTab on">학생회원</div>
 						<div class="teacherTab">교사회원</div>
 					</div>
+				<form action="join.do" method="post" class="studentInfo">
+					<input type="hidden" name="classify" value="학생" />
 					<div>
-						<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" />
-						<input type="hidden" name="classify" />
-					</div>
-					<div>
-						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" />
-					</div>
-					<hr/>
-					<div>
-						<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" />
-					</div>
-					<div>
-						<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" />
-					</div>
-					<div class="genderDiv">
-						Gender : <select name="Gender">
-									<option value="남">Male</option>
-									<option value="여">Female</option>
-								 </select>
-					</div>
-					<div class="teacherInfo">
-						<hr />
 						<div>
-							<input type="text" class="inputSlot" name="major" placeholder="Major" required="required" />
+							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
 						</div>
 						<div>
-							<input type="text" class="inputSlot" name="education" placeholder="Education" required="required" />
+							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 						</div>
+						<hr/>
+						<div>
+							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" autocomplete="off" />
+						</div>
+						<div>
+							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
+						</div>
+						<div class="genderDiv">
+							Gender :<br />
+							<input type="radio" name="gender" value="남" checked /> 남<br />
+							<input type="radio" name="gender" value="여" /> 여
+						</div>
+						<input type="submit" value="회원가입" />
 					</div>
+				</form>
+				<form action="join.do" method="post" class="teacherInfo">
+					<input type="hidden" name="classify" value="교사" />
 					<div>
+						<div>
+							<input type="text" class="inputSlot" name="id" placeholder="ID" required="required" autocomplete="off" />
+						</div>
+						<div>
+							<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
+						</div>
+						<hr/>
+						<div>
+							<input type="text" class="inputSlot" name="name" placeholder="Name" required="required" autocomplete="off" />
+						</div>
+						<div>
+							<input type="text" class="inputSlot" name="email" placeholder="Email" required="required" autocomplete="off" />
+						</div>
+						<div class="genderDiv">
+							Gender :<br />
+							<input type="radio" name="gender" value="남" checked /> 남<br />
+							<input type="radio" name="gender" value="여" /> 여
+						</div>
+						<div>
+							<hr />
+							<div>
+								<input type="text" class="inputSlot" name="major" placeholder="Major" required="required" autocomplete="off" />
+							</div>
+							<div>
+								<input type="text" class="inputSlot" name="education" placeholder="Education" required="required" autocomplete="off" />
+							</div>
+						</div>
 						<input type="submit" value="회원가입" />
 					</div>
 				</form>

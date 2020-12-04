@@ -15,12 +15,12 @@ $(function(){
 		$(this).siblings().removeClass("on");
 		$(this).addClass("on");
 		$(".teacherInfo").hide();
-		$("input:hidden").val("학생");
+		$(".studentInfo").show();
 	});
 	$(".teacherTab").click(function(){
 		$(this).siblings().removeClass("on");
 		$(this).addClass("on");
+		$(".studentInfo").hide();
 		$(".teacherInfo").show();
-		$("input:hidden").val("교사");
 	});
 });
