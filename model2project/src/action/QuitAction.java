@@ -30,7 +30,7 @@ public class QuitAction implements Action {
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('실패');location.replace('index.jsp');</script>");
+			out.println("<script>alert('실패');location.replace('quit.jsp');</script>");
 		}
 		return forward;
 	}
