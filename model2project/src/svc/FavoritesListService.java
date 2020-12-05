@@ -11,11 +11,11 @@ import vo.Favorites;
 
 public class FavoritesListService {
 
-	public ArrayList<Object[]> getFavoritesList(String id) {
+	public ArrayList[] getFavoritesList(String id) {
 		Connection conn = getConnection();
 		FavoritesDAO favoritesDAO = FavoritesDAO.getInstance();
 		favoritesDAO.setConnection(conn);
-		ArrayList<Object[]> favorList = favoritesDAO.selectFavoritesList(id);
+		ArrayList[] favorList = favoritesDAO.selectFavoritesList(id);
 		close(conn);
 		
 		return favorList;

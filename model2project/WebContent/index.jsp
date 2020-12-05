@@ -28,7 +28,7 @@
 						<li>
 							<a href="#">마이페이지</a>
 							<ul>
-								<li><a href="editprofile.jsp">개인정보 수정</a></li>
+								<li><a href="editprofilePage.do">개인정보 수정</a></li>
 								<li><a href="favorites.do">즐겨찾기 목록</a></li>
 								<li><a href="review.do">리뷰남기기</a></li>
 								<li><a href="messanger.do">쪽지함</a></li>
@@ -130,7 +130,7 @@
 				<dd><a href="#"><img src="./images/ico_tw.png" alt="트위터로 이동"></a></dd>
 				<dd><a href="#"><img src="./images/ico_fb.png" alt="페이스북으로 이동"></a></dd>
 			</dl>
-			<p class="copy">copyright &copy; JUST Shoppingmall, All rights reserved.</p>
+			<p class="copy">copyright &copy; 2LW, All rights reserved.</p>
 		</footer>
 		<!-- //footer -->
 	</div>

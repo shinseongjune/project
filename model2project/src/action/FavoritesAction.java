@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import svc.FavoritesListService;
 import vo.ActionForward;
@@ -16,8 +17,9 @@ public class FavoritesAction implements Action {
 		String id = request.getParameter("id");
 		ActionForward forward = new ActionForward();
 		FavoritesListService favoritesListService = new FavoritesListService();
-		ArrayList<Object[]> favorList = favoritesListService.getFavoritesList(id);
-		request.setAttribute("favoritesList", favorList);
+		ArrayList[] favorList = favoritesListService.getFavoritesList(id);
+		HttpSession session = request.getSession();
+		session.setAttribute("favoritesListr", favorList);
 		forward.setPath("./favorites.jsp");
 		return forward;
 	}

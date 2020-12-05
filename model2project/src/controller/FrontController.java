@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.LoginAction;
 import action.EditProfileAction;
+import action.EditProfilePageAction;
 import action.FavoritesAction;
 import action.JoinAction;
 import vo.ActionForward;
@@ -48,6 +49,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/join.do")) {
 			action = new JoinAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/editProfilePage.do")) {
+			action = new EditProfilePageAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
