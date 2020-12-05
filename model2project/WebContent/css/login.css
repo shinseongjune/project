@@ -4,6 +4,10 @@ body {
 	background: black;
 }
 
+.logoToMain {
+	cursor: pointer;
+}
+
 body * {
 	margin: 0px;
 	padding: 0px;
@@ -12,7 +16,6 @@ body * {
 	background-color: #ffffff;
 	box-sizing: border-box;
 }
-
 .loginCont {
 	width: 480px;
 	margin: auto;
