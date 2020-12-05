@@ -35,9 +35,6 @@ public class EditProfilePageAction implements Action {
 			}
 			return forward;
 		} else {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('로그인이 필요합니다');</script>");
 			forward = new ActionForward();
 			forward.setRedirect(true);
 			forward.setPath("login.jsp");

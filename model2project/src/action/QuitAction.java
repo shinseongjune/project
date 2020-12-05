@@ -20,10 +20,6 @@ public class QuitAction implements Action {
 		int result = quitService.deleteMember(id);
 		
 		if(result > 0) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('회원 탈퇴가 완료되었습니다.');</script>");
-			
 			forward = new ActionForward();
 			forward.setRedirect(true);
 			forward.setPath("index.jsp");

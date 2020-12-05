@@ -28,8 +28,6 @@ public class EditProfileAction implements Action {
 		int result = editProfileService.doEdit(id, pw, name, email, gender, major, education);
 		
 		if(result > 0) {
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('회원 정보가 수정되었습니다.');</script>");
 			forward = new ActionForward();
 			forward.setRedirect(true);
 			forward.setPath("index.do");
