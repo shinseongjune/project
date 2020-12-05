@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.LoginAction;
+import action.QuitAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FavoritesAction;
@@ -70,6 +71,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/favorites.do")) {
 			action = new FavoritesAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/quit.do")) {
+			action = new QuitAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
