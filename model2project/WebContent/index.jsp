@@ -28,7 +28,7 @@
 						<li>
 							<a href="#">마이페이지</a>
 							<ul>
-								<li><a href="editprofilePage.do">개인정보 수정</a></li>
+								<li><a href="editProfilePage.do">개인정보 수정</a></li>
 								<li><a href="favorites.do">즐겨찾기 목록</a></li>
 								<li><a href="review.do">리뷰남기기</a></li>
 								<li><a href="messanger.do">쪽지함</a></li>

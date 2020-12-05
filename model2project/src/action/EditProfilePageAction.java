@@ -15,24 +15,34 @@ public class EditProfilePageAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
-		HttpSession session = request.getSession(true);
-		Member loginMember = (Member) session.getAttribute("id");
-		String id = loginMember.getId();
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
 		
-		EditProfilePageService editProfilePageService = new EditProfilePageService();
-		Member memData = editProfilePageService.getProfileData(id);
-		
-		if(memData != null) {
+		if(loginMember != null) {
+			String id = loginMember.getId();
+			EditProfilePageService editProfilePageService = new EditProfilePageService();
+			Member memData = editProfilePageService.getProfileData(id);
 			
-			forward = new ActionForward();
-			forward.setRedirect(true);
-			forward.setPath("editprofile.jsp");
+			if(memData != null) {
+				
+				forward = new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("editprofile.jsp");
+			} else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('실패');history.back();</script>");
+			}
+			return forward;
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('실패');history.back();</script>");
+			out.println("<script>alert('로그인이 필요합니다');</script>");
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("login.jsp");
+			return forward;
 		}
-		return forward;
 	}
 
 }

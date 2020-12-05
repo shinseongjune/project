@@ -14,14 +14,22 @@ public class FavoritesAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ActionForward forward = null;
 		String id = request.getParameter("id");
-		ActionForward forward = new ActionForward();
-		FavoritesListService favoritesListService = new FavoritesListService();
-		ArrayList[] favorList = favoritesListService.getFavoritesList(id);
-		HttpSession session = request.getSession();
-		session.setAttribute("favoritesListr", favorList);
-		forward.setPath("./favorites.jsp");
-		return forward;
+		if(id!=null) {
+			forward = new ActionForward();
+			FavoritesListService favoritesListService = new FavoritesListService();
+			ArrayList[] favorList = favoritesListService.getFavoritesList(id);
+			HttpSession session = request.getSession();
+			session.setAttribute("favoritesListr", favorList);
+			forward.setPath("./favorites.jsp");
+			return forward;
+		} else {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("login.jsp");
+			return forward;
+		}
 	}
 
 }
