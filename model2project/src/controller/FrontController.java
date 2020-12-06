@@ -15,6 +15,7 @@ import action.QuitAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FavoritesAction;
+import action.FavoritesDeleteAction;
 import action.JoinAction;
 import vo.ActionForward;
 
@@ -71,6 +72,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/favorites.do")) {
 			action = new FavoritesAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/favoritesDelete.do")) {
+			action = new FavoritesDeleteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

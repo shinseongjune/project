@@ -18,8 +18,8 @@ public class FavoritesAction implements Action {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		String id = loginMember.getId();
-		if(id != null) {
+		if(loginMember != null) {
+			String id = loginMember.getId();
 			forward = new ActionForward();
 			FavoritesListService favoritesListService = new FavoritesListService();
 			ArrayList[] favorList = favoritesListService.getFavoritesList(id);

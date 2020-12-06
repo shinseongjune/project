@@ -27,7 +27,7 @@ public class EditProfileDAO {
 
 	public int doEditProfile(String id, String pw, String name, String email, String gender, String major, String education) {
 		PreparedStatement pstmt = null;
-		String sql = "UPDAtE member SET password=?, name=?, email=?, gender=?, major=?, education=? WHERE id=?";
+		String sql = "UPDATE member SET password=?, name=?, email=?, gender=?, major=?, education=? WHERE id=?";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -36,7 +36,7 @@ public class FavoritesDAO {
 	}
 
 	public ArrayList[] selectFavoritesList(String id) {
-		String sql = "SELECT l.lecture_title, m.name FROM lecture l JOIN member m ON l.number = m.number WHERE l.lecture_num IN (SELECT lecture_num FROM favorites WHERE NUMBER = (SELECT NUMBER FROM member WHERE id = ?))";
+		String sql = "SELECT l.lecture_title, l.lecture_num, m.name FROM lecture l JOIN member m ON l.number = m.number WHERE l.lecture_num IN (SELECT lecture_num FROM favorites WHERE NUMBER = (SELECT NUMBER FROM member WHERE id = ?))";
 		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
 		ArrayList<Member> memList = new ArrayList<Member>(); 
 		ArrayList[] favorList = new ArrayList[1];
@@ -53,6 +53,7 @@ public class FavoritesDAO {
 					lec = new Lecture();
 					mem = new Member();
 					lec.setLecture_title(rs.getString("lecture_title"));
+					lec.setLecture_num(rs.getInt("lecture_num"));
 					mem.setName(rs.getString("name"));
 					lecList.add(lec);
 					memList.add(mem);
@@ -66,5 +67,23 @@ public class FavoritesDAO {
 			close(pstmt);
 		}
 		return favorList;
+	}
+
+	public int deleteFavorites(String id, String lecture_num) {
+		int result = 0;
+		String sql = "DELETE FROM favorites WHERE number = (SELECT number FROM member WHERE id = ?) AND lecture_num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, lecture_num);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }
