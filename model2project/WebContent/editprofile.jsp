@@ -52,8 +52,8 @@
 		<div class="sidebar">
 			<div class="bigMyPage">My Page</div>
 			<div>
-				<div class="myPageMenu"><a href="editprofilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
-				<div class="myPageMenu on"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
+				<div class="myPageMenu on"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
+				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
 				<div class="myPageMenu"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
 				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
 				<div class="myPageMenu"><a href="quit.jsp"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>

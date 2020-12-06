@@ -17,15 +17,15 @@ public class FavoritesAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
-		Member loginMember = session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 		String id = loginMember.getId();
-		if(id!=null) {
+		if(id != null) {
 			forward = new ActionForward();
 			FavoritesListService favoritesListService = new FavoritesListService();
 			ArrayList[] favorList = favoritesListService.getFavoritesList(id);
-			HttpSession session = request.getSession();
-			session.setAttribute("favoritesListr", favorList);
-			forward.setPath("./favorites.jsp");
+			session = request.getSession();
+			session.setAttribute("favoritesList", favorList);
+			forward.setPath("favorites.jsp");
 			return forward;
 		} else {
 			forward = new ActionForward();

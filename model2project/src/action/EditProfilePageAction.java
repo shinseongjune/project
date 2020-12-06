@@ -17,14 +17,12 @@ public class EditProfilePageAction implements Action {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		
 		if(loginMember != null) {
 			String id = loginMember.getId();
 			EditProfilePageService editProfilePageService = new EditProfilePageService();
 			Member memData = editProfilePageService.getProfileData(id);
-			
 			if(memData != null) {
-				
+				session.setAttribute("loginMember", memData);
 				forward = new ActionForward();
 				forward.setRedirect(true);
 				forward.setPath("editprofile.jsp");
