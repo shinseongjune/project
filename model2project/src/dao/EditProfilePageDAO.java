@@ -43,7 +43,7 @@ public class EditProfilePageDAO {
 				loginMember.setEmail(rs.getString("email"));
 				loginMember.setGender(rs.getString("gender"));
 				loginMember.setClassify(rs.getString("classify"));
-				if(loginMember.getClassify()=="교사") {
+				if(loginMember.getClassify().equals("교사")) {
 					loginMember.setMajor(rs.getString("major"));
 					loginMember.setEducation(rs.getString("education"));
 				}

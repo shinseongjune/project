@@ -9,13 +9,16 @@ import javax.servlet.http.HttpSession;
 import svc.FavoritesListService;
 import vo.ActionForward;
 import vo.Favorites;
+import vo.Member;
 
 public class FavoritesAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
-		String id = request.getParameter("id");
+		HttpSession session = request.getSession();
+		Member loginMember = session.getAttribute("loginMember");
+		String id = loginMember.getId();
 		if(id!=null) {
 			forward = new ActionForward();
 			FavoritesListService favoritesListService = new FavoritesListService();
