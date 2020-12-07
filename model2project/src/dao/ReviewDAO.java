@@ -1,6 +1,7 @@
 package dao;
 
 import static db.JdbcUtil.close;
+import static db.JdbcUtil.commit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -138,12 +139,55 @@ public class ReviewDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, review_num);
 			result = pstmt.executeUpdate();
+			commit(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public Review updateReviewPage(int review_num) {
+		String sql = "SELECT * FROM review WHERE review_num = ?";
+		Review re = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				re = new Review();
+				re.setTitle(rs.getString("title"));
+				re.setContents(rs.getString("contents"));
+				re.setReview_num(rs.getInt("review_num"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return re;
+	}
+
+	public int updateReview(Review re) {
+		String sql = "UPDATE review SET title = ?, contents = ? WHERE review_num = ?";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, re.getTitle());
+			pstmt.setString(2, re.getContents());
+			pstmt.setInt(3, re.getReview_num());
+			result = pstmt.executeUpdate();
+			commit(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
 		return result;
 	}
 }

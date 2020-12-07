@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
-	int nowPage = 1;
-	String opt = "";
 %>
 <html lang="ko">
 <head>
@@ -49,12 +47,7 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-				ArrayList<Object> reviewViewList = (ArrayList<Object>)session.getAttribute("reviewViewList");
-				if(request.getParameter("page") != null) nowPage = Integer.parseInt(request.getParameter("page"));
-				Review re = (Review) reviewViewList.get(0);
-				Member mem = (Member) reviewViewList.get(1);
-				session.setAttribute("review_num", re.getReview_num());
-				if(!mem.getName().equals(loginMember.getName())) opt = " invisible";
+		Review re = (Review) session.getAttribute("re");
 %>
 	<div class="editcont">
 		<div class="sidebar">
@@ -68,38 +61,42 @@
 			</div>
 		</div>
 			<div class="contents">
-				<div class="row justify-content-center mb-5">
-					<div class="col-md-12">
-						<div class="bbsWrapper">
-							<ul class="bbsViewWrapperList">
-								<li class="bbsViewWriter">
-									<ul>
-										<li class="bbsViewWriterHeader">WRITER</li>
-										<li class="bbsViewWriterName"><%=mem.getName() %></li>
-									</ul>
-								</li>
-								<li class="bbsViewTitle">
-									<ul>
-										<li class="bbsViewTitleHeader">TITLE</li>
-										<li class="bbsViewTitleText"><%=re.getTitle() %></li>
-									</ul>
-								</li>
-								<li class="bbsViewBody">
-									<div>
-										<%=re.getContents() %>
-									</div>
-								</li>
-							</ul>
+			
+				<form method="post" action="reviewUpdate.do">
+					<div class="row justify-content-center mb-5">
+						<div class="col-md-12">
+							<div class="bbsWrapper">
+								<ul class="bbsViewWrapperList">
+									<li class="bbsViewWriter">
+										<ul>
+											<li class="bbsViewWriterHeader">WRITER</li>
+											<li class="bbsViewWriterName"><%=loginMember.getName() %></li>
+										</ul>
+									</li>
+									<li class="bbsViewTitle">
+										<ul>
+											<li class="bbsViewTitleHeader">TITLE</li>
+											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="none" value="<%=re.getTitle() %>" autocomplete="off" /></li>
+										</ul>
+									</li>
+									<li class="bbsViewBody">
+										<div>
+											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="500자까지 적을 수 있습니다."><%=re.getContents() %></textarea>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
+							
+							
+					</div>			        
+						<input type="hidden" name="review_num" value="<%=re.getReview_num() %>" />
+							<div class="float-right">
+								<input type="submit" value="작성 완료" class="btn btn-primary" />
+							</div>
+							
+				</form>
 						
-						
-				</div>			        
-						<div class="float-right">
-							<button class="btn btn-info" onClick="location.href='review.do?page=<%=nowPage %>'">목록</button>
-							<button class="btn btn-primary<%=opt %>" onClick="location.href='reviewUpdatePage.do?page=<%=nowPage%>'">수정</button>
-							<button class="btn btn-danger<%=opt %>" onClick="confirmDelete()">삭제</button>
-						</div>
 			</div>
 	</div>
 	

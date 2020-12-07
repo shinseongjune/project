@@ -1,15 +1,13 @@
 package dao;
 
 import static db.JdbcUtil.close;
+import static db.JdbcUtil.commit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.sql.DataSource;
-
-import vo.Favorites;
 import vo.Lecture;
 import vo.Member;
 
@@ -76,7 +74,7 @@ public class FavoritesDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, lecture_num);
 			result = pstmt.executeUpdate();
-			
+			commit(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
