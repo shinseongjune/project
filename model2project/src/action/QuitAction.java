@@ -1,9 +1,8 @@
 package action;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import svc.QuitService;
 import vo.ActionForward;
@@ -14,21 +13,33 @@ public class QuitAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
-		Member loginMember = (Member)request.getAttribute("loginMember");
-		String id = loginMember.getId();
-		QuitService quitService = new QuitService();
-		int result = quitService.deleteMember(id);
-		
-		if(result > 0) {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			String id = loginMember.getId();
+			QuitService quitService = new QuitService();
+			int result = quitService.deleteMember(id);
+			
+			if(result > 0) {
+				forward = new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("index.jsp");
+				session.invalidate();
+				return forward;
+			} else {
+				forward = new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("login.jsp");
+				session.invalidate();
+				return forward;
+			}
+		} else {
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setPath("index.jsp");
-		} else {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('실패');location.replace('quit.jsp');</script>");
+			forward.setPath("login.jsp");
+			session.invalidate();
+			return forward;
 		}
-		return forward;
 	}
 
 }
