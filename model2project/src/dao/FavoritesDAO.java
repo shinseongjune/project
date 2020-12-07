@@ -18,7 +18,6 @@ public class FavoritesDAO {
 	private Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
-	DataSource ds;
 	
 	private FavoritesDAO() {
 		
@@ -39,7 +38,7 @@ public class FavoritesDAO {
 		String sql = "SELECT l.lecture_title, l.lecture_num, m.name FROM lecture l JOIN member m ON l.number = m.number WHERE l.lecture_num IN (SELECT lecture_num FROM favorites WHERE NUMBER = (SELECT NUMBER FROM member WHERE id = ?))";
 		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
 		ArrayList<Member> memList = new ArrayList<Member>(); 
-		ArrayList[] favorList = new ArrayList[1];
+		ArrayList[] favorList = null;
 		Lecture lec = null;
 		Member mem = null;
 		try {

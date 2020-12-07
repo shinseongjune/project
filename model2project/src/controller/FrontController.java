@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.LoginAction;
 import action.QuitAction;
+import action.ReviewAction;
+import action.ReviewDeleteAction;
+import action.ReviewViewAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FavoritesAction;
@@ -86,6 +89,27 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/quit.do")) {
 			action = new QuitAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/review.do")) {
+			action = new ReviewAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/reviewView.do")) {
+			action = new ReviewViewAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/reviewDelete.do")) {
+			action = new ReviewDeleteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -6,25 +6,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FavoritesListService;
+import dao.ReviewDAO;
+import svc.ReviewLastPageService;
+import svc.ReviewService;
 import vo.ActionForward;
-import vo.Favorites;
 import vo.Member;
 
-public class FavoritesAction implements Action {
+public class ReviewAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
+		int nowPage = 1;
+		if(request.getParameter("page") != null) {
+			nowPage = Integer.parseInt(request.getParameter("page"));
+		}
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if(loginMember != null) {
-			String id = loginMember.getId();
 			forward = new ActionForward();
-			FavoritesListService favoritesListService = new FavoritesListService();
-			ArrayList[] favorList = favoritesListService.getFavoritesList(id);
-			session.setAttribute("favoritesList", favorList);
-			forward.setPath("favorites.jsp");
+			ReviewService reviewService = new ReviewService();
+			ArrayList[] reviewList = reviewService.getReviewList(nowPage);
+			ReviewLastPageService reviewLastPageService = new ReviewLastPageService();
+			int lastPage = reviewLastPageService.getReviewLastPage();
+			session.setAttribute("lastPage", lastPage);
+			session.setAttribute("reviewList", reviewList);
+			forward.setRedirect(true);
+			forward.setPath("review.jsp?page=" + nowPage);
 			return forward;
 		} else {
 			forward = new ActionForward();

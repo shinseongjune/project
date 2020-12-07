@@ -1,31 +1,38 @@
 package action;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FavoritesListService;
+import svc.ReviewDeleteService;
 import vo.ActionForward;
-import vo.Favorites;
 import vo.Member;
 
-public class FavoritesAction implements Action {
+public class ReviewDeleteAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
+		int review_num = (int) session.getAttribute("review_num");
+		int result = 0;
+		
 		if(loginMember != null) {
-			String id = loginMember.getId();
 			forward = new ActionForward();
-			FavoritesListService favoritesListService = new FavoritesListService();
-			ArrayList[] favorList = favoritesListService.getFavoritesList(id);
-			session.setAttribute("favoritesList", favorList);
-			forward.setPath("favorites.jsp");
-			return forward;
+			ReviewDeleteService reviewDeleteService = new ReviewDeleteService();
+			result = reviewDeleteService.deleteReview(review_num);
+			
+			if (result > 0) {
+				forward.setRedirect(true);
+				forward.setPath("review.do?page=1");
+				return forward;
+			} else {
+				forward.setRedirect(true);
+				forward.setPath("index.do");
+				return forward;
+			}
+			
 		} else {
 			forward = new ActionForward();
 			forward.setRedirect(true);
