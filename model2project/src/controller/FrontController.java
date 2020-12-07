@@ -15,6 +15,7 @@ import action.QuitAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
 import action.ReviewViewAction;
+import action.ReviewWriteAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FavoritesAction;
@@ -110,6 +111,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/reviewDelete.do")) {
 			action = new ReviewDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/reviewWrite.do")) {
+			action = new ReviewWriteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

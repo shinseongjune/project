@@ -3,11 +3,6 @@
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
-	int nowPageNumber = 1;
-	int pageCount = 5;
-	int range = 5;
-	String prevDisabled = "";
-	String nextDisabled = "";
 %>
 <html lang="ko">
 <head>
@@ -52,18 +47,6 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-				int lastPage = (int)session.getAttribute("lastPage");
-				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
-				if (nowPageNumber < 1) nowPageNumber = 1;
-				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-				ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
-				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
-				int endNumber = startNumber + range - 1;
-				if (nowPageNumber == 1) {
-					prevDisabled = " disabled";
-				} else if (nowPageNumber == lastPage) {
-					nextDisabled = " disabled";
-				}
 %>
 	<div class="editcont">
 		<div class="sidebar">
@@ -77,64 +60,48 @@
 			</div>
 		</div>
 			<div class="contents">
-				<div class="row justify-content-center">
-					<div class="col-md-12">
-						<div class="bbsWrapper">
-							<ul class="bbsWrapperList">
-								<li class="bbsHeader">
-									<ul class="bbsHeaderContents">
-										<li class="bbsTitleHeader">REVIEW</li>
-										<li class="bbsLectureHeader">LECTURE</li>
-										<li class="bbsWriterHeader">WRITER</li>
-									</ul>
-								</li>
-<%
-				ArrayList<Lecture> lecList = reviewList[0];
-				ArrayList<Member> memList = reviewList[1];
-				ArrayList<Review> reList = reviewList[2];
-				
-				for (int i = 0; i < lecList.size();i++) {
-%>
-								<li class="bbsBody">
-									<ul class="bbsBodyContents">
-										<li class="bbsTitle">
-											<a href="reviewView.do?page=<%=nowPageNumber %>&review_num=<%=reList.get(i).getReview_num() %>"><%=reList.get(i).getTitle() %></a>
-											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
-										</li>
-										<li class="bbsLecture"><a href="강의페이지.do?lecture_num=<%=lecList.get(i).getLecture_num() %>"><%=lecList.get(i).getLecture_title() %></a></li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
-									</ul>
-								</li>
-								
-<%
-				}
-%>
-							</ul>
+			
+				<form method="post" action="reviewWrite.do">
+					<div class="row justify-content-center mb-5">
+						<div class="col-md-12">
+							<div class="bbsWrapper">
+								<ul class="bbsViewWrapperList">
+									<li class="bbsViewWriter">
+										<ul>
+											<li class="bbsViewWriterHeader">WRITER</li>
+											<li class="bbsViewWriterName"><%=loginMember.getName() %></li>
+										</ul>
+									</li>
+									<li class="bbsViewWriter">
+										<ul>
+											<li class="bbsViewWriterHeader">LECTURE</li>
+											<li class="bbsViewWriterName">!!!!!!!!!!!!!!!!강의 제목 받아와서 셀렉트에 넣기!!!!!액션부터만들기!!!!!!!!!!!!!!</li>
+										</ul>
+									</li>
+									<li class="bbsViewTitle">
+										<ul>
+											<li class="bbsViewTitleHeader">TITLE</li>
+											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="none" /></li>
+										</ul>
+									</li>
+									<li class="bbsViewBody">
+										<div>
+											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="500자까지 적을 수 있습니다."></textarea>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
+							
+							
+					</div>			        
+						<input type="hidden" name="name" value="<%=loginMember.getName() %>" />
+							<div class="float-right">
+								<input type="submit" value="작성 완료" class="btn btn-primary" />
+							</div>
+							
+				</form>
 						
-						<nav aria-label="Page navigation example">
-						  <ul class="pagination justify-content-center">
-						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
-						    </li>
-<%
-				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
-%>
-						    <li class="page-item"><a class="page-link" href="review.do?page=<%=i%>"><%=i %></a></li>
-<%
-				}
-%>
-						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber + 1 %>">Next</a>
-						    </li>
-						  </ul>
-						</nav>
-						
-				</div>			        
-						<div class="float-right">
-							<button class="btn btn-primary" onClick="location.href='reviewWrite.jsp?page=<%=nowPageNumber %>'">리뷰 작성</button>
-						</div>
 			</div>
 	</div>
 	
@@ -145,5 +112,12 @@
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script>
+      function confirmDelete() {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+          location.href="reviewDelete.do";
+        }
+      }
+    </script>
 </body>
 </html>
