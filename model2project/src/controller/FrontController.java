@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.LoginAction;
+import action.MessengerAction;
 import action.QuitAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
@@ -132,8 +133,15 @@ public class FrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.contentEquals("/reviewWrite.do")) {
+		} else if(command.contentEquals("/reviewWrite.do")) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 			action = new ReviewWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/messenger.do")) {
+			action = new MessengerAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
