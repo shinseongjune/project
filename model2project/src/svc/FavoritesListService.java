@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import dao.FavoritesDAO;
-import vo.Favorites;
 
 public class FavoritesListService {
 

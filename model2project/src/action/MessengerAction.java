@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import svc.MessengerLastPageService;
 import svc.MessengerService;
 import vo.ActionForward;
 import vo.Member;
@@ -22,15 +23,16 @@ public class MessengerAction implements Action {
 		}
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if(loginMember != null) {
+			String id = loginMember.getId();
 			forward = new ActionForward();
 			MessengerService messengerService = new MessengerService();
 			ArrayList[] messageList = messengerService.getMessageList(nowPage);
 			MessengerLastPageService messengerLastPageService = new MessengerLastPageService();
-			int lastPage = messengerLastPageService.getMessengerLastPage();
-			session.setAttribute("lastPage", lastPage);
-			session.setAttribute("messagewList", messageList);
+			int lastPage = messengerLastPageService.getMessengerLastPage(id);
+			session.setAttribute("messageLastPage", lastPage);
+			session.setAttribute("messageList", messageList);
 			forward.setRedirect(true);
-			forward.setPath("review.jsp?page=" + nowPage);
+			forward.setPath("messenger.jsp?page=" + nowPage);
 			return forward;
 		} else {
 			forward = new ActionForward();

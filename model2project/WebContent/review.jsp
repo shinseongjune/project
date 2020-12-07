@@ -61,7 +61,8 @@
 				int endNumber = startNumber + range - 1;
 				if (nowPageNumber == 1) {
 					prevDisabled = " disabled";
-				} else if (nowPageNumber == lastPage) {
+				}
+				if (nowPageNumber == lastPage) {
 					nextDisabled = " disabled";
 				}
 %>
@@ -89,6 +90,12 @@
 									</ul>
 								</li>
 <%
+			if (reviewList == null) {
+%>
+								<li><h4>리뷰가 없습니다.</h4></li>
+<%
+			} else {
+				
 				ArrayList<Lecture> lecList = reviewList[0];
 				ArrayList<Member> memList = reviewList[1];
 				ArrayList<Review> reList = reviewList[2];
@@ -108,6 +115,7 @@
 								
 <%
 				}
+			}
 %>
 							</ul>
 						</div>

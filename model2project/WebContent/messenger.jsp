@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, vo.Review, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Message, vo.Review, java.util.ArrayList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -52,16 +52,17 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-				int lastPage = (int)session.getAttribute("lastPage");
+				int lastPage = (int)session.getAttribute("messageLastPage");
 				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 				if (nowPageNumber < 1) nowPageNumber = 1;
 				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-				ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
-				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
+				ArrayList[] messageList = (ArrayList[])session.getAttribute("messageList");
+				int startNumber = (((nowPageNumber - 1) / pageCount) * range) + 1;
 				int endNumber = startNumber + range - 1;
 				if (nowPageNumber == 1) {
 					prevDisabled = " disabled";
-				} else if (nowPageNumber == lastPage) {
+				}
+				if (nowPageNumber == lastPage) {
 					nextDisabled = " disabled";
 				}
 %>
@@ -88,17 +89,16 @@
 									</ul>
 								</li>
 <%
-				ArrayList<Lecture> lecList = reviewList[0];
-				ArrayList<Member> memList = reviewList[1];
-				ArrayList<Review> reList = reviewList[2];
+				ArrayList<Message> mesList = messageList[0];
+				ArrayList<Member> memList = messageList[1];
 				
-				for (int i = 0; i < lecList.size();i++) {
+				for (int i = 0; i < mesList.size();i++) {
 %>
 								<li class="bbsBody">
 									<ul class="bbsBodyContents">
 										<li class="bbsTitle">
-											<a href="reviewView.do?page=<%=nowPageNumber %>&review_num=<%=reList.get(i).getReview_num() %>"><%=reList.get(i).getTitle() %></a>
-											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
+											<div><%=mesList.get(i).getTitle() %></div>
+											<div class="bbsTitleDetail"><%=mesList.get(i).getContents() %></div>
 										</li>
 										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
 									</ul>
@@ -114,24 +114,24 @@
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center">
 						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
+						      <a class="page-link" href="messenger.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
 						    </li>
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item"><a class="page-link" href="review.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item"><a class="page-link" href="messenger.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
 						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber + 1 %>">Next</a>
+						      <a class="page-link" href="messenger.do?page=<%=nowPageNumber + 1 %>">Next</a>
 						    </li>
 						  </ul>
 						</nav>
 						
 				</div>			        
 						<div class="float-right">
-							<button class="btn btn-primary" onClick="location.href='reviewWrite.jsp?page=<%=nowPageNumber %>'">리뷰 작성</button>
+							<button class="btn btn-primary" onClick="location.href='sendMessage.jsp?page=<%=nowPageNumber %>'">쪽지 보내기</button>
 						</div>
 			</div>
 	</div>

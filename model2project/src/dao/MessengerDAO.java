@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import vo.Lecture;
 import vo.Member;
 import vo.Message;
 import vo.Review;
@@ -26,15 +25,16 @@ public class MessengerDAO {
 		
 	}
 	
-	public int getMessageNumber() {
-		String sql = "SELECT count(*) AS c FROM messenger";
+	public int getMessageNumber(String id) {
+		String sql = "SELECT count(*) AS c FROM message where receiver = (SELECT number FROM member WHERE id = ?)";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("c");
-				if (result / 5 != 0) {
+				if (result % 5 != 0) {
 					result = (result / 5) + 1;
 				} else {
 					result = result / 5;
@@ -62,8 +62,8 @@ public class MessengerDAO {
 	}
 
 	public ArrayList[] selectMessageList(int nowPageNumber) {
-		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.name FROM review AS r JOIN member AS m on r.number = m.number JOIN lecture AS l ON r.lecture_num = l.lecture_num ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
-		SELECT mes.sender, mes.title, mes.contents, mes.time from message as mes join member as mem on mes.receiver = mem.number where mes.receiver = 2; 수정필요
+		String sql = "SELECT member.name, message.title, message.contents, message.time from member join message on member.number = message.sender and message.receiver = 2 ORDER BY time DESC LIMIT ?, " + pageCount;
+		
 		ArrayList<Member> memList = new ArrayList<Member>();
 		ArrayList<Message> mesList = new ArrayList<Message>();
 		ArrayList[] messageList = null;
@@ -78,25 +78,24 @@ public class MessengerDAO {
 			if(rs.next()) {
 				do {
 					mem = new Member();
-					mes = new Review();
+					mes = new Message();
 
 					mem.setName(rs.getString("name"));
-					re.setTitle(rs.getString("title"));
-					re.setContents(rs.getString("contents"));
-					re.setReview_num(rs.getInt("review_num"));
-					lecList.add(lec);
+					mes.setTitle(rs.getString("title"));
+					mes.setContents(rs.getString("contents"));
+					mes.setTime(rs.getString("time"));
+					mesList.add(mes);
 					memList.add(mem);
-					reviewContentList.add(re);
 				} while(rs.next());
 			}
-			reviewList = new ArrayList[] {lecList, memList, reviewContentList};
+			messageList = new ArrayList[] {mesList, memList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return reviewList;
+		return messageList;
 	}
 
 	public ArrayList<Object> selectReviewView(int review_num) {
