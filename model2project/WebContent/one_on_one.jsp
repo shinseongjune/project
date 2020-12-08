@@ -106,7 +106,7 @@
 					if(oneList.get(i).getAnswer() != null) {							
 %>
 							<div class="content">
-								<p><%=oneList.get(i).getAnswer() %></p>			
+								<p><b><%=oneList.get(i).getAnswer() %></b></p>			
 							</div>
 <%
 					}
