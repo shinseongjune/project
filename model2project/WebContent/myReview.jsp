@@ -142,7 +142,7 @@
 				</div>			        
 						<div class="float-right">
 							<button class="btn btn-primary" onClick="location.href='reviewWritePage.do'">리뷰 작성</button>
-							<button class="btn btn-info" onClick="location.href='myReview.do?page=1'">내가 쓴 리뷰</button>
+							<button class="btn btn-info" onClick="location.href='review.do?page=1'">모두 보기</button>
 						</div>
 			</div>
 	</div>

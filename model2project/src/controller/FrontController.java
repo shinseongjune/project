@@ -20,6 +20,7 @@ import action.MessageDeleteAction;
 import action.MessageSendAction;
 import action.MessengerAction;
 import action.MyMessageAction;
+import action.MyReviewAction;
 import action.QuitAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
@@ -146,6 +147,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/reviewWrite.do")) {
 			action = new ReviewWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/myReview.do")) {
+			action = new MyReviewAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

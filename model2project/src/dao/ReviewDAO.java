@@ -33,7 +33,7 @@ public class ReviewDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("c");
-				if (result / 5 != 0) {
+				if (result % 5 != 0) {
 					result = (result / 5) + 1;
 				} else {
 					result = result / 5;
@@ -235,6 +235,73 @@ public class ReviewDAO {
 			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	public ArrayList[] selectMyReviewList(String id, int nowPage) {
+		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.name FROM review AS r JOIN member AS m on r.number = m.number JOIN lecture AS l ON r.lecture_num = l.lecture_num WHERE r.number = (SELECT number FROM member WHERE id = ?) ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
+		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
+		ArrayList<Member> memList = new ArrayList<Member>();
+		ArrayList<Review> reviewContentList = new ArrayList<Review>();
+		ArrayList[] reviewList = null;
+		Lecture lec = null;
+		Member mem = null;
+		Review re = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, (nowPage - 1) * pageCount);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					lec = new Lecture();
+					mem = new Member();
+					re = new Review();
+					lec.setLecture_title(rs.getString("lecture_title"));
+					lec.setLecture_num(rs.getInt("lecture_num"));
+					mem.setName(rs.getString("name"));
+					re.setTitle(rs.getString("title"));
+					re.setContents(rs.getString("contents"));
+					re.setReview_num(rs.getInt("review_num"));
+					lecList.add(lec);
+					memList.add(mem);
+					reviewContentList.add(re);
+				} while(rs.next());
+			}
+			reviewList = new ArrayList[] {lecList, memList, reviewContentList};
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return reviewList;
+	}
+
+	public int getMyReviewNumber(String id) {
+		String sql = "SELECT count(*) AS c FROM review WHERE review.number = (SELECT number FROM member WHERE id = ?)";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("c");
+				if (result % 5 != 0) {
+					result = (result / 5) + 1;
+				} else {
+					result = result / 5;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			close(pstmt);
+		}
 		return result;
 	}
 }

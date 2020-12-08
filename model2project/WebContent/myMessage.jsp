@@ -59,10 +59,10 @@
 				ArrayList[] messageList = (ArrayList[])session.getAttribute("messageList");
 				int startNumber = (((nowPageNumber - 1) / pageCount) * range) + 1;
 				int endNumber = startNumber + range - 1;
-				if (nowPageNumber == 1) {
+				if (nowPageNumber <= 1) {
 					prevDisabled = " disabled";
 				}
-				if (nowPageNumber == lastPage) {
+				if (nowPageNumber >= lastPage) {
 					nextDisabled = " disabled";
 				}
 %>
