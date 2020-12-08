@@ -43,6 +43,7 @@
 		</nav>
 	</header>
 		<!-- //header -->
+<div class="container" id="main">
 <%
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
@@ -125,6 +126,7 @@
 <%			
 	}
 %>
+</div>
 	<script src="./js/jquery-1.12.4.min.js"></script>
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -138,6 +140,14 @@
 				} else {
 					$(this).siblings(".popup").stop().slideDown();
 				}
+			});
+		});
+	</script>
+	<script>
+		$(function(){
+			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
+			$(window).resize(function(){
+				$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			});
 		});
 	</script>
