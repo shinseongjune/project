@@ -21,6 +21,8 @@ import action.MessageSendAction;
 import action.MessengerAction;
 import action.MyMessageAction;
 import action.MyReviewAction;
+import action.OneOnOneListAction;
+import action.OneOnOneSendAction;
 import action.QuitAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
@@ -182,6 +184,20 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/myMessage.do")) {
 			action = new MyMessageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/one_on_one.do")) {
+			action = new OneOnOneListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/one_on_one_submit.do")) {
+			action = new OneOnOneSendAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

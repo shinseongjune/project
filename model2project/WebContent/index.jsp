@@ -38,8 +38,8 @@
 						<li>
 							<a href="#">고객센터</a>
 							<ul>
-								<li><a href="#">자주묻는 질문</a></li>
-								<li><a href="#">1:1문의하기</a></li>
+								<li><a href="faq.html">자주묻는 질문</a></li>
+								<li><a href="one_on_one.do">1:1문의하기</a></li>
 							</ul>
 						</li>
 					</ul>
