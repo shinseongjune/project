@@ -26,17 +26,15 @@ public class MessengerAction implements Action {
 			String id = loginMember.getId();
 			forward = new ActionForward();
 			MessengerService messengerService = new MessengerService();
-			ArrayList[] messageList = messengerService.getMessageList(nowPage);
+			ArrayList[] messageList = messengerService.getMessageList(id, nowPage);
 			MessengerLastPageService messengerLastPageService = new MessengerLastPageService();
 			int lastPage = messengerLastPageService.getMessengerLastPage(id);
 			session.setAttribute("messageLastPage", lastPage);
 			session.setAttribute("messageList", messageList);
-			forward.setRedirect(true);
 			forward.setPath("messenger.jsp?page=" + nowPage);
 			return forward;
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}

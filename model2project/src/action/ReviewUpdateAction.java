@@ -39,7 +39,6 @@ public class ReviewUpdateAction implements Action {
 			
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}

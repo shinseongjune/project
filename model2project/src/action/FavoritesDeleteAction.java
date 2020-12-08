@@ -21,7 +21,6 @@ public class FavoritesDeleteAction implements Action {
 		if(loginMember != null) {
 			String id = loginMember.getId();
 			String lecture_num = request.getParameter("deleteThis");
-			System.out.println(id + lecture_num);
 			forward = new ActionForward();
 			FavoritesDeleteService favoritesDeleteService = new FavoritesDeleteService();
 			int result = favoritesDeleteService.deleteFavorites(id, lecture_num);
@@ -36,7 +35,6 @@ public class FavoritesDeleteAction implements Action {
 			}
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}

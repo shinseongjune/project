@@ -190,4 +190,51 @@ public class ReviewDAO {
 		
 		return result;
 	}
+
+	public ArrayList<Lecture> selectLectureList() {
+		String sql = "SELECT lecture_title, lecture_num FROM Lecture order by lecture_num desc";
+		Lecture lec = null;
+		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					lec = new Lecture();
+					lec.setLecture_title(rs.getString("lecture_title"));
+					lec.setLecture_num(rs.getInt("lecture_num"));
+					lecList.add(lec);
+				} while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return lecList;
+	}
+
+	public int writeReview(String id, Review re) {
+		String sql = "INSERT INTO review VALUES ((SELECT number FROM member WHERE id = ?), ?, ?, ?, NULL)";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, re.getLecture_num());
+			pstmt.setString(3, re.getContents());
+			pstmt.setString(4, re.getTitle());
+			result = pstmt.executeUpdate();
+			commit(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

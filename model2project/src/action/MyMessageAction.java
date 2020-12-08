@@ -6,13 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ReviewDAO;
-import svc.ReviewLastPageService;
-import svc.ReviewService;
+import svc.MessengerLastPageService;
+import svc.MessengerService;
+import svc.MyMessageLastPageService;
+import svc.MyMessageService;
 import vo.ActionForward;
 import vo.Member;
 
-public class ReviewAction implements Action {
+public class MyMessageAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -24,14 +25,15 @@ public class ReviewAction implements Action {
 		}
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if(loginMember != null) {
+			String id = loginMember.getId();
 			forward = new ActionForward();
-			ReviewService reviewService = new ReviewService();
-			ArrayList[] reviewList = reviewService.getReviewList(nowPage);
-			ReviewLastPageService reviewLastPageService = new ReviewLastPageService();
-			int lastPage = reviewLastPageService.getReviewLastPage();
-			session.setAttribute("lastPage", lastPage);
-			session.setAttribute("reviewList", reviewList);
-			forward.setPath("review.jsp?page=" + nowPage);
+			MyMessageService myMessageService = new MyMessageService();
+			ArrayList[] messageList = myMessageService.getMyMessageList(id, nowPage);
+			MyMessageLastPageService myMessageLastPageService = new MyMessageLastPageService();
+			int lastPage = myMessageLastPageService.getMessengerLastPage(id);
+			session.setAttribute("messageLastPage", lastPage);
+			session.setAttribute("messageList", messageList);
+			forward.setPath("myMessage.jsp?page=" + nowPage);
 			return forward;
 		} else {
 			forward = new ActionForward();

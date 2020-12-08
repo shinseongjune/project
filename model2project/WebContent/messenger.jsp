@@ -86,6 +86,7 @@
 									<ul class="bbsHeaderContents">
 										<li class="bbsTitleHeader">MESSAGE</li>
 										<li class="bbsWriterHeader">SENDER</li>
+										<li class="bbsDeleteHeader">DELETE</li>
 									</ul>
 								</li>
 <%
@@ -97,10 +98,18 @@
 								<li class="bbsBody">
 									<ul class="bbsBodyContents">
 										<li class="bbsTitle">
-											<div><%=mesList.get(i).getTitle() %></div>
-											<div class="bbsTitleDetail"><%=mesList.get(i).getContents() %></div>
+											<div><a class="messagePopupWindow"><%=mesList.get(i).getTitle() %></a></div>
+											<div class="bbsTitleDetail"><%=mesList.get(i).getTime() %></div>
+											<div class="messagePopup">
+												<h3><%=mesList.get(i).getTitle() %></h3>
+												<div class="messageContents">
+													<p><%=mesList.get(i).getContents() %></p>			
+												</div>
+												<p class="close"><button type="button" class="btn btn-secondary">X</button></p>
+											</div>
 										</li>
 										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="messageDeleteButton"><input type="button" class="btn btn-danger" value="삭제" onclick="location.href='messageDelete.do?message_num=<%=mesList.get(i).getMessage_num() %>'"/></li>
 									</ul>
 								</li>
 								
@@ -131,7 +140,8 @@
 						
 				</div>			        
 						<div class="float-right">
-							<button class="btn btn-primary" onClick="location.href='sendMessage.jsp?page=<%=nowPageNumber %>'">쪽지 보내기</button>
+							<button class="btn btn-primary" onClick="location.href='sendMessage.jsp'">쪽지 보내기</button>
+							<button class="btn btn-primary" onClick="location.href='myMessage.do?page=1'">보낸 쪽지함</button>
 						</div>
 			</div>
 	</div>
@@ -143,5 +153,6 @@
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="js/messenger.js"></script>
 </body>
 </html>

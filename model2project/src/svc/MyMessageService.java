@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import dao.MessengerDAO;
 
-public class MessengerService {
+public class MyMessageService {
 
-	public ArrayList[] getMessageList(String id, int nowPage) {
+	public ArrayList[] getMyMessageList(String id, int nowPage) {
 		Connection conn = getConnection();
 		MessengerDAO messengerDAO = MessengerDAO.getInstance();
 		messengerDAO.setConnection(conn);
-		ArrayList[] messageList = messengerDAO.selectMessageList(id, nowPage);
+		ArrayList[] messageList = messengerDAO.selectMyMessageList(id, nowPage);
 		close(conn);
 		
 		return messageList;

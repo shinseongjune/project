@@ -30,12 +30,17 @@ li {
 }
 .bbsTitleHeader {
 	text-align: left;
-	width: 70%;
+	width: 60%;
 	border-right: 1px solid #ffffff;
 }
 .bbsWriterHeader {
 	text-align: center;
-	width: 30%;
+	width: 20%;
+	border-right: 1px solid #ffffff;
+}
+.bbsDeleteHeader {
+	text-align: center;
+	width: 20%;
 }
 
 .bbsBody {
@@ -54,7 +59,8 @@ li {
 	width: 100%;
 }
 .bbsTitle {
-	width: 70%;
+	width: 60%;
+    cursor: pointer;
 	text-align: left;
 	font-weight: 600;
 	font-size: 1.2rem;
@@ -74,7 +80,15 @@ li {
 	overflow:hidden;
 }
 .bbsWriter {
-	width: 30%;
+	width: 20%;
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	border-right: 1px solid rgba(0,0,0,0.5);
+}
+.messageDeleteButton {
+	width: 20%;
 	text-align: center;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -132,4 +146,48 @@ li {
 	padding: 25px;
 	background-color: #ffffff;
 	color: black;
+}
+
+.messagePopup {
+    display: none;
+    position: fixed;
+    top: 110px;
+    left: 50%;
+    margin-left: -300px;
+    z-index: 200;
+    width: 600px;
+    height: 500px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+.messagePopup h3 {
+    border-bottom: 1px solid #ccc;
+    color: #606060;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-indent: 20px;
+    line-height: 64px;
+}
+.messagePopup .messageContents {
+    padding: 20px;
+    line-height: 1.6;
+}
+.messagePopup .messageContents p {
+    margin-bottom: 12px;
+}
+.messagePopup .close {
+    position: absolute;
+    right: 25px;
+    top: 10px;
+}
+.messagePopup .close button {
+    height: 44px;
+    width: 44px;
+    border: 1px solid #aaa;
+    background-color: #efefef;
+    color: #888;
+    font: 24px/44px arial,sans-serif;
+    text-align: center;
+    cursor: pointer;
 }

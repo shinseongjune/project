@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, vo.Review, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Message, vo.Review, java.util.ArrayList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -15,7 +15,7 @@
 	<title>2LW</title>
 	<link rel="stylesheet" href="css/sidebar.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/review.css">
+	<link rel="stylesheet" href="css/messenger.css">
 </head>
 <body>
 	<header>
@@ -52,12 +52,12 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-				int lastPage = (int)session.getAttribute("lastPage");
+				int lastPage = (int)session.getAttribute("messageLastPage");
 				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 				if (nowPageNumber < 1) nowPageNumber = 1;
 				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-				ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
-				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
+				ArrayList[] messageList = (ArrayList[])session.getAttribute("messageList");
+				int startNumber = (((nowPageNumber - 1) / pageCount) * range) + 1;
 				int endNumber = startNumber + range - 1;
 				if (nowPageNumber == 1) {
 					prevDisabled = " disabled";
@@ -72,8 +72,8 @@
 			<div>
 				<div class="myPageMenu"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
 				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
-				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
-				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
+				<div class="myPageMenu"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
+				<div class="myPageMenu on"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
 				<div class="myPageMenu"><a href="quit.jsp"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>
 			</div>
 		</div>
@@ -84,38 +84,37 @@
 							<ul class="bbsWrapperList">
 								<li class="bbsHeader">
 									<ul class="bbsHeaderContents">
-										<li class="bbsTitleHeader">REVIEW</li>
-										<li class="bbsLectureHeader">LECTURE</li>
-										<li class="bbsWriterHeader">WRITER</li>
+										<li class="bbsTitleHeader">MESSAGE</li>
+										<li class="bbsWriterHeader">RECEIVER</li>
+										<li class="bbsDeleteHeader">DELETE</li>
 									</ul>
 								</li>
 <%
-			if (reviewList == null) {
-%>
-								<li><h4>리뷰가 없습니다.</h4></li>
-<%
-			} else {
+				ArrayList<Message> mesList = messageList[0];
+				ArrayList<Member> memList = messageList[1];
 				
-				ArrayList<Lecture> lecList = reviewList[0];
-				ArrayList<Member> memList = reviewList[1];
-				ArrayList<Review> reList = reviewList[2];
-				
-				for (int i = 0; i < lecList.size();i++) {
+				for (int i = 0; i < mesList.size();i++) {
 %>
 								<li class="bbsBody">
 									<ul class="bbsBodyContents">
 										<li class="bbsTitle">
-											<a href="reviewView.do?page=<%=nowPageNumber %>&review_num=<%=reList.get(i).getReview_num() %>"><%=reList.get(i).getTitle() %></a>
-											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
+											<div><a class="messagePopupWindow"><%=mesList.get(i).getTitle() %></a></div>
+											<div class="bbsTitleDetail"><%=mesList.get(i).getTime() %></div>
+											<div class="messagePopup">
+												<h3><%=mesList.get(i).getTitle() %></h3>
+												<div class="messageContents">
+													<p><%=mesList.get(i).getContents() %></p>			
+												</div>
+												<p class="close"><button type="button" class="btn btn-secondary">X</button></p>
+											</div>
 										</li>
-										<li class="bbsLecture"><a href="강의페이지.do?lecture_num=<%=lecList.get(i).getLecture_num() %>"><%=lecList.get(i).getLecture_title() %></a></li>
 										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="messageDeleteButton"><input type="button" class="btn btn-danger" value="삭제" onclick="location.href='messageDelete.do?message_num=<%=mesList.get(i).getMessage_num() %>'"/></li>
 									</ul>
 								</li>
 								
 <%
 				}
-			}
 %>
 							</ul>
 						</div>
@@ -124,24 +123,25 @@
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center">
 						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
+						      <a class="page-link" href="messenger.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
 						    </li>
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item"><a class="page-link" href="review.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item"><a class="page-link" href="messenger.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
 						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber + 1 %>">Next</a>
+						      <a class="page-link" href="messenger.do?page=<%=nowPageNumber + 1 %>">Next</a>
 						    </li>
 						  </ul>
 						</nav>
 						
 				</div>			        
 						<div class="float-right">
-							<button class="btn btn-primary" onClick="location.href='reviewWritePage.do'">리뷰 작성</button>
+							<button class="btn btn-primary" onClick="location.href='sendMessage.jsp'">쪽지 보내기</button>
+							<button class="btn btn-primary" onClick="location.href='messenger.do?page=1'">받은 쪽지함</button>
 						</div>
 			</div>
 	</div>
@@ -153,5 +153,6 @@
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="js/messenger.js"></script>
 </body>
 </html>

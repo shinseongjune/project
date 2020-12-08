@@ -28,7 +28,6 @@ public class FavoritesAction implements Action {
 			return forward;
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}

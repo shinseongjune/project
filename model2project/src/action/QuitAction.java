@@ -23,19 +23,17 @@ public class QuitAction implements Action {
 			if(result > 0) {
 				forward = new ActionForward();
 				forward.setRedirect(true);
-				forward.setPath("index.jsp");
+				forward.setPath("index.do");
 				session.invalidate();
 				return forward;
 			} else {
 				forward = new ActionForward();
-				forward.setRedirect(true);
 				forward.setPath("login.jsp");
 				session.invalidate();
 				return forward;
 			}
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			session.invalidate();
 			return forward;

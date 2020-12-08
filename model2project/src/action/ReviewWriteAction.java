@@ -4,8 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import svc.MessageSendService;
+import svc.ReviewWriteService;
 import vo.ActionForward;
-import vo.Lecture;
 import vo.Member;
 import vo.Review;
 
@@ -20,17 +21,15 @@ public class ReviewWriteAction implements Action {
 		
 		if(loginMember != null) {
 			forward = new ActionForward();
-			Lecture lec = new Lecture();
-			Member mem = new Member();
+			String id = loginMember.getId();
 			Review re = new Review();
 			
-			mem.setName(request.getParameter("name"));
+			re.setLecture_num(Integer.parseInt(request.getParameter("lecture_num")));
 			re.setTitle(request.getParameter("title"));
 			re.setContents(request.getParameter("contents"));
-			lec.set---------------- 렉쳐 넘버 가져올 수 있으면 re에 넣고 아니면 렉쳐에 타이틀 넣기----------------
 			
 			ReviewWriteService reviewWriteService = new ReviewWriteService();
-			result = reviewWriteService.writeReview(mem, re, lec);
+			result = reviewWriteService.writeReview(id, re);
 			
 			if (result > 0) {
 				forward.setRedirect(true);
@@ -44,7 +43,6 @@ public class ReviewWriteAction implements Action {
 			
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}

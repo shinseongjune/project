@@ -1,6 +1,6 @@
 package vo;
 
-public class Teacher_Introduce {
+public class Intro {
 	private int number;
 	private String contents;
 	private String image;

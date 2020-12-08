@@ -10,8 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.EditProfileAction;
+import action.EditProfilePageAction;
+import action.FavoritesAction;
+import action.FavoritesDeleteAction;
+import action.JoinAction;
 import action.LoginAction;
+import action.MessageDeleteAction;
+import action.MessageSendAction;
 import action.MessengerAction;
+import action.MyMessageAction;
 import action.QuitAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
@@ -19,11 +27,7 @@ import action.ReviewUpdateAction;
 import action.ReviewUpdatePageAction;
 import action.ReviewViewAction;
 import action.ReviewWriteAction;
-import action.EditProfileAction;
-import action.EditProfilePageAction;
-import action.FavoritesAction;
-import action.FavoritesDeleteAction;
-import action.JoinAction;
+import action.ReviewWritePageAction;
 import vo.ActionForward;
 
 @WebServlet("*.do")
@@ -133,7 +137,14 @@ public class FrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.contentEquals("/reviewWrite.do")) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+		} else if(command.contentEquals("/reviewWritePage.do")) {
+			action = new ReviewWritePageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/reviewWrite.do")) {
 			action = new ReviewWriteAction();
 			try {
 				forward = action.execute(request, response);
@@ -142,6 +153,27 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/messenger.do")) {
 			action = new MessengerAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/messageDelete.do")) {
+			action = new MessageDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/sendMessage.do")) {
+			action = new MessageSendAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/myMessage.do")) {
+			action = new MyMessageAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

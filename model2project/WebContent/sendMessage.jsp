@@ -47,10 +47,6 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-		ArrayList<Lecture> lecList = (ArrayList<Lecture>) session.getAttribute("lecList");
-		if(lecList == null) {
-			out.println("<script>alert('강의가 없습니다.');location.back();</script>");
-		} else {
 %>
 	<div class="editcont">
 		<div class="sidebar">
@@ -58,49 +54,39 @@
 			<div>
 				<div class="myPageMenu"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
 				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
-				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
-				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
+				<div class="myPageMenu"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
+				<div class="myPageMenu on"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
 				<div class="myPageMenu"><a href="quit.jsp"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>
 			</div>
 		</div>
 			<div class="contents">
 			
-				<form method="post" action="reviewWrite.do">
+				<form method="post" action="sendMessage.do">
 					<div class="row justify-content-center mb-5">
 						<div class="col-md-12">
 							<div class="bbsWrapper">
 								<ul class="bbsViewWrapperList">
 									<li class="bbsViewWriter">
 										<ul>
-											<li class="bbsViewWriterHeader">WRITER</li>
+											<li class="bbsViewWriterHeader">SENDER</li>
 											<li class="bbsViewWriterName"><%=loginMember.getName() %></li>
 										</ul>
 									</li>
 									<li class="bbsViewWriter">
 										<ul>
-											<li class="bbsViewWriterHeader">LECTURE</li>
-											<li class="bbsViewWriterName">
-												<select name="lecture_num">
-<%
-					for (int i = 0; i < lecList.size(); i++) {							
-%>
-													<option value="<%=lecList.get(i).getLecture_num() %>"><%=lecList.get(i).getLecture_title() %></option>
-<%
-					}
-%>													
-												</select>
-											</li>
+											<li class="bbsViewWriterHeader">RECEIVER</li>
+											<li class="bbsViewWriterName"><input type="text" name="receiver" placeholder="받는 사람 이름을 입력해주세요." required="required" autocomplete="off" /></li>
 										</ul>
 									</li>
 									<li class="bbsViewTitle">
 										<ul>
 											<li class="bbsViewTitleHeader">TITLE</li>
-											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="off" /></li>
+											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="none" /></li>
 										</ul>
 									</li>
 									<li class="bbsViewBody">
 										<div>
-											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="500자까지 적을 수 있습니다."></textarea>
+											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="300자까지 적을 수 있습니다."></textarea>
 										</div>
 									</li>
 								</ul>
@@ -109,9 +95,8 @@
 							
 							
 					</div>			        
-						<input type="hidden" name="name" value="<%=loginMember.getName() %>" />
 							<div class="float-right">
-								<input type="submit"value="작성 완료" class="btn btn-primary" />
+								<input type="submit" value="작성 완료" class="btn btn-primary" />
 							</div>
 							
 				</form>
@@ -120,7 +105,6 @@
 	</div>
 	
 <%
-		}
 	}
 %>
 	<script src="./js/jquery-1.12.4.min.js"></script>

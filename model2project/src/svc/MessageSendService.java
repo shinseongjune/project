@@ -4,20 +4,21 @@ import static db.JdbcUtil.close;
 import static db.JdbcUtil.getConnection;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import dao.MessengerDAO;
+import vo.Member;
+import vo.Message;
 
-public class MessengerService {
+public class MessageSendService {
 
-	public ArrayList[] getMessageList(String id, int nowPage) {
+	public int sendMessage(String id, Member mem, Message mes) {
 		Connection conn = getConnection();
 		MessengerDAO messengerDAO = MessengerDAO.getInstance();
 		messengerDAO.setConnection(conn);
-		ArrayList[] messageList = messengerDAO.selectMessageList(id, nowPage);
+		int result = messengerDAO.sendMessage(id, mem, mes);
 		close(conn);
 		
-		return messageList;
+		return result;
 	}
 
 }

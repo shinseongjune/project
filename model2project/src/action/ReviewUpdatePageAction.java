@@ -27,7 +27,6 @@ public class ReviewUpdatePageAction implements Action {
 			re = reviewUpdatePageService.updateReview(review_num);
 			session.setAttribute("re", re);
 			if (re != null) {
-				forward.setRedirect(true);
 				forward.setPath("reviewUpdate.jsp");
 				return forward;
 			} else {
@@ -38,7 +37,6 @@ public class ReviewUpdatePageAction implements Action {
 			
 		} else {
 			forward = new ActionForward();
-			forward.setRedirect(true);
 			forward.setPath("login.jsp");
 			return forward;
 		}
