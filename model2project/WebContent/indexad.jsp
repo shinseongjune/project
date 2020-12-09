@@ -32,15 +32,15 @@
 						<li>
 							<a href="#">회원관리</a>
 							<ul>
-								<li><a href="#">회원 리스트</a></li>
-								<li><a href="#">탈퇴 회원 리스트</a></li>
-								<li><a href="#">방문자/가입자/뷰 통계</a></li>
-								<li><a href="#">1:1문의함</a></li>
-								<li><a href="#">메뉴 접근 권한</a></li>
+								<li><a href="members.do">회원 리스트</a></li>
+								<li><a href="quitters.do">탈퇴 회원 리스트</a></li>
+								<li><a href="statistics.do">방문자/가입자/뷰 통계</a></li>
+								<li><a href="one_on_onead.do">1:1문의함</a></li>
+								<li><a href="authorization.do">메뉴 접근 권한</a></li>
 							</ul>
 						</li>
 						<li>
-							<a href="#">정책관리</a>
+							<a href="logout.do">로그아웃</a>
 							<ul>
 							</ul>
 						</li>

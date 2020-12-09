@@ -5,6 +5,15 @@ public class One_On_One {
 	private String title;
 	private String contents;
 	private String answer;
+	private int one_on_one_num;
+
+	public int getOne_on_one_num() {
+		return one_on_one_num;
+	}
+
+	public void setOne_on_one_num(int one_on_one_num) {
+		this.one_on_one_num = one_on_one_num;
+	}
 
 	public int getNumber() {
 		return number;

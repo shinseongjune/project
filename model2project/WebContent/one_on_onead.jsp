@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, vo.Review, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.One_On_One, java.util.ArrayList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
 	if (loginMember == null || !loginMember.getId().equals("admin")) {
-		out.println("<script>location.href='review.do'</script>");
+		out.println("<script>location.href='index.do'</script>");
 	}
 	int nowPageNumber = 1;
 	int pageCount = 5;
@@ -18,7 +18,6 @@
 	<title>2LW</title>
 	<link rel="stylesheet" href="css/sidebar.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/review.css">
 </head>
 <body>
 	<header>
@@ -37,10 +36,10 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="#">주문관리
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="members.do">회원관리</a></li>
-					<li class="nav-item"><a class="nav-link" href="logout.do">로그아웃</a></li>
-					<li class="nav-item active"><a class="nav-link" href="review.do">마이페이지
+					<li class="nav-item active"><a class="nav-link" href="members.do">회원관리
 							<span class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="logout.do">로그아웃</a></li>
+					<li class="nav-item"><a class="nav-link" href="review.do">마이페이지</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"
@@ -58,7 +57,9 @@
 		if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 		if (nowPageNumber < 1) nowPageNumber = 1;
 		if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-		ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
+		ArrayList[] oneOnOneAdList = (ArrayList[])session.getAttribute("oneOnOneAdList");
+		
+			
 		int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 		int endNumber = startNumber + range - 1;
 		if (nowPageNumber <= 1) {
@@ -70,78 +71,82 @@
 %>
 	<div class="editcont">
 		<div class="sidebar">
-			<div class="bigMyPage">My Page</div>
+			<div class="bigMyPage">회원관리</div>
 			<div>
-				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰 관리</a></div>
-				<div class="myPageMenu"><a href="event.do"><img src="images/event_icon.png">&nbsp;이벤트 관리</a></div>
-				<div class="myPageMenu"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;FAQ 관리</a></div>
-				<div class="myPageMenu"><a href="category.do"><img src="images/category_icon.png">&nbsp;카테고리 관리</a></div>
-				<div class="myPageMenu"><a href="banner.do"><img src="images/banner_icon.png">&nbsp;메인배너 관리</a></div>
+				<div class="myPageMenu"><a href="members.do"><img src="images/members_icon.png">&nbsp;회원 리스트</a></div>
+				<div class="myPageMenu"><a href="quitters.do"><img src="images/x_mark_icon.png">&nbsp;탈퇴회원 리스트</a></div>
+				<div class="myPageMenu"><a href="statistics.do"><img src="images/statistics_icon.png">&nbsp;통계</a></div>
+				<div class="myPageMenu on"><a href="one_on_onead.do"><img src="images/mail_icon.png">&nbsp;1:1 문의함</a></div>
+				<div class="myPageMenu"><a href="authorization.do"><img src="images/eye_icon.png">&nbsp;메뉴 접근권한</a></div>
 			</div>
 		</div>
 			<div class="contents">
-				<div class="row justify-content-center">
-					<div class="col-md-12">
-						<div class="bbsWrapper">
-							<ul class="bbsWrapperList">
-								<li class="bbsHeader">
-									<ul class="bbsHeaderContents">
-										<li class="bbsTitleHeader">REVIEW</li>
-										<li class="bbsLectureHeader">LECTURE</li>
-										<li class="bbsWriterHeader">WRITER</li>
-									</ul>
-								</li>
+			
 <%
-			if (reviewList == null) {
+		if(oneOnOneAdList != null) {
+			
+			ArrayList<Member> memList = oneOnOneAdList[0];
+			ArrayList<One_On_One> oneList = oneOnOneAdList[1];
+			
+			if(oneList != null) {	
+				
+				for(int i = 0; i < oneList.size(); i++) {				    
 %>
-								<li><h4>리뷰가 없습니다.</h4></li>
+				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
+				    	<h5 class="Q Qoff"><%=oneList.get(i).getTitle() %></h5>
+				    	<div><hr></div>
+				    	<div class="popup">
+							<h6><%=oneList.get(i).getContents() %></h6>
+							<span class="float-right">문의자 : <%=memList.get(i).getName() %></span>
+							<div><hr/></div>
 <%
-			} else {
-				
-				ArrayList<Lecture> lecList = reviewList[0];
-				ArrayList<Member> memList = reviewList[1];
-				ArrayList<Review> reList = reviewList[2];
-				
-				for (int i = 0; i < lecList.size();i++) {
+					if(oneList.get(i).getAnswer() != null) {							
 %>
-								<li class="bbsBody">
-									<ul class="bbsBodyContents">
-										<li class="bbsTitle">
-											<a href="reviewView.do?page=<%=nowPageNumber %>&review_num=<%=reList.get(i).getReview_num() %>"><%=reList.get(i).getTitle() %></a>
-											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
-										</li>
-										<li class="bbsLecture"><a href="강의페이지.do?lecture_num=<%=lecList.get(i).getLecture_num() %>"><%=lecList.get(i).getLecture_title() %></a></li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
-									</ul>
-								</li>
-								
+							<div class="content">
+								<div class="badge badge-primary float-left">답변 완료</div>
+								<p><b><%=oneList.get(i).getAnswer() %></b></p>			
+							</div>
+<%
+					} else {
+%>
+							<div class="form-group">
+								<form method="post" action="one_on_one_answer.do">
+								    <label for="answerTextarea">ANSWER</label>
+								    <textarea class="form-control" name="answer" rows="3"></textarea>
+								    <input type="hidden" name="one_on_one_num" value="<%=oneList.get(i).getOne_on_one_num() %>" />
+								    <input type="submit" class="btn btn-primary" value="답변하기" />
+								</form>
+							</div>
+<%
+					}
+%>
+						</div>
+				    </div>
 <%
 				}
 			}
 %>
-							</ul>
-						</div>
-					</div>
-						
+				
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center">
 						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
+						      <a class="page-link" href="one_on_onead.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
 						    </li>
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item"><a class="page-link" href="review.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item"><a class="page-link" href="one_on_onead.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
 						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="review.do?page=<%=nowPageNumber + 1 %>">Next</a>
+						      <a class="page-link" href="one_on_onead.do?page=<%=nowPageNumber + 1 %>">Next</a>
 						    </li>
 						  </ul>
 						</nav>
-						
-				</div>			        
+<%
+		}
+%>
 			</div>
 	</div>
 	

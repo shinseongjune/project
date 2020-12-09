@@ -24,6 +24,17 @@ public class ReviewDAO {
 	private ReviewDAO() {
 		
 	}
+
+	public static ReviewDAO getInstance() {
+		if(reviewDAO == null) {
+			reviewDAO = new ReviewDAO();
+		}
+		return reviewDAO;
+	}
+	
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
 	
 	public int getReviewNumber() {
 		String sql = "SELECT count(*) AS c FROM review";
@@ -47,17 +58,6 @@ public class ReviewDAO {
 			close(pstmt);
 		}
 		return result;
-	}
-
-	public static ReviewDAO getInstance() {
-		if(reviewDAO == null) {
-			reviewDAO = new ReviewDAO();
-		}
-		return reviewDAO;
-	}
-	
-	public void setConnection(Connection conn) {
-		this.conn = conn;
 	}
 
 	public ArrayList[] selectReviewList(int nowPageNumber) {

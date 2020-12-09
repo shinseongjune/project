@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.Action;
 import action.CategoryDeleteAction;
@@ -22,6 +23,7 @@ import action.FavoritesAction;
 import action.FavoritesDeleteAction;
 import action.JoinAction;
 import action.LoginAction;
+import action.MembersListAction;
 import action.MessageDeleteAction;
 import action.MessageSendAction;
 import action.MessengerAction;
@@ -29,7 +31,10 @@ import action.MyMessageAction;
 import action.MyReviewAction;
 import action.OneOnOneListAction;
 import action.OneOnOneSendAction;
+import action.One_on_oneAnswerAction;
+import action.One_on_oneadListAction;
 import action.QuitAction;
+import action.QuittersListAction;
 import action.ReviewAction;
 import action.ReviewDeleteAction;
 import action.ReviewUpdateAction;
@@ -249,6 +254,39 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/insertCategory.do")) {
 			action = new CategoryInsertAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/members.do")) {
+			action = new MembersListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/logout.do")) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			forward = new ActionForward();
+			forward.setPath("/index.jsp");
+		} else if(command.contentEquals("/quitters.do")) {
+			action = new QuittersListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/one_on_onead.do")) {
+			action = new One_on_oneadListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/one_on_one_answer.do")) {
+			action = new One_on_oneAnswerAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

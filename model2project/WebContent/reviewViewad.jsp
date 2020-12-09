@@ -61,9 +61,9 @@
 			<div>
 				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰 관리</a></div>
 				<div class="myPageMenu"><a href="event.do"><img src="images/event_icon.png">&nbsp;이벤트 관리</a></div>
-				<div class="myPageMenu"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;자주하는질문 관리</a></div>
-				<div class="myPageMenu"><a href="category.do"><img src="images/category_icon.png">&nbsp;강의 카테고리 관리</a></div>
-				<div class="myPageMenu"><a href="banner.jsp"><img src="images/banner_icon.png">&nbsp;메인배너 관리</a></div>
+				<div class="myPageMenu"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;FAQ 관리</a></div>
+				<div class="myPageMenu"><a href="category.do"><img src="images/category_icon.png">&nbsp;카테고리 관리</a></div>
+				<div class="myPageMenu"><a href="banner.do"><img src="images/banner_icon.png">&nbsp;메인배너 관리</a></div>
 			</div>
 		</div>
 			<div class="contents">
