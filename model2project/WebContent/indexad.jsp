@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="vo.Member" %>
 <!DOCTYPE html>
+<%
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember == null || !loginMember.getId().equals("admin")) {
+		out.println("<script>location.href='index.do'</script>");
+	}
+%>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -41,10 +47,9 @@
 						<li>
 							<a href="#">마이페이지</a>
 							<ul>
-								<li><a href="#">커뮤니티 관리</a></li>
-								<li><a href="#">리뷰 관리</a></li>
+								<li><a href="review.do">리뷰 관리</a></li>
 								<li><a href="#">이벤트 관리</a></li>
-								<li><a href="#">자주하는질문 관리</a></li>
+								<li><a href="faq.do">자주하는질문 관리</a></li>
 								<li><a href="#">강의 카테고리 관리</a></li>
 								<li><a href="#">메인배너 관리</a></li>
 							</ul>

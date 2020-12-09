@@ -1,34 +1,38 @@
 package action;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FaqListService;
+import svc.FaqDeleteService;
 import vo.ActionForward;
-import vo.Faq;
 import vo.Member;
 
-public class FaqAction implements Action {
+public class FaqDeleteAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
+		int result = 0;
+		
 		if(loginMember != null) {
+			int faqId = Integer.parseInt(request.getParameter("faqId"));
 			forward = new ActionForward();
-			FaqListService faqListService = new FaqListService();
-			ArrayList<Faq> faqList = faqListService.getFaqList();
-			session.setAttribute("faqList", faqList);
-			if(loginMember.getId().equals("admin")) {
-				forward.setPath("faqad.jsp");
+			FaqDeleteService faqDeleteService = new FaqDeleteService();
+			result = faqDeleteService.deleteFaq(faqId);
+			
+			if (result > 0) {
+				forward.setRedirect(true);
+				forward.setPath("faq.do");
+				return forward;
+			} else {
+				forward.setRedirect(true);
+				forward.setPath("index.do");
 				return forward;
 			}
-			forward.setPath("faq.jsp");
-			return forward;
+			
 		} else {
 			forward = new ActionForward();
 			forward.setPath("login.jsp");

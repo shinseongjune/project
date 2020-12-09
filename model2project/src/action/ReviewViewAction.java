@@ -25,6 +25,10 @@ public class ReviewViewAction implements Action {
 			ArrayList<Object> reviewViewList = reviewViewService.getReviewView(review_num);
 
 			session.setAttribute("reviewViewList", reviewViewList);
+			if(loginMember.getId().equals("admin")) {
+				forward.setPath("reviewViewad.jsp?page=" + request.getParameter("page"));
+				return forward;
+			}
 			forward.setPath("reviewView.jsp?page=" + request.getParameter("page"));
 			return forward;
 		} else {

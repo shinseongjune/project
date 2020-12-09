@@ -13,6 +13,8 @@ import action.Action;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FaqAction;
+import action.FaqDeleteAction;
+import action.FaqWriteAction;
 import action.FavoritesAction;
 import action.FavoritesDeleteAction;
 import action.JoinAction;
@@ -57,6 +59,9 @@ public class FrontController extends HttpServlet {
 		if(command.contentEquals("/index.do")) {
 			forward = new ActionForward();
 			forward.setPath("/index.jsp");
+		} else if(command.contentEquals("/indexad.do")) {
+			forward = new ActionForward();
+			forward.setPath("/indexad.jsp");
 		} else if(command.contentEquals("/login.do")) {
 			action = new LoginAction();
 			try {
@@ -206,6 +211,20 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/faq.do")) {
 			action = new FaqAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/faqDelete.do")) {
+			action = new FaqDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/faqWrite.do")) {
+			action = new FaqWriteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

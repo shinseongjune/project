@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
+	if (loginMember == null || !loginMember.getId().equals("admin")) {
+		out.println("<script>location.href='review.do'</script>");
+	}
 	int nowPageNumber = 1;
 	int pageCount = 5;
 	int range = 5;
@@ -32,12 +35,12 @@
 	
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#">강사소개
+					<li class="nav-item"><a class="nav-link" href="#">주문관리
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
-					<li class="nav-item active"><a class="nav-link" href="editProfilePage.do">마이페이지
+					<li class="nav-item"><a class="nav-link" href="#carrer">회원관리</a></li>
+					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">정책관리</a></li>
+					<li class="nav-item active"><a class="nav-link" href="faq.do">마이페이지
 							<span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"
@@ -50,33 +53,30 @@
 		<!-- //header -->
 		<div class="container" id="main">
 <%
-	if(loginMember == null){
-		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
-	} else {
-				int lastPage = 1;
-				if (session.getAttribute("lastPage") != null) lastPage = (int) session.getAttribute("lastPage");
-				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
-				if (nowPageNumber < 1) nowPageNumber = 1;
-				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-				ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
-				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
-				int endNumber = startNumber + range - 1;
-				if (nowPageNumber == 1) {
-					prevDisabled = " disabled";
-				}
-				if (nowPageNumber == lastPage) {
-					nextDisabled = " disabled";
-				}
+		int lastPage = 1;
+		if (session.getAttribute("lastPage") != null) lastPage = (int) session.getAttribute("lastPage");
+		if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
+		if (nowPageNumber < 1) nowPageNumber = 1;
+		if (nowPageNumber > lastPage) nowPageNumber = lastPage;
+		ArrayList[] reviewList = (ArrayList[])session.getAttribute("reviewList");
+		int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
+		int endNumber = startNumber + range - 1;
+		if (nowPageNumber == 1) {
+			prevDisabled = " disabled";
+		}
+		if (nowPageNumber == lastPage) {
+			nextDisabled = " disabled";
+		}
 %>
 	<div class="editcont">
 		<div class="sidebar">
 			<div class="bigMyPage">My Page</div>
 			<div>
-				<div class="myPageMenu"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
-				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
-				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
-				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
-				<div class="myPageMenu"><a href="quit.jsp"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>
+				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰 관리</a></div>
+				<div class="myPageMenu"><a href="event.do"><img src="images/event_icon.png">&nbsp;이벤트 관리</a></div>
+				<div class="myPageMenu"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;FAQ 관리</a></div>
+				<div class="myPageMenu"><a href="category.do"><img src="images/category_icon.png">&nbsp;카테고리 관리</a></div>
+				<div class="myPageMenu"><a href="banner.jsp"><img src="images/banner_icon.png">&nbsp;메인배너 관리</a></div>
 			</div>
 		</div>
 			<div class="contents">
@@ -142,16 +142,9 @@
 						</nav>
 						
 				</div>			        
-						<div class="float-right">
-							<button class="btn btn-primary" onClick="location.href='reviewWritePage.do'">리뷰 작성</button>
-							<button class="btn btn-info" onClick="location.href='myReview.do?page=1'">내가 쓴 리뷰</button>
-						</div>
 			</div>
 	</div>
 	
-<%
-	}
-%>
 </div>
 	<script src="./js/jquery-1.12.4.min.js"></script>
 	<!-- Optional JavaScript; -->

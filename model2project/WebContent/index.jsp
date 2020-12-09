@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember != null && loginMember.getId().equals("admin")) {
+		out.println("<script>location.href='indexad.do'</script>");
+	}
 %>
 <html lang="ko">
 <head>

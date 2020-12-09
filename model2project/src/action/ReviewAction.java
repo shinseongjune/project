@@ -31,6 +31,10 @@ public class ReviewAction implements Action {
 			int lastPage = reviewLastPageService.getReviewLastPage();
 			session.setAttribute("lastPage", lastPage);
 			session.setAttribute("reviewList", reviewList);
+			if(loginMember.getId().equals("admin")) {
+				forward.setPath("reviewad.jsp?page="+nowPage);
+				return forward;
+			}
 			forward.setPath("review.jsp?page=" + nowPage);
 			return forward;
 		} else {

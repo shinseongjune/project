@@ -53,7 +53,8 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
-				int lastPage = (int)session.getAttribute("lastPage");
+				int lastPage = 1;
+				if (session.getAttribute("lastPage") != null) lastPage = (int) session.getAttribute("lastPage");
 				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 				if (nowPageNumber < 1) nowPageNumber = 1;
 				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
