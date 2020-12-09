@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.CategoryDeleteAction;
+import action.CategoryInsertAction;
+import action.CategoryListAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FaqAction;
@@ -225,6 +228,27 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/faqWrite.do")) {
 			action = new FaqWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/category.do")) {
+			action = new CategoryListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/deleteCategory.do")) {
+			action = new CategoryDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/insertCategory.do")) {
+			action = new CategoryInsertAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
