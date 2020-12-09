@@ -35,7 +35,7 @@ public class MyReviewAction implements Action {
 			return forward;
 		} else {
 			forward = new ActionForward();
-			forward.setPath("login.jsp");
+			forward.setPath("loginPage.do");
 			return forward;
 		}
 	}

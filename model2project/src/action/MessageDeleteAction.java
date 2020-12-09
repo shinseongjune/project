@@ -32,7 +32,7 @@ public class MessageDeleteAction implements Action {
 			}
 		} else {
 			forward = new ActionForward();
-			forward.setPath("login.jsp");
+			forward.setPath("loginPage.do");
 			return forward;
 		}
 	}

@@ -41,7 +41,7 @@ public class One_on_oneAnswerAction implements Action {
 			
 		} else {
 			forward = new ActionForward();
-			forward.setPath("login.jsp");
+			forward.setPath("loginPage.do");
 			return forward;
 		}
 	}

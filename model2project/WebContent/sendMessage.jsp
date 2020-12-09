@@ -46,7 +46,7 @@
 		<div class="container" id="main">
 <%
 	if(loginMember == null){
-		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
+		out.println("<script>alert('로그인이 필요합니다.');location.href='loginPage.do';</script>");
 	} else {
 %>
 	<div class="editcont">
