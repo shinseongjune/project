@@ -18,6 +18,7 @@
 	<title>2LW</title>
 	<link rel="stylesheet" href="css/sidebar.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/one_on_one.css">
 </head>
 <body>
 	<header>
@@ -93,7 +94,7 @@
 				for(int i = 0; i < oneList.size(); i++) {				    
 %>
 				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
-				    	<h5 class="Q Qoff"><%=oneList.get(i).getTitle() %></h5>
+				    	<h5 class="Q"><%=oneList.get(i).getTitle() %></h5>
 				    	<div><hr></div>
 				    	<div class="popup">
 							<h6><%=oneList.get(i).getContents() %></h6>
@@ -156,6 +157,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script>
+		$(function(){
+			$(".Q").click(function(){
+					$(this).siblings(".popup").slideToggle();
+			});
+		});
 		$(function(){
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			$(window).resize(function(){

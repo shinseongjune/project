@@ -98,10 +98,10 @@
 				for(int i = 0; i < oneList.size(); i++) {				    
 %>
 				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
-				    	<h5 class="Q Qoff"><%=oneList.get(i).getTitle() %></h5>
+				    	<h5 class="Q"><%=oneList.get(i).getTitle() %></h5>
 				    	<div><hr></div>
 				    	<div class="popup">
-							<h6><%=oneList.get(i).getContents() %></h6>
+							<%=oneList.get(i).getContents() %>
 							<div><hr/></div>
 <%
 					if(oneList.get(i).getAnswer() != null) {							
@@ -134,16 +134,9 @@
 	<script>
 		$(function(){
 			$(".Q").click(function(){
-				$(this).toggleClass("Qoff");
-				if($(this).hasClass("Qoff")){
-					$(this).siblings(".popup").stop().slideUp();
-				} else {
-					$(this).siblings(".popup").stop().slideDown();
-				}
+					$(this).siblings(".popup").slideToggle();
 			});
 		});
-	</script>
-	<script>
 		$(function(){
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			$(window).resize(function(){

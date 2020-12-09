@@ -91,6 +91,7 @@
 									</ul>
 								</li>
 <%
+		if(messageList != null) {
 				ArrayList<Message> mesList = messageList[0];
 				ArrayList<Member> memList = messageList[1];
 				
@@ -148,6 +149,7 @@
 	</div>
 	
 <%
+		}
 	}
 %>
 </div>
