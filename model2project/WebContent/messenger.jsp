@@ -104,7 +104,7 @@
 											<div class="messagePopup">
 												<h3><%=mesList.get(i).getTitle() %></h3>
 												<div class="messageContents">
-													<p><%=mesList.get(i).getContents() %></p>			
+													<%=mesList.get(i).getContents() %>		
 												</div>
 												<p class="close"><button type="button" class="btn btn-secondary">X</button></p>
 											</div>
