@@ -31,7 +31,7 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
 					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
-					<li class="nav-item active"><a class="nav-link" href="faq.html">고객센터
+					<li class="nav-item active"><a class="nav-link" href="faq.do">고객센터
 							<span class="sr-only">(current)</span></a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
@@ -54,7 +54,7 @@
 		<div class="sidebar">
 			<div class="bigMyPage">고객센터</div>
 			<div>
-				<div class="myPageMenu"><a href="faq.html"><img src="images/faq_icon.png">&nbsp;자주묻는 질문</a></div>
+				<div class="myPageMenu"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;자주묻는 질문</a></div>
 				<div class="myPageMenu on"><a href="one_on_one.do"><img src="images/oneonone_icon.png">&nbsp;1:1 문의하기</a></div>
 			</div>
 		</div>

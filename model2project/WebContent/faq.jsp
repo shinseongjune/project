@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Faq, java.util.ArrayList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -29,9 +29,9 @@
 					<li class="nav-item"><a class="nav-link" href="#">강사소개
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
-					<li class="nav-item active"><a class="nav-link" href="editProfilePage.do">마이페이지
+					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
+					<li class="nav-item active"><a class="nav-link" href="faq.do">고객센터
 							<span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"
@@ -42,33 +42,72 @@
 		</nav>
 	</header>
 		<!-- //header -->
-		<div class="container" id="main">
+<div class="container" id="main">
 <%
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
 	} else {
+				ArrayList<Faq> faqList = (ArrayList<Faq>)session.getAttribute("faqList");
 %>
 	<div class="editcont">
 		<div class="sidebar">
-			<div class="bigMyPage">My Page</div>
+			<div class="bigMyPage">고객센터</div>
 			<div>
-				<div class="myPageMenu"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
-				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
-				<div class="myPageMenu"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
-				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
-				<div class="myPageMenu on"><a href="quit.jsp"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>
+				<div class="myPageMenu on"><a href="faq.do"><img src="images/faq_icon.png">&nbsp;자주묻는 질문</a></div>
+				<div class="myPageMenu"><a href="one_on_one.do"><img src="images/oneonone_icon.png">&nbsp;1:1 문의하기</a></div>
 			</div>
 		</div>
-			<div class="contents">
-				   <input type="button" class="btn btn-danger" id="quitButton" value="회원 탈퇴" />
+			<div class="contents justify-content-center">
+				<div class="container">
+				  <div class="row">
+				    <div class="col-sm">
+				    	<h1><span class="badge bg-light text-dark shadow p-3 mb-5 bg-white rounded">FAQ</span></h1>
+				    </div>
+				  </div>
+				</div>
+<%
+	if(faqList == null) {
+%>
+			<div>
+				<h2>자주 묻는 질문이 없습니다.</h2>
 			</div>
+<%
+	} else {
+%>
+			<div class="contents">
+<%
+				for (int i = 0; i<faqList.size();i++) {
+%>
+			        <div id="accordion<%=i %>">
+					  <div class="card">
+					    <div class="card-header">
+					      <h5>
+					        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%=i %>">
+					          <span class="badge bg-info text-light">Q</span> <span class="text-muted"><%=faqList.get(i).getQuestion() %></span>
+					        </button>
+					      </h5>
+					    </div>
+					    <div id="collapse<%=i %>" class="collapse" data-parent="#accordion<%=i %>">
+					      <div class="card-body">
+					        <span class="badge bg-primary text-light">A</span> <%=faqList.get(i).getAnswer() %>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+<%
+				}	
+%>
+			        
+			</div>
+<%
+	}
+%>
 	</div>
 <%			
 	}
 %>
 </div>
 	<script src="./js/jquery-1.12.4.min.js"></script>
-	<script src="js/quit.js"></script>
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>

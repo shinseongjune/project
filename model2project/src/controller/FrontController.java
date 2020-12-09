@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
+import action.FaqAction;
 import action.FavoritesAction;
 import action.FavoritesDeleteAction;
 import action.JoinAction;
@@ -198,6 +199,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/one_on_one_submit.do")) {
 			action = new OneOnOneSendAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/faq.do")) {
+			action = new FaqAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
