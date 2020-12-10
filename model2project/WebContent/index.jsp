@@ -136,7 +136,7 @@
 			<dl class="btm_menu">
 				<dt class="blind"><strong>바닥메뉴</strong></dt>
 				<dd><a href="#"><img src="./images/ico_in.png" alt="인스타그램으로 이동"></a></dd>
-				<dd><a href="#"><img src="./images/icosa_tw.png" alt="트위터로 이동"></a></dd>
+				<dd><a href="#"><img src="./images/ico_tw.png" alt="트위터로 이동"></a></dd>
 				<dd><a href="#"><img src="./images/ico_fb.png" alt="페이스북으로 이동"></a></dd>
 			</dl>
 			<p class="copy">copyright &copy; 2LW, All rights reserved.</p>
