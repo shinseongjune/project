@@ -72,6 +72,9 @@ public class FrontController extends HttpServlet {
 		} else if(command.contentEquals("/indexad.do")) {
 			forward = new ActionForward();
 			forward.setPath("/indexad.jsp");
+		} else if(command.contentEquals("/quit.do")) {
+			forward = new ActionForward();
+			forward.setPath("/quit.jsp");
 		} else if(command.contentEquals("/login.do")) {
 			action = new LoginAction();
 			try {

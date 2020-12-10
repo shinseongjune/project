@@ -35,7 +35,7 @@
 								<li><a href="favorites.do">즐겨찾기 목록</a></li>
 								<li><a href="review.do">리뷰남기기</a></li>
 								<li><a href="messenger.do">쪽지함</a></li>
-								<li><a href="quit.jsp">회원탈퇴</a></li>
+								<li><a href="quit.do">회원탈퇴</a></li>
 <%
 						if (loginMember != null) {
 %>
