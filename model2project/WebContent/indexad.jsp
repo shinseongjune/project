@@ -18,7 +18,7 @@
 		<!-- header -->
 		<header id="header">
 			<div class="inner clearfix">
-				<h1 class="logo"><a href="#"><img src="./images/logo.png" alt="JUST쇼핑몰"></a></h1>
+				<h1 class="logo"><a href="#"><img src="./images/logo.png" alt="2LW"></a></h1>
 				<nav class="nav">
 					<h2 class="blind">메인메뉴</h2>
 					<ul>
@@ -41,8 +41,6 @@
 						</li>
 						<li>
 							<a href="logout.do">로그아웃</a>
-							<ul>
-							</ul>
 						</li>
 						<li>
 							<a href="#">마이페이지</a>

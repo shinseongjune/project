@@ -85,7 +85,7 @@ public class OneOnOneDAO {
 	}
 
 	public ArrayList[] selectOneOnOneAdList(int nowPage) {
-		String sql = "SELECT m.name, o.title, o.contents, o.answer FROM member AS m JOIN one_on_one AS o ON m.number = o.number ORDER BY o.one_on_one_num DESC LIMIT ?," + pageCount;
+		String sql = "SELECT m.name, o.title, o.contents, o.answer, o.one_on_one_num FROM member AS m JOIN one_on_one AS o ON m.number = o.number ORDER BY o.one_on_one_num DESC LIMIT ?," + pageCount;
 		ArrayList[] oneOnOneAdList = null;
 		ArrayList<One_On_One> oneList = new ArrayList<One_On_One>();
 		ArrayList<Member> memList = new ArrayList<Member>();
@@ -104,6 +104,7 @@ public class OneOnOneDAO {
 					mem.setName(rs.getString("name"));
 					one.setTitle(rs.getString("title"));
 					one.setContents(rs.getString("contents"));
+					one.setOne_on_one_num(rs.getInt("one_on_one_num"));
 					if(rs.getString("answer") != null) {
 						one.setAnswer(rs.getString("answer"));
 					}
@@ -153,6 +154,7 @@ public class OneOnOneDAO {
 			pstmt.setString(1, one.getAnswer());
 			pstmt.setInt(2, one.getOne_on_one_num());
 			result = pstmt.executeUpdate();
+			
 			commit(conn);
 		} catch (Exception e) {
 			e.printStackTrace();

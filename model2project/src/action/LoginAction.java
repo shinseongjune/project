@@ -22,7 +22,7 @@ public class LoginAction implements Action {
 		LoginService loginService = new LoginService();
 		Member loginMember = loginService.getLoginMember(id, pw);
 		
-		if (re.equals("remember")) {
+		if (re != null && re.equals("remember")) {
 			Cookie idCookie = new Cookie("id", id);
 			idCookie.setMaxAge(60 * 60 * 24 * 365);
 			System.out.println(idCookie.getValue());
