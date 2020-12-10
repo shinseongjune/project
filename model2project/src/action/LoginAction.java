@@ -18,9 +18,17 @@ public class LoginAction implements Action {
 		ActionForward forward = null;
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		String remember = request.getParameter("rememberID");
+		String re = request.getParameter("rememberID");
 		LoginService loginService = new LoginService();
 		Member loginMember = loginService.getLoginMember(id, pw);
+		
+		if (re.equals("remember")) {
+			Cookie idCookie = new Cookie("id", id);
+			idCookie.setMaxAge(60 * 60 * 24 * 365);
+			System.out.println(idCookie.getValue());
+			response.addCookie(idCookie);
+			response.addHeader("samesite", "none");
+		}
 		
 		if(loginMember != null) {
 			HttpSession session = request.getSession();

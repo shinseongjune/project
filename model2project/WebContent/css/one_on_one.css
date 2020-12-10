@@ -38,6 +38,7 @@ li {
     box-sizing: border-box;
     border: 1px solid #aaa;
     background-color: #fff;
+	word-break: break-all;
 }
 .popup h3 {
     border-bottom: 1px solid #ccc;

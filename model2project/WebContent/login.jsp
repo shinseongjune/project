@@ -32,7 +32,7 @@
 						<input type="password" class="inputSlot" name="pw" placeholder="Password" required="required" autocomplete="off" />
 					</div>
 					<div class="loginExtra">
-						<label><input type="checkbox" name="RememberID" value="remember" /> Remember Me</label>
+						<label><input type="checkbox" name="rememberID" value="remember"/> Remember Me</label>
 						<span class="forgotPW"><a href="#"><h6>Forgot Password?</h6></a></span>
 					</div>
 					<div>
@@ -108,4 +108,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

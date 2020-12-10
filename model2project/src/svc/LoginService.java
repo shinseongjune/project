@@ -19,4 +19,13 @@ public class LoginService {
 		return loginMember;
 	}
 
+	public Member getAutoLogin(String id) {
+		LoginDAO loginDAO = LoginDAO.getInstance();
+		Connection conn = getConnection();
+		loginDAO.setConnection(conn);
+		Member loginMember = loginDAO.getAutoMember(id);
+		close(conn);
+		return loginMember;
+	}
+
 }

@@ -96,7 +96,7 @@
 				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
 				    	<h5 class="Q"><%=oneList.get(i).getTitle() %></h5>
 				    	<div><hr></div>
-				    	<div class="popup">
+				    	<div class="popup" style="word-break: break-all;">
 							<h6><%=oneList.get(i).getContents() %></h6>
 							<span class="float-right">문의자 : <%=memList.get(i).getName() %></span>
 							<div><hr/></div>

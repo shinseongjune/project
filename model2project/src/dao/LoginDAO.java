@@ -45,7 +45,41 @@ public class LoginDAO {
 				loginMember.setEmail(rs.getString("email"));
 				loginMember.setGender(rs.getString("gender"));
 				loginMember.setClassify(rs.getString("classify"));
-				if(loginMember.getClassify()=="선생") {
+				if(loginMember.getClassify().equals("교사")) {
+					loginMember.setMajor(rs.getString("major"));
+					loginMember.setEducation(rs.getString("education"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				close(rs);
+				close(pstmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return loginMember;
+	}
+
+	public Member getAutoMember(String id) {
+		Member loginMember = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM member WHERE id = ?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				loginMember = new Member();
+				loginMember.setId(rs.getString("id"));
+				loginMember.setPassword(rs.getString("password"));
+				loginMember.setName(rs.getString("name"));
+				loginMember.setEmail(rs.getString("email"));
+				loginMember.setGender(rs.getString("gender"));
+				loginMember.setClassify(rs.getString("classify"));
+				if(loginMember.getClassify().equals("교사")) {
 					loginMember.setMajor(rs.getString("major"));
 					loginMember.setEducation(rs.getString("education"));
 				}

@@ -23,6 +23,7 @@ import action.FavoritesAction;
 import action.FavoritesDeleteAction;
 import action.JoinAction;
 import action.LoginAction;
+import action.LoginPageAction;
 import action.MembersListAction;
 import action.MessageDeleteAction;
 import action.MessageSendAction;
@@ -72,6 +73,13 @@ public class FrontController extends HttpServlet {
 			forward.setPath("/indexad.jsp");
 		} else if(command.contentEquals("/login.do")) {
 			action = new LoginAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/loginPage.do")) {
+			action = new LoginPageAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
