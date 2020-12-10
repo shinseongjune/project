@@ -24,6 +24,7 @@ import action.FavoritesDeleteAction;
 import action.JoinAction;
 import action.LoginAction;
 import action.LoginPageAction;
+import action.LogoutAction;
 import action.MembersListAction;
 import action.MessageDeleteAction;
 import action.MessageSendAction;
@@ -87,6 +88,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/join.do")) {
 			action = new JoinAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/logout.do")) {
+			action = new LogoutAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

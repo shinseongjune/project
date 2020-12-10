@@ -1,5 +1,6 @@
 package action;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,10 @@ public class QuitAction implements Action {
 			int result = quitService.deleteMember(id);
 			
 			if(result > 0) {
+				session.invalidate();
+				Cookie idCookie = new Cookie("id", null);
+				idCookie.setMaxAge(0);
+				response.addCookie(idCookie);
 				forward = new ActionForward();
 				forward.setRedirect(true);
 				forward.setPath("index.do");
