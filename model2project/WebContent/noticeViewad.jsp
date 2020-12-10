@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, vo.Review, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Notice, java.util.ArrayList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
+	if (loginMember == null || !loginMember.getId().equals("admin")) {
+		out.println("<script>location.href='notice.do'</script>");
+	}
+	int nowPage = 1;
+	String opt = "";
 %>
 <html lang="ko">
 <head>
@@ -10,7 +15,7 @@
 	<title>2LW</title>
 	<link rel="stylesheet" href="css/sidebar.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/review.css">
+	<link rel="stylesheet" href="css/freeBoard.css">
 </head>
 <body>
 	<header>
@@ -30,8 +35,7 @@
 					<li class="nav-item"><a class="nav-link" href="introList.do">강사소개
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
-					<li class="nav-item active"><a class="nav-link" href="editProfilePage.do">마이페이지
-							<span class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
@@ -48,57 +52,52 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='loginPage.do';</script>");
 	} else {
-		Review re = (Review) session.getAttribute("re");
+				Notice not = (Notice)session.getAttribute("not");
+				if(request.getParameter("page") != null) nowPage = Integer.parseInt(request.getParameter("page"));
+				session.setAttribute("notice_num", not.getNotice_num());
+				if(!loginMember.getId().equals("admin")) opt = " invisible";
 %>
 	<div class="editcont">
 		<div class="sidebar">
-			<div class="bigMyPage">My Page</div>
+			<div class="bigMyPage">Board</div>
 			<div>
-				<div class="myPageMenu"><a href="editProfilePage.do"><img src="images/user_icon.png">&nbsp;개인정보 수정</a></div>
-				<div class="myPageMenu"><a href="favorites.do"><img src="images/heart_icon.png">&nbsp;즐겨찾기 목록</a></div>
-				<div class="myPageMenu on"><a href="review.do"><img src="images/star_icon.png">&nbsp;리뷰남기기</a></div>
-				<div class="myPageMenu"><a href="messenger.do"><img src="images/mail_icon.png">&nbsp;쪽지함</a></div>
-				<div class="myPageMenu"><a href="quit.do"><img src="images/x_mark_icon.png">&nbsp;회원 탈퇴</a></div>
-				<div class="myPageMenu"><a href="logout.do"><img src="images/door_icon.png">&nbsp;로그아웃</a></div>
+				<div class="myPageMenu on"><a href="notice.do"><img src="images/user_icon.png">&nbsp;공지사항</a></div>
+				<div class="myPageMenu"><a href="freeBoard.do"><img src="images/heart_icon.png">&nbsp;자유게시판</a></div>
 			</div>
 		</div>
 			<div class="contents">
-			
-				<form method="post" action="reviewUpdate.do">
-					<div class="row justify-content-center mb-5">
-						<div class="col-md-12">
-							<div class="bbsWrapper">
-								<ul class="bbsViewWrapperList">
-									<li class="bbsViewWriter">
-										<ul>
-											<li class="bbsViewWriterHeader">WRITER</li>
-											<li class="bbsViewWriterName"><%=loginMember.getName() %></li>
-										</ul>
-									</li>
-									<li class="bbsViewTitle">
-										<ul>
-											<li class="bbsViewTitleHeader">TITLE</li>
-											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="none" value="<%=re.getTitle() %>" autocomplete="off" /></li>
-										</ul>
-									</li>
-									<li class="bbsViewBody">
-										<div>
-											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="500자까지 적을 수 있습니다."><%=re.getContents() %></textarea>
-										</div>
-									</li>
-								</ul>
-							</div>
+				<div class="row justify-content-center mb-5">
+					<div class="col-md-12">
+						<div class="bbsWrapper">
+							<ul class="bbsViewWrapperList">
+								<li class="bbsViewWriter">
+									<ul>
+										<li class="bbsViewWriterHeader">WRITER</li>
+										<li class="bbsViewWriterName">ADMIN</li>
+									</ul>
+								</li>
+								<li class="bbsViewTitle">
+									<ul>
+										<li class="bbsViewTitleHeader">TITLE</li>
+										<li class="bbsViewTitleText"><%=not.getTitle() %></li>
+									</ul>
+								</li>
+								<li class="bbsViewBody">
+									<div>
+										<%=not.getContents() %>
+									</div>
+								</li>
+							</ul>
 						</div>
-							
-							
-					</div>			        
-						<input type="hidden" name="review_num" value="<%=re.getReview_num() %>" />
-							<div class="float-right">
-								<input type="submit" value="작성 완료" class="btn btn-primary" />
-							</div>
-							
-				</form>
+					</div>
 						
+						
+				</div>			        
+						<div class="float-right">
+							<button class="btn btn-info" onClick="location.href='notice.do?page=<%=nowPage %>'">목록</button>
+							<button class="btn btn-primary" onClick="location.href='noticeUpdatePage.do?page=<%=nowPage%>'">수정</button>
+							<button class="btn btn-danger" onClick="confirmDelete()">삭제</button>
+						</div>
 			</div>
 	</div>
 	
@@ -110,6 +109,13 @@
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script>
+      function confirmDelete() {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+          location.href="noticeDelete.do";
+        }
+      }
+    </script>
 	<script>
 		$(function(){
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");

@@ -70,7 +70,7 @@
 			<h3 class="blind">공지사항, 갤러리, 배너, 링크 영역</h3>
 			<section class="notice">
 				<div class="news">
-					<h4 class="on">Notice</h4>
+					<h4 class="on"><a href="notice.do">Notice</a></h4>
 					<ul>
 						<li><a href="#" title="팝업레이어 띄우기" class="popupWindow">Site Usage Rules</a> <span>2020.12.01</span></li>
 						<li><a href="#">We're looking for a new teacher with 2LW!</a> <span>2020.10.17</span></li>
@@ -78,18 +78,10 @@
 						<li><a href="#">information on enrollment</a> <span>2020.09.12</span></li>
 					</ul>				
 				</div>
-				<div class="gallery">
-					<h4>Event</h4>
-					<ul>
-						<li><a href="#"><img src="./images/thumb1.png" alt="thumbnail photo 1"></a></li>
-						<li><a href="#"><img src="./images/thumb2.png" alt="thumbnail photo 2"></a></li>
-						<li class="last"><a href="#"><img src="./images/thumb3.png" alt="thumbnail photo 3"></a></li>
-					</ul>				
-				</div>
 			</section>
 			<section class="notice">
 				<div class="news">
-					<h4 class="on">Community</h4>
+					<h4 class="on"><a href="freeBoard.do">Community</a></h4>
 					<ul>
 						<li><a href="#" title="팝업레이어 띄우기" class="popupWindow">Professor Peterson's class review</a> <span>2020.12.02</span></li>
 						<li><a href="#">Professor Jenson's class review</a> <span>2020.11.27</span></li>

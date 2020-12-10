@@ -97,12 +97,12 @@
 									<li class="bbsViewTitle">
 										<ul>
 											<li class="bbsViewTitleHeader">TITLE</li>
-											<li class="bbsViewTitleText"><input type="text" name="title" required="required" autocomplete="off" /></li>
+											<li class="bbsViewTitleText"><input type="text" name="title" class="form-control" required="required" autocomplete="off" /></li>
 										</ul>
 									</li>
 									<li class="bbsViewBody">
 										<div>
-											<textarea cols="50" rows="10" style="resize: none;" name="contents" placeholder="500자까지 적을 수 있습니다."></textarea>
+											<textarea cols="50" rows="10" style="resize: none;" name="contents" class="form-control" placeholder="500자까지 적을 수 있습니다."></textarea>
 										</div>
 									</li>
 								</ul>

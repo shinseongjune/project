@@ -21,6 +21,12 @@ import action.FaqDeleteAction;
 import action.FaqWriteAction;
 import action.FavoritesAction;
 import action.FavoritesDeleteAction;
+import action.FreeBoardAction;
+import action.FreeBoardDeleteAction;
+import action.FreeBoardUpdateAction;
+import action.FreeBoardUpdatePageAction;
+import action.FreeBoardViewAction;
+import action.FreeBoardWriteAction;
 import action.IntroDeleteProAction;
 import action.IntroDetailAction;
 import action.IntroListAction;
@@ -35,8 +41,11 @@ import action.MembersListAction;
 import action.MessageDeleteAction;
 import action.MessageSendAction;
 import action.MessengerAction;
+import action.MyFreeAction;
 import action.MyMessageAction;
 import action.MyReviewAction;
+import action.NoticeAction;
+import action.NoticeViewAction;
 import action.OneOnOneListAction;
 import action.OneOnOneSendAction;
 import action.One_on_oneAnswerAction;
@@ -364,6 +373,72 @@ public class FrontController extends HttpServlet {
 			forward.setPath("/intro/intro_delete.jsp");
 		} else if (command.equals("/introDeletePro.do")) {
 			action = new IntroDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeBoard.do")) {
+			action = new FreeBoardAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeWritePage.do")) {
+			forward = new ActionForward();
+			forward.setPath("freeBoardWrite.jsp");
+		} else if(command.contentEquals("/freeWrite.do")) {
+			action = new FreeBoardWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeView.do")) {
+			action = new FreeBoardViewAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeDelete.do")) {
+			action = new FreeBoardDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeUpdatePage.do")) {
+			action = new FreeBoardUpdatePageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/freeUpdate.do")) {
+			action = new FreeBoardUpdateAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/myFree.do")) {
+			action = new MyFreeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/notice.do")) {
+			action = new NoticeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/noticeView.do")) {
+			action = new NoticeViewAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
