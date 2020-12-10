@@ -21,6 +21,12 @@ import action.FaqDeleteAction;
 import action.FaqWriteAction;
 import action.FavoritesAction;
 import action.FavoritesDeleteAction;
+import action.IntroDeleteProAction;
+import action.IntroDetailAction;
+import action.IntroListAction;
+import action.IntroModifyFormAction;
+import action.IntroModifyProAction;
+import action.IntroWriteProAction;
 import action.JoinAction;
 import action.LoginAction;
 import action.LoginPageAction;
@@ -306,6 +312,58 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/one_on_one_answer.do")) {
 			action = new One_on_oneAnswerAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introWriteForm.do")) {
+			forward = new ActionForward();
+			forward.setPath("/intro/intro_write.jsp");
+		} else if (command.equals("/introWritePro.do")) {
+			action = new IntroWriteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introList.do")) {
+			action = new IntroListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introDetail.do")) {
+			action = new IntroDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introModifyForm.do")) {
+			action = new IntroModifyFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introModifyPro.do")) {
+			action = new IntroModifyProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/introDeleteForm.do")) {
+			String nowPage = request.getParameter("page");
+			request.setAttribute("page", nowPage);
+			int number = Integer.parseInt(request.getParameter("number"));
+			request.setAttribute("number", number);
+			forward = new ActionForward();
+			forward.setPath("/intro/intro_delete.jsp");
+		} else if (command.equals("/introDeletePro.do")) {
+			action = new IntroDeleteProAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -23,7 +23,7 @@
 					<h2 class="blind">메인메뉴</h2>
 					<ul>
 						<li>
-							<a href="introduce.do">강사소개</a>
+							<a href="introList.do">강사소개</a>
 						</li>
 						<li>
 							<a href="#">강의목록</a>

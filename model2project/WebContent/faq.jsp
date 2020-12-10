@@ -26,7 +26,7 @@
 	
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#">강사소개
+					<li class="nav-item"><a class="nav-link" href="introList.do">강사소개
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
 					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
