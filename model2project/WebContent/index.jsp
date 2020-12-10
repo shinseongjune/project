@@ -90,7 +90,7 @@
 			</section>
 			<section class="notice">
 				<div class="news">
-					<h4 class="on">Community</h4>
+					<h4 class="on"><a href="freeBoard.do">Community</a></h4>
 					<ul>
 						<li><a href="#" title="팝업레이어 띄우기" class="popupWindow">Professor Peterson's class review</a> <span>2020.12.02</span></li>
 						<li><a href="#">Professor Jenson's class review</a> <span>2020.11.27</span></li>
