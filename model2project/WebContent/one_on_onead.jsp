@@ -95,6 +95,14 @@
 %>
 				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
 				    	<h5 class="Q"><%=oneList.get(i).getTitle() %></h5>
+<%
+				    if(oneList.get(i).getAnswer() != null) {				    	
+%>
+				    	
+								<div class="badge badge-primary float-left">답변 완료</div>
+<%
+				    }
+%>
 				    	<div><hr></div>
 				    	<div class="popup" style="word-break: break-all;">
 							<h6><%=oneList.get(i).getContents() %></h6>
@@ -104,7 +112,6 @@
 					if(oneList.get(i).getAnswer() != null) {							
 %>
 							<div class="content">
-								<div class="badge badge-primary float-left">답변 완료</div>
 								<p><b><%=oneList.get(i).getAnswer() %></b></p>			
 							</div>
 <%

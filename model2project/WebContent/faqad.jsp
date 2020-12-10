@@ -38,7 +38,7 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="members.do">회원관리</a></li>
 					<li class="nav-item"><a class="nav-link" href="logout.do">로그아웃</a></li>
-					<li class="nav-item active"><a class="nav-link" href="faq.do">마이페이지
+					<li class="nav-item active"><a class="nav-link" href="review.do">마이페이지
 							<span class="sr-only">(current)</span></a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
