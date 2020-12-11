@@ -81,7 +81,7 @@
 										<li class="bbsViewTitleText"><%=fr.getTitle() %></li>
 									</ul>
 								</li>
-								<li class="bbsViewBody">
+								<li class="bbsViewBody"">
 									<div>
 										<%=fr.getContents() %>
 									</div>

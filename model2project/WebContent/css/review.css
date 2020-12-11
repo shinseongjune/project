@@ -142,4 +142,5 @@ li {
 	padding: 25px;
 	background-color: #ffffff;
 	color: black;
+	word-break:break-all;
 }

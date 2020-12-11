@@ -81,9 +81,10 @@
 				</div>
 				<div class="mt-5 bg-white p-4">
 					<form method="post" action="bannerUpload.do" enctype="multipart/form-data">
-						<input type="file" class="form-control-file" name="bannerFile" />
-						<input type="submit" class="btn btn-primary mt-3" value="배너 등록" accept="image/*" />
-						<div><h6>배너 크기는 1200 x 300이 적절하며, 이미지 파일만 등록할 수 있습니다. 10mb까지 업로드 가능합니다.</h6></div>
+						<div id="imagePreview"></div> 
+						<input type="file" class="form-control-file bannerFile" name="bannerFile" required="required" />
+						<input type="submit" class="btn btn-primary mt-3" value="배너 등록" />
+						<div><h6>배너 크기는 1200 x 300이 적절하며, jpg(jpeg), png, gif 파일만 등록할 수 있습니다. 10mb까지 업로드 가능합니다.</h6></div>
 					</form>
 				</div>
 			</div>
@@ -105,6 +106,16 @@
 				if(confirm('정말 삭제하시겠습니까?')) {
 					var img = $(this).attr("id");
 					location.href="deleteBanner.do?img=" + img;
+				}
+			});
+			$(".bannerFile").change(function(){
+				var file_name = $(".bannerFile").val().split('\\').pop();;
+				var extension = file_name.split('.').pop().toLowerCase();
+				var extArray = ["jpg", "jpeg", "png", "gif"];
+				var isExtRight = extArray.indexOf(extension) > -1;
+				if(!isExtRight) {
+					alert('유효하지 않은 파일 형식입니다.');
+					$(".bannerFile").val('');
 				}
 			});
 		});
