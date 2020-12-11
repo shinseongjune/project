@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Free, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Free, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -34,7 +34,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="introList.do">강사소개
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
+					<li class="nav-item"><a class="nav-link" href="lectureList.do">강의목록</a></li>
 					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>
@@ -57,7 +57,7 @@
 				if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 				if (nowPageNumber < 1) nowPageNumber = 1;
 				if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-				ArrayList[] freeList = (ArrayList[])session.getAttribute("freeList");
+				LinkedList[] freeList = (LinkedList[])session.getAttribute("freeList");
 				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 				int endNumber = startNumber + range - 1;
 				if (nowPageNumber <= 1) {
@@ -93,8 +93,8 @@
 <%
 			} else {
 				
-				ArrayList<Free> frList = freeList[0];
-				ArrayList<Member> memList = freeList[1];
+				LinkedList<Free> frList = freeList[0];
+				LinkedList<Member> memList = freeList[1];
 				
 				for (int i = 0; i < frList.size();i++) {
 %>

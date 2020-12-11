@@ -1,6 +1,6 @@
 package action;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ public class FreeBoardViewAction implements Action {
 		if(loginMember != null) {
 			forward = new ActionForward();
 			FreeViewService freeViewService = new FreeViewService();
-			ArrayList<Object> freeViewList = freeViewService.getFreeView(free_num);
+			LinkedList<Object> freeViewList = freeViewService.getFreeView(free_num);
 
 			session.setAttribute("freeViewList", freeViewList);
 			if(loginMember.getId().equals("admin")) {

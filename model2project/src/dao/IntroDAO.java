@@ -1,15 +1,16 @@
 package dao;
 
-import static db.JdbcUtil.*;
+import static db.JdbcUtil.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+
 import javax.sql.DataSource;
 
 import vo.Intro;
-import vo.Member;
 
 public class IntroDAO {
 
@@ -54,11 +55,11 @@ public class IntroDAO {
 	}
 	
 	//글 목록 보기
-	public ArrayList<Intro> selectArticleList(int page, int limit){
+	public LinkedList<Intro> selectArticleList(int page, int limit){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String intro_list_sql = "SELECT * FROM intro ORDER BY intro_num DESC, number ASC LIMIT ?, ?";
-		ArrayList<Intro> articleList = new ArrayList<Intro>();
+		LinkedList<Intro> articleList = new LinkedList<Intro>();
 		Intro intro = null;
 		int startrow = (page - 1) * 10; //읽기 시작할 row 번호
 		

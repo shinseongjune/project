@@ -6,7 +6,7 @@ import static db.JdbcUtil.commit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import vo.Free;
 import vo.Member;
@@ -34,11 +34,11 @@ public class FreeDAO {
 	public void setConnection(Connection conn) {
 		this.conn = conn;
 	}
-	public ArrayList[] selectFreeList(int nowPage) {
+	public LinkedList[] selectFreeList(int nowPage) {
 		String sql = "SELECT m.name, f.title, f.contents, f.free_num FROM member AS m JOIN freeboard AS f ON m.number = f.number ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
-		ArrayList<Member> memList = new ArrayList<Member>();
-		ArrayList<Free> freeContentList = new ArrayList<Free>();
-		ArrayList[] freeList = null;
+		LinkedList<Member> memList = new LinkedList<Member>();
+		LinkedList<Free> freeContentList = new LinkedList<Free>();
+		LinkedList[] freeList = null;
 		Member mem = null;
 		Free fr = null;
 		try {
@@ -59,7 +59,7 @@ public class FreeDAO {
 					freeContentList.add(fr);
 				} while(rs.next());
 			}
-			freeList = new ArrayList[] {freeContentList, memList};
+			freeList = new LinkedList[] {freeContentList, memList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -113,9 +113,9 @@ public class FreeDAO {
 		return result;
 	}
 
-	public ArrayList<Object> selectFreeView(int free_num) {
+	public LinkedList<Object> selectFreeView(int free_num) {
 		String sql = "SELECT F.free_num, f.title, f.contents, m.name FROM freeboard AS f JOIN member AS m ON f.number = m.number WHERE f.free_num = ?";
-		ArrayList<Object> freeViewList = null;
+		LinkedList<Object> freeViewList = null;
 		Member mem = null;
 		Free fr = null;
 		try {
@@ -131,7 +131,7 @@ public class FreeDAO {
 				fr.setContents(rs.getString("contents"));
 				fr.setFree_num(rs.getInt("free_num"));
 			}
-			freeViewList = new ArrayList<Object>();
+			freeViewList = new LinkedList<Object>();
 			freeViewList.add(fr);
 			freeViewList.add(mem);
 			
@@ -203,11 +203,11 @@ public class FreeDAO {
 		return result;
 	}
 
-	public ArrayList[] selectMyFreeList(String id, int nowPage) {
+	public LinkedList[] selectMyFreeList(String id, int nowPage) {
 		String sql = "SELECT f.title, f.contents, f.free_num, m.name FROM freeboard AS f JOIN member AS m on f.number = m.number WHERE f.number = (SELECT number FROM member WHERE id = ?) ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
-		ArrayList<Member> memList = new ArrayList<Member>();
-		ArrayList<Free> freeContentList = new ArrayList<Free>();
-		ArrayList[] freeList = null;
+		LinkedList<Member> memList = new LinkedList<Member>();
+		LinkedList<Free> freeContentList = new LinkedList<Free>();
+		LinkedList[] freeList = null;
 		Member mem = null;
 		Free fr = null;
 		try {
@@ -229,7 +229,7 @@ public class FreeDAO {
 					freeContentList.add(fr);
 				} while(rs.next());
 			}
-			freeList = new ArrayList[] {memList, freeContentList};
+			freeList = new LinkedList[] {memList, freeContentList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -262,6 +262,31 @@ public class FreeDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public LinkedList<Free> selectMainFreeList() {
+		String sql = "SELECT * FROM freeboard ORDER BY free_num DESC LIMIT 0, " + pageCount;
+		LinkedList<Free> freeList = new LinkedList<>();
+		Free fr = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				do {
+					fr = new Free();
+					fr.setTitle(rs.getString("title"));
+					fr.setFree_num(rs.getInt("free_num"));
+					freeList.add(fr);
+				} while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return freeList;
 	}
 
 }

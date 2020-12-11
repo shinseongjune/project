@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FreeBoardLastPageService;
 import svc.FreeDeleteService;
 import vo.ActionForward;
 import vo.Member;
@@ -25,9 +24,6 @@ public class FreeBoardDeleteAction implements Action {
 			result = freeDeleteService.deleteFree(free_num);
 			
 			if (result > 0) {
-				FreeBoardLastPageService freeLastPageService = new FreeBoardLastPageService();
-				int lastPage = freeLastPageService.getFreeLastPage();
-				session.setAttribute("lastPage", lastPage);
 				forward.setRedirect(true);
 				forward.setPath("freeBoard.do?page=1");
 				return forward;

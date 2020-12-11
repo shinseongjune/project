@@ -1,14 +1,13 @@
 package action;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FreeViewService;
+import svc.NoticeViewService;
 import vo.ActionForward;
 import vo.Member;
+import vo.Notice;
 
 public class NoticeViewAction implements Action {
 

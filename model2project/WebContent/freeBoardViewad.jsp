@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Free, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Free, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -49,7 +49,7 @@
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='loginPage.do';</script>");
 	} else {
-				ArrayList<Object> freeViewList = (ArrayList<Object>)session.getAttribute("freeViewList");
+				LinkedList<Object> freeViewList = (LinkedList<Object>)session.getAttribute("freeViewList");
 				if(request.getParameter("page") != null) nowPage = Integer.parseInt(request.getParameter("page"));
 				Free fr = (Free) freeViewList.get(0);
 				Member mem = (Member) freeViewList.get(1);

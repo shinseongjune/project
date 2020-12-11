@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="vo.PageInfo, vo.Intro, vo.Member, java.util.*, java.text.SimpleDateFormat" %>
 <%
-	ArrayList<Intro> articleList = (ArrayList<Intro>)request.getAttribute("articleList");
+	LinkedList<Intro> articleList = (LinkedList<Intro>)request.getAttribute("articleList");
 	Member loginMember = (Member) session.getAttribute("loginMember");
 	PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
 	int listCount = pageInfo.getListCount();

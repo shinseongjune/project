@@ -1,6 +1,6 @@
 package action;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ public class NoticeAction implements Action {
 		if(loginMember != null) {
 			forward = new ActionForward();
 			NoticeService noticeService = new NoticeService();
-			ArrayList<Notice> noticeList = noticeService.getNoticeList(nowPage);
+			LinkedList<Notice> noticeList = noticeService.getNoticeList(nowPage);
 			NoticeLastPageService noticeLastPageService = new NoticeLastPageService();
 			int lastPage = noticeLastPageService.getNoticeLastPage();
 			session.setAttribute("lastPage", lastPage);

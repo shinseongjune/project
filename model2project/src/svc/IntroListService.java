@@ -2,7 +2,7 @@ package svc;
 
 import static db.JdbcUtil.*;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import dao.IntroDAO;
 import vo.Intro;
 
@@ -19,8 +19,8 @@ public class IntroListService {
 		return listCount;
 	}
 
-	public ArrayList<Intro> getArticleList(int page, int limit) {
-		ArrayList<Intro> articleList=null;
+	public LinkedList<Intro> getArticleList(int page, int limit) {
+		LinkedList<Intro> articleList=null;
 		Connection conn = getConnection();
 		IntroDAO introDAO=IntroDAO.getInstance();
 		introDAO.setConnection(conn);

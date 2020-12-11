@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import svc.FreeUpdateService;
-import svc.ReviewUpdateService;
 import vo.ActionForward;
 import vo.Free;
 import vo.Member;

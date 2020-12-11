@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Notice, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Notice, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -31,7 +31,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="introList.do">강사소개
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
+					<li class="nav-item"><a class="nav-link" href="lectureList.do">강의목록</a></li>
 					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Notice, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Notice, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -32,11 +32,11 @@
 	
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="introList.do">강사소개
+					<li class="nav-item"><a class="nav-link" href="#">주문관리
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#carrer">강의목록</a></li>
-					<li class="nav-item"><a class="nav-link" href="editProfilePage.do">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link" href="members.do">회원관리</a></li>
+					<li class="nav-item"><a class="nav-link" href="logout.do">로그아웃</a></li>
+					<li class="nav-item"><a class="nav-link" href="review.do">마이페이지</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"

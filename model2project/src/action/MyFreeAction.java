@@ -1,13 +1,11 @@
 package action;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.FreeBoardLastPageService;
-import svc.FreeBoardService;
 import svc.MyFreeBoardLastPageService;
 import svc.MyFreeService;
 import vo.ActionForward;
@@ -28,7 +26,7 @@ public class MyFreeAction implements Action {
 			String id = loginMember.getId();
 			forward = new ActionForward();
 			MyFreeService myFreeService = new MyFreeService();
-			ArrayList[] freeList = myFreeService.getMyFreeList(id, nowPage);
+			LinkedList[] freeList = myFreeService.getMyFreeList(id, nowPage);
 			MyFreeBoardLastPageService myFreeBoardLastPageService = new MyFreeBoardLastPageService();
 			int lastPage = myFreeBoardLastPageService.getMyFreeLastPage(id);
 			session.setAttribute("lastPage", lastPage);
