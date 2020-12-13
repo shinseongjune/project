@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import action.Action;
 import action.BannerAction;
@@ -37,6 +36,7 @@ import action.IntroModifyFormAction;
 import action.IntroModifyProAction;
 import action.IntroWriteProAction;
 import action.JoinAction;
+import action.LectureListAction;
 import action.LoginAction;
 import action.LoginPageAction;
 import action.LogoutAction;
@@ -325,10 +325,12 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if(command.contentEquals("/logout.do")) {
-			HttpSession session = request.getSession();
-			session.invalidate();
-			forward = new ActionForward();
-			forward.setPath("/index.jsp");
+			action = new LogoutAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if(command.contentEquals("/quitters.do")) {
 			action = new QuittersListAction();
 			try {
@@ -525,6 +527,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/bannerUpload.do")) {
 			action = new BannerUploadAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/lectureList.do")) {
+			action = new LectureListAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

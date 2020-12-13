@@ -60,10 +60,10 @@
 				LinkedList[] freeList = (LinkedList[])session.getAttribute("freeList");
 				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 				int endNumber = startNumber + range - 1;
-				if (nowPageNumber == 1) {
+				if (nowPageNumber <= 1) {
 					prevDisabled = " disabled";
 				}
-				if (nowPageNumber == lastPage) {
+				if (nowPageNumber >= lastPage) {
 					nextDisabled = " disabled";
 				}
 %>
@@ -77,7 +77,7 @@
 		</div>
 			<div class="contents">
 				<div class="row justify-content-center">
-					<div class="col-md-12">
+					<div class="col-md-12 mb-5">
 						<div class="bbsWrapper">
 							<ul class="bbsWrapperList">
 								<li class="bbsHeader">
@@ -123,7 +123,7 @@
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item"><a class="page-link" href="freeBoard.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item<% if(nowPageNumber==i){%> active<%} %>"><a class="page-link" href="freeBoard.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
