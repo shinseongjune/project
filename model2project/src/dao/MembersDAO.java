@@ -102,6 +102,7 @@ public class MembersDAO {
 					mem = new Member();
 					mem.setId(rs.getString("id"));
 					mem.setEmail(rs.getString("email"));
+					mem.setNumber(rs.getInt("number"));
 					memList.add(mem);
 				} while(rs.next());
 			}

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Lecture, vo.Review, java.util.LinkedList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.OrderList, vo.Lecture, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -34,10 +34,9 @@
 	
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="purchaseAllList.do">주문관리
+					<li class="nav-item active"><a class="nav-link" href="purchaseAllList.do">주문관리
 					</a></li>
-					<li class="nav-item active"><a class="nav-link" href="members.do">회원관리
-							<span class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="members.do">회원관리</a></li>
 					<li class="nav-item"><a class="nav-link" href="logout.do">로그아웃</a></li>
 					<li class="nav-item"><a class="nav-link" href="review.do">마이페이지</a></li>
 				</ul>
@@ -50,14 +49,20 @@
 		</nav>
 	</header>
 		<!-- //header -->
-		<div class="container" id="main">
+<div class="container" id="main">
 <%
+	if(loginMember == null){
+		out.println("<script>alert('로그인이 필요합니다.');location.href='loginPage.do';</script>");
+	} else {
 		int lastPage = 1;
 		if (session.getAttribute("lastPage") != null) lastPage = (int) session.getAttribute("lastPage");
 		if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 		if (nowPageNumber < 1) nowPageNumber = 1;
 		if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-		LinkedList<Member> memList = (LinkedList<Member>)session.getAttribute("memList");
+		LinkedList[] purchaseList = (LinkedList[])session.getAttribute("purchaseList");
+		LinkedList<OrderList> orList = purchaseList[0];
+		LinkedList<Member> memList = purchaseList[1];
+		LinkedList<Lecture> lecList = purchaseList[2];
 		int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 		int endNumber = startNumber + range - 1;
 		if (nowPageNumber <= 1) {
@@ -69,12 +74,10 @@
 %>
 	<div class="editcont">
 		<div class="sidebar">
-			<div class="bigMyPage">회원관리</div>
+			<div class="bigMyPage">주문관리</div>
 			<div>
-				<div class="myPageMenu"><a href="members.do"><img src="images/members_icon.png">&nbsp;회원 리스트</a></div>
-				<div class="myPageMenu on"><a href="quitters.do"><img src="images/x_mark_icon.png">&nbsp;탈퇴회원 리스트</a></div>
-				<div class="myPageMenu"><a href="statistics.do"><img src="images/statistics_icon.png">&nbsp;통계</a></div>
-				<div class="myPageMenu"><a href="one_on_onead.do"><img src="images/mail_icon.png">&nbsp;1:1 문의함</a></div>
+				<div class="myPageMenu on"><a href="purchaseAllList.do"><img src="images/heart_icon.png">&nbsp;결제목록</a></div>
+				<div class="myPageMenu"><a href="purchaseRefundList.do"><img src="images/x_mark_icon.png">&nbsp;결제 취소</a></div>
 			</div>
 		</div>
 			<div class="contents">
@@ -82,24 +85,31 @@
 				<table class="table table-sm bg-white">
 				  <thead>
 				    <tr>
+				      <th scope="col">ORDER NUMBER</th>
 				      <th scope="col">ID</th>
-				      <th scope="col">E-MAIL</th>
-				      <th scope="col">NUMBER</th>
+				      <th scope="col">NAME</th>
+				      <th scope="col">LECTURE</th>
+				      <th scope="col">PRICE</th>
+				      <th scope="col">DATE</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 <%
-	if(memList != null) {
+	if(purchaseList != null) {
 	
-		for(int i = 0; i < memList.size();i++) {
+		for(int i = 0; i < orList.size();i++) {
 %>
 				    <tr>
+				      <td><%=orList.get(i).getOrder_num() %></td>
 				      <td><%=memList.get(i).getId() %></td>
-				      <td><%=memList.get(i).getEmail() %></td>
-				      <td><%=memList.get(i).getNumber() %></td>
+				      <td><%=memList.get(i).getName() %></td>
+				      <td><%=lecList.get(i).getLecture_title() %></td>
+				      <td><%=lecList.get(i).getPrice() %></td>
+				      <td><%=orList.get(i).getDate() %></td>
 				    </tr>
 <%
 		}
+	}
 %>				    
 				  </tbody>
 				</table>
@@ -107,17 +117,17 @@
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center">
 						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="quitters.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
+						      <a class="page-link" href="purchase.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
 						    </li>
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item<% if(nowPageNumber==i){%> active<%} %>"><a class="page-link" href="quitters.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item<% if(nowPageNumber==i){%> active<%} %>"><a class="page-link" href="purchase.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
 						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="quitters.do?page=<%=nowPageNumber + 1 %>">Next</a>
+						      <a class="page-link" href="purchase.do?page=<%=nowPageNumber + 1 %>">Next</a>
 						    </li>
 						  </ul>
 						</nav>
@@ -126,7 +136,6 @@
 %>
 			</div>
 	</div>
-	
 </div>
 	<script src="./js/jquery-1.12.4.min.js"></script>
 	<!-- Optional JavaScript; -->
