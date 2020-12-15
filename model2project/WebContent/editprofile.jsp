@@ -66,10 +66,6 @@
 				<form action="editProfile.do" method="post">
 					<input type="hidden" name="id" value="<%=(String)loginMember.getId() %>">
 					<div class="inputSlot">
-						Point : <br />
-						<input type="number" name="point" value="<%=loginMember.getPoint() %>" disabled />
-					</div>
-					<div class="inputSlot">
 						Password : <br />
 						<input type="password" name="password" required="required" autocomplete="off" />
 					</div>

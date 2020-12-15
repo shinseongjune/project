@@ -10,7 +10,6 @@ public class Member {
 	private String gender;
 	private String major;
 	private String education;
-	private int point;
 	
 	public int getNumber() {
 		return number;
@@ -18,13 +17,6 @@ public class Member {
 	
 	public void setNumber(int i) {
 		this.number = i;
-	}
-	public int getPoint() {
-		return point;
-	}
-
-	public void setPoint(int point) {
-		this.point = point;
 	}
 
 	public String getClassify() {

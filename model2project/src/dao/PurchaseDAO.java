@@ -247,34 +247,17 @@ public class PurchaseDAO {
 		return result;
 	}
 	public int doRefund(int order_num) {
-		String sql = "SELECT o.number, l.price FROM orderlist AS o JOIN lecture AS l ON o.lecture_num = l.lecture_num WHERE order_num = ?";
+		String sql = "DELETE FROM orderlist WHERE order_num = ?";
 		int result = 0;
-		int price = 0;
-		int number = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, order_num);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				price = rs.getInt("price");
-				number = rs.getInt("number");
-				sql = "DELETE FROM orderlist WHERE order_num = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, order_num);
-				result = pstmt.executeUpdate();
-				if(result > 0) {
-					sql = "UPDATE member SET point = point + ? WHERE number = ?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, price);
-					pstmt.setInt(2, number);
-					result = pstmt.executeUpdate();
-				} else {
-					rollback(conn);
-				}
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				commit(conn);
 			} else {
 				rollback(conn);
 			}
-			commit(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
