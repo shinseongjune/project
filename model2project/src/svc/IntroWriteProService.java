@@ -7,13 +7,13 @@ import dao.IntroDAO;
 import vo.Intro;
 public class IntroWriteProService {
 	
-	public static boolean registArticle(Intro intro) throws Exception {
+	public static boolean registArticle(String id, Intro intro) throws Exception {
 		
 		boolean isWriteSuccess = false;
 		Connection conn = getConnection();
 		IntroDAO introDAO = IntroDAO.getInstance();
 		introDAO.setConnection(conn);
-		int insertCount = introDAO.insertArticle(intro);
+		int insertCount = introDAO.insertArticle(id, intro);
 		
 		if(insertCount > 0) {
 			commit(conn);

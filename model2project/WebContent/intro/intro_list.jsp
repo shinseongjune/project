@@ -2,9 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ page import="vo.PageInfo, vo.Intro, vo.Member, java.util.*, java.text.SimpleDateFormat" %>
 <%
-	LinkedList<Intro> articleList = (LinkedList<Intro>)request.getAttribute("articleList");
-	Member loginMember = (Member) session.getAttribute("loginMember");
-	PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
+	ArrayList[] bigArticleList = null;
+	ArrayList<Intro> articleList = null;
+	ArrayList<Member> articleListm = null;
+	Member loginMember = null;
+	String classify = null;
+	if(session.getAttribute("articleList") != null) {
+		bigArticleList = (ArrayList[])session.getAttribute("articleList");
+		articleList = bigArticleList[0];
+		articleListm = bigArticleList[1];
+	}
+	if(session.getAttribute("loginMember") != null) {
+		loginMember = (Member) session.getAttribute("loginMember");
+		classify = loginMember.getClassify();	
+	} else {
+		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
+	}
+	PageInfo pageInfo = (PageInfo)session.getAttribute("pageInfo");
 	int listCount = pageInfo.getListCount();
 	int nowPage = pageInfo.getPage();
 	int maxPage = pageInfo.getMaxPage();
@@ -17,6 +31,9 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
  		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+ 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/story-show-gallery@2/dist/ssg.min.css">
+ 		<link rel="stylesheet" href="src/ssg.css" type="text/css" media="all">
+		<link rel='stylesheet' href='./css/index.css' type='text/css' media='all' />
 		<title>강사소개</title>
 <style>
 body {
@@ -54,15 +71,7 @@ body {
 	</nav>
 </header>
 	<div class="container" id="main">
-<%
-	if(loginMember == null){
-		out.println("<script>alert('로그인이 필요합니다.');location.href='login.jsp';</script>");
-	} else {
-%>
 		<table>
-<%
-	}
-%>		
 <%
 	if(articleList != null && listCount > 0) {
 %>
@@ -72,11 +81,36 @@ body {
 	for(int i=0;i<articleList.size();i++) {
 %>
 					<td style="text-align: center;">
-						<img src="/upload/<%=articleList.get(i).getImg1() %>" alt="-" 
-						style="width : 355px; height:300px; align:center;"/>
+					<div class="gallery ssg wider vipssg fs" style="margin-top:10px;">
+						<a href='/upload/<%=articleList.get(i).getImg1() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg1() %>" alt="<%=articleList.get(i).getImgex1() %>" 
+						style="width : 355px; height:410px; align:center;"/></a>
+						
+						<a href='/upload/<%=articleList.get(i).getImg2() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg2() %>" alt="<%=articleList.get(i).getImgex2() %>" 
+						style="display:none"/></a>
+						
+						<a href='/upload/<%=articleList.get(i).getImg3() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg3() %>" alt="<%=articleList.get(i).getImgex3() %>" 
+						style="display:none"/></a>
+						
+						<a href='/upload/<%=articleList.get(i).getImg4() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg4() %>" alt="<%=articleList.get(i).getImgex4() %>" 
+						style="display:none"/></a>
+						
+						<a href='/upload/<%=articleList.get(i).getImg5() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg5() %>" alt="<%=articleList.get(i).getImgex5() %>" 
+						style="display:none"/></a>
+						
+						<a href='/upload/<%=articleList.get(i).getImg6() %>'>
+						<img src="/upload/<%=articleList.get(i).getImg6() %>" alt="<%=articleList.get(i).getImgex6() %>" 
+						style="display:none"/></a>
+					</div>
 						<br><a href="introDetail.do?intro_num=<%=articleList.get(i).getIntro_num() %>&page=<%=nowPage %>">
-						<%=articleList.get(i).getContents() %>
-						</a>
+						<%=articleListm.get(i).getName() %><br>
+						</a>						
+						<%=articleListm.get(i).getMajor() %><br>
+						<%=articleListm.get(i).getEducation() %>
 					</td>
 <%
 	if(i%3==2) {
@@ -129,10 +163,17 @@ body {
 		</ul>
 	</nav>
 	<div class="row">
+<%
+	if(classify != null && (!classify.equals("학생"))){
+%>
 		<div class="ml-auto"><a href="introWriteForm.do"><input type="button" class="btn btn-primary" value="작성하기"/></a></div>
+<% 		
+	}
+%>		
 	</div>
-	</div>	
+	</div>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/story-show-gallery@2/dist/ssg.min.js"> </script>	
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 		<script>

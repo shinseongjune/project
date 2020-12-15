@@ -2,8 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ page import="vo.Intro, vo.Member, java.util.*, java.text.SimpleDateFormat"  %>
 <%
-	Intro article = (Intro)request.getAttribute("article");
-	Member articlem = (Member)request.getAttribute("articlem");
+	ArrayList[] articleList = (ArrayList[])session.getAttribute("articleList");
+	ArrayList<Intro> intList = articleList[0];
+	ArrayList<Member> memList = articleList[1];
+	Intro article = intList.get(0);
+	Member articlem = memList.get(0);
 	String nowPage = (String)request.getAttribute("page");
 %>
 <!DOCTYPE html>
@@ -132,7 +135,7 @@
 #container .notice2 {
     position: relative;
     float: left;
-    width: 1165px;
+    width: 1170px;
     margin-right: 15px;
     margin-top: 20px;
 }
@@ -140,7 +143,7 @@
     position: relative;
     z-index: 1;
     float: left;
-    height: 35px;
+    height: 30px;
     padding: 0 12px;
     border: 1px solid #ccc;
     background-color: #d7d7d7;
@@ -160,7 +163,7 @@
 
 }
 #container .notice2 .news ul {
-    padding-top: 20px;
+    padding-top: 30px;
 }
 #container .notice2 .news ul li {
     overflow: hidden;
@@ -172,20 +175,9 @@
     float: left;
 }
 #container .notice2 .news ul li span {
-    float: right;
-    color: #606060;
+	float: right;
+	color: #606060;
 }
-#container .notice2 .gallery ul {
-    display: none;
-    padding: 20px 0 0 12px;
-}
-#container .notice2 .gallery ul li {
-    float: left;
-    margin-right: 13px;
-}
-#container .notice2 .gallery ul li.last {
-    margin-right: 0;
-}	
 </style>
 </head>
 <body>
@@ -198,42 +190,38 @@
 		<section class="notice">
 			<div class="news">
 				<ul>
-					<li><a href="#" >교사이름</a><span>d</span></li>
-					<li><a href="#">이메일</a> <span>s</span></li>
-					<li><a href="#">성별</a> <span>a</span></li>
-					<li><a href="#">전공</a> <span>a</span></li>
-					<li><a href="#">학력</a> <span>a</span></li>
+					<li><a href="#" >name</a><span><%=articlem.getName() %></span></li>
+					<li><a href="#">E-mail</a><span><%=articlem.getEmail() %></span></li>
+					<li><a href="#">gender</a><span><%=articlem.getGender() %></span></li>
+					<li><a href="#">major</a><span><%=articlem.getMajor() %></span></li>
+					<li><a href="#">education</a><span><%=articlem.getEducation() %></span></li>
+					<li><a href="#">introduce</a><span><%=article.getContents() %></span></li>
 				</ul>				
 			</div>
 		</section>
-			<section class="notice2">
-				<div class="news">
-					<h4 class="on">리뷰</h4>
-					<ul>
-						<li><a href="#">Site Usage Rules</a> <span>2020.12.01</span></li>
-						<li><a href="#">We're looking for a new teacher with 2LW!</a> <span>2020.10.17</span></li>
-						<li><a href="#">Site Changes in September</a> <span>2020.09.21</span></li>
-						<li><a href="#">information on enrollment</a> <span>2020.09.12</span></li>
-					</ul>				
-				</div>
-			</section>
-<!-- 		<section class="notice">	
-			<div id="news">		
+		<section class="notice2">
+			<div class="news">
+				<h4 class="on">리뷰</h4>
 				<ul>
-					<li>내용 : <%=article.getContents() %></li>
-				</ul>	
+					<li><a href="#">It was a good class.</a><span>2020.12.01</span></li>
+					<li><a href="#">I'd like to hear it again if I have a chance.</a><span>2020.10.17</span></li>
+					<li><a href="#">It was fun.</a><span>2020.09.21</span></li>
+					<li><a href="#">When is the next class coming?</a><span>2020.09.12</span></li>
+				</ul>				
 			</div>
-		</section> -->
-		
-		
-<!-- 교사본인에게만 보이는 탭( -->	
-<!-- 		<section id="commandList">
-			<a href="introReplyForm.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>">[답변]</a>
-			<a href="introModifyForm.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>">[수정]</a>
-			<a href="introDeleteForm.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>">[삭제]</a> -->
-<!-- )교사본인에게만 보이는 탭 -->	
-<!-- 		<button type="button" class="btn btn-success" onclick="history.back(-1);">목록으로</button> -->	
+	<div id="notice2">
+		<div class="mr-auto">
+			<button style="margin-top:20px; margin-right:10px; float:right;"
+		 	type="button" class="btn btn-success" onclick = "location.href = 'introList.do'">목록으로</button>
+		 	<button id="button_event" style="margin-top:20px; margin-right:10px; float:right;"
+		 	type="button" class="btn btn-danger" onclick =
+			"location.href = 'introDeleteForm.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>'">삭제하기</button>		 	
+			<button style="margin-top:20px; margin-right:10px; float:right;" 
+			type="button" class="btn btn-primary" onclick =
+			"location.href = 'introModifyForm.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>'">수정하기</button>
+		</div>
+	</div>
+		</section>
 	</section>
-	
 </body>
 </html>

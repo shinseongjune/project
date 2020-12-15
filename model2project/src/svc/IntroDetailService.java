@@ -2,13 +2,14 @@ package svc;
 
 import static db.JdbcUtil.*;
 import java.sql.Connection;
+import java.util.ArrayList;
+
 import dao.IntroDAO;
 import vo.Intro;
 
 public class IntroDetailService {
 
-	public Intro getArticle(int intro_num) {
-		Intro article = null;
+	public ArrayList[] getArticle(int intro_num) {
 		Connection conn = getConnection();
 		IntroDAO introDAO = IntroDAO.getInstance();
 		introDAO.setConnection(conn);
@@ -20,10 +21,20 @@ public class IntroDetailService {
 			rollback(conn);
 		}
 		
-		article = introDAO.selectArticle(intro_num);
+		ArrayList[] articleList = introDAO.selectArticle(intro_num);
 		if(conn != null) close(conn);
 		
-		return article;
+		return articleList;
+	}
+
+	public Intro getArticleForModify(int intro_num) {
+		Connection conn = getConnection();
+		IntroDAO introDAO = IntroDAO.getInstance();
+		introDAO.setConnection(conn);
+		Intro intro = introDAO.selectArticleForModify(intro_num);
+		if(conn != null) close(conn);
+		
+		return intro;
 	}
 
 }
