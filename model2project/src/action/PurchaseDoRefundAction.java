@@ -17,11 +17,11 @@ public class PurchaseDoRefundAction implements Action {
 		int nowPage = 1;
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if(loginMember != null) {
-			int order_num = Integer.parseInt(request.getParameter("order_num"));
+			int pay_number = Integer.parseInt(request.getParameter("pay_number"));
 			forward = new ActionForward();
 			
 			PurchaseDoRefundService purchaseDoRefundService = new PurchaseDoRefundService();
-			int result = purchaseDoRefundService.doRefund(order_num);
+			int result = purchaseDoRefundService.doRefund(pay_number);
 			
 			if(result > 0) {
 				forward.setPath("purchaseRefundList.do?page="+nowPage);

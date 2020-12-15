@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.OrderList, vo.Lecture, java.util.LinkedList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Pay, vo.Lecture, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -59,10 +59,10 @@
 		if (request.getParameter("page") != null) nowPageNumber = Integer.parseInt(request.getParameter("page"));
 		if (nowPageNumber < 1) nowPageNumber = 1;
 		if (nowPageNumber > lastPage) nowPageNumber = lastPage;
-		LinkedList[] purchaseList = (LinkedList[])session.getAttribute("purchaseList");
-		LinkedList<OrderList> orList = purchaseList[0];
-		LinkedList<Member> memList = purchaseList[1];
-		LinkedList<Lecture> lecList = purchaseList[2];
+		LinkedList[] payList = (LinkedList[])session.getAttribute("payList");
+		LinkedList<Pay> pList = payList[0];
+		LinkedList<Lecture> lecList = payList[1];
+		LinkedList<Member> memList = payList[2];
 		int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 		int endNumber = startNumber + range - 1;
 		if (nowPageNumber <= 1) {
@@ -85,29 +85,31 @@
 				<table class="table table-sm bg-white">
 				  <thead>
 				    <tr>
-				      <th scope="col">ORDER NUMBER</th>
-				      <th scope="col">ID</th>
-				      <th scope="col">NAME</th>
-				      <th scope="col">LECTURE</th>
-				      <th scope="col">PRICE</th>
+				      <th scope="col">BUYER NUMBER</th>
+				      <th scope="col">BUYER ID</th>
+				      <th scope="col">LECTURE NUMBER</th>
+				      <th scope="col">LECTURE TITLE</th>
+				      <th scope="col">TYPE</th>
+				      <th scope="col">PAYCODE</th>
 				      <th scope="col">DATE</th>
 				      <th scope="col">REFUND</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 <%
-	if(purchaseList != null) {
+	if(pList != null) {
 	
-		for(int i = 0; i < orList.size();i++) {
+		for(int i = 0; i < pList.size();i++) {
 %>
 				    <tr>
-				      <td><%=orList.get(i).getOrder_num() %></td>
+				      <td><%=pList.get(i).getNumber() %></td>
 				      <td><%=memList.get(i).getId() %></td>
-				      <td><%=memList.get(i).getName() %></td>
+				      <td><%=pList.get(i).getLecture_num() %></td>
 				      <td><%=lecList.get(i).getLecture_title() %></td>
-				      <td><%=lecList.get(i).getPrice() %></td>
-				      <td><%=orList.get(i).getDate() %></td>
-				      <td><input type="button" class="btn btn-danger refundButton" id="<%=orList.get(i).getOrder_num() %>" value="환불처리" /></td>
+				      <td><%=pList.get(i).getType() %></td>
+				      <td><%=pList.get(i).getPay_code() %></td>
+				      <td><%=pList.get(i).getDate() %></td>
+				      <td><input type="button" class="btn btn-danger refundButton" id="<%=pList.get(i).getPay_number() %>" value="환불처리" /></td>
 				    </tr>
 <%
 		}
@@ -155,8 +157,8 @@
 		$(function(){
 			$(".refundButton").on("click", function(){
 				if(confirm("정말 환불 처리하시겠습니까?")) {
-					var order_num = $(this).attr("id");
-					location.href="purchaseDoRefund.do?order_num=" + order_num;
+					var pay_number = $(this).attr("id");
+					location.href="purchaseDoRefund.do?pay_number=" + pay_number;
 				}
 			});
 		});

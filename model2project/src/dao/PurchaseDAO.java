@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 import vo.Lecture;
 import vo.Member;
-import vo.OrderList;
+import vo.Pay;
 
 public class PurchaseDAO {
 	private static PurchaseDAO purchaseDAO;
@@ -36,13 +36,11 @@ public class PurchaseDAO {
 		this.conn = conn;
 	}
 	public LinkedList[] selectMyPurchaseList(String id, int nowPage) {
-		String sql = "SELECT l.lecture_title, m.name, l.price, o.date, o.order_num FROM orderList AS o JOIN lecture AS l ON o.lecture_num = l.lecture_num JOIN member AS m ON l.number = m.number WHERE o.number = (SELECT number FROM member WHERE id = ?) AND o.refund = 0 ORDER BY o.order_num DESC LIMIT ?, " + pageCount;
-		LinkedList[] purchaseList = null;
-		LinkedList<OrderList> orList = new LinkedList<>();
-		LinkedList<Member> memList = new LinkedList<>();
+		String sql = "SELECT * FROM pay AS p JOIN lecture AS l ON p.lecture_num = l.lecture_num WHERE p.number = (SELECT number FROM member WHERE id = ?) ORDER BY p.pay_number DESC LIMIT ?, " + pageCount;
+		LinkedList[] payList = null;
+		LinkedList<Pay> pList = new LinkedList<>();
 		LinkedList<Lecture> lecList = new LinkedList<>();
-		OrderList or = null;
-		Member mem = null;
+		Pay pay = null;
 		Lecture lec = null;
 		
 		try {
@@ -54,30 +52,30 @@ public class PurchaseDAO {
 			
 			if(rs.next()) {
 				do {
-					or = new OrderList();
-					mem = new Member();
+					pay = new Pay();
 					lec = new Lecture();
-					or.setOrder_num(rs.getInt("order_num"));
-					or.setDate(rs.getString("date"));
-					mem.setName(rs.getString("name"));
+					pay.setLecture_num(rs.getInt("lecture_num"));
+					pay.setPay_code(rs.getString("pay_code"));
+					pay.setPay_number(rs.getInt("pay_number"));
+					pay.setRefund(rs.getInt("refund"));
+					pay.setDate(rs.getString("date"));
+					pay.setType(rs.getString("type"));
 					lec.setLecture_title(rs.getString("lecture_title"));
-					lec.setPrice(rs.getInt("price"));
-					orList.add(or);
-					memList.add(mem);
+					pList.add(pay);
 					lecList.add(lec);
 				} while(rs.next());
+				payList = new LinkedList[] {pList, lecList};
 			}
-			purchaseList = new LinkedList[] {orList, memList, lecList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return purchaseList;
+		return payList;
 	}
 	public int getMyPurchaseNumber(String id) {
-		String sql = "SELECT count(*) AS c FROM orderList AS o JOIN member AS m ON o.number = m.number WHERE m.id = ? AND o.refund = 0";
+		String sql = "SELECT count(*) AS c FROM pay AS p JOIN member AS m ON p.number = m.number WHERE m.id = ?";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -100,12 +98,12 @@ public class PurchaseDAO {
 		}
 		return result;
 	}
-	public int getRefund(int order_num) {
-		String sql = "UPDATE orderList SET refund = 1 WHERE order_num = ?";
+	public int getRefund(int pay_number) {
+		String sql = "UPDATE pay SET refund = 1 WHERE pay_number = ?";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, order_num);
+			pstmt.setInt(1, pay_number);
 			result = pstmt.executeUpdate();
 			if (result <= 0) {
 				rollback(conn);
@@ -119,14 +117,16 @@ public class PurchaseDAO {
 		return result;
 	}
 	public LinkedList[] selectPurchaseAllList(int nowPage) {
-		String sql = "SELECT l.lecture_title, m.id, m.name, l.price, o.date, o.order_num FROM orderList AS o JOIN lecture AS l ON o.lecture_num = l.lecture_num JOIN member AS m ON o.number = m.number WHERE o.refund = 0 ORDER BY o.order_num DESC LIMIT ?, " + pageCount;
-		LinkedList[] purchaseList = null;
-		LinkedList<OrderList> orList = new LinkedList<>();
-		LinkedList<Member> memList = new LinkedList<>();
+		String sql = "SELECT p.pay_number, p.lecture_num, p.number, p.type, p.pay_code, p.date, l.lecture_title, m4tea.name AS teacher, m4stu.name AS buyer FROM pay AS p JOIN lecture AS l ON p.lecture_num = l.lecture_num JOIN member AS m4tea ON l.number = m4tea.number JOIN member AS m4stu ON p.number = m4stu.number WHERE refund = 0 ORDER BY pay_number DESC LIMIT ?, " + pageCount;
+		LinkedList[] payList = null;
+		LinkedList<Pay> pList = new LinkedList<>();
 		LinkedList<Lecture> lecList = new LinkedList<>();
-		OrderList or = null;
-		Member mem = null;
+		LinkedList<Member> teaList = new LinkedList<>();
+		LinkedList<Member> stuList = new LinkedList<>();
+		Pay pay = null;
 		Lecture lec = null;
+		Member tea = null;
+		Member stu = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -136,31 +136,36 @@ public class PurchaseDAO {
 			
 			if(rs.next()) {
 				do {
-					or = new OrderList();
-					mem = new Member();
+					pay = new Pay();
 					lec = new Lecture();
-					or.setOrder_num(rs.getInt("order_num"));
-					or.setDate(rs.getString("date"));
-					mem.setName(rs.getString("name"));
-					mem.setId(rs.getString("id"));
+					tea = new Member();
+					stu = new Member();
+					pay.setPay_number(rs.getInt("pay_number"));
+					pay.setLecture_num(rs.getInt("lecture_num"));
+					pay.setNumber(rs.getInt("number"));
+					pay.setType(rs.getString("type"));
+					pay.setPay_code(rs.getString("pay_code"));
+					pay.setDate(rs.getString("date"));
 					lec.setLecture_title(rs.getString("lecture_title"));
-					lec.setPrice(rs.getInt("price"));
-					orList.add(or);
-					memList.add(mem);
+					tea.setName(rs.getString("teacher"));
+					stu.setName(rs.getString("buyer"));
+					pList.add(pay);
 					lecList.add(lec);
+					teaList.add(tea);
+					stuList.add(stu);
 				} while(rs.next());
 			}
-			purchaseList = new LinkedList[] {orList, memList, lecList};
+			payList = new LinkedList[] {pList, lecList, teaList, stuList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return purchaseList;
+		return payList;
 	}
 	public int getPurchaseNumber() {
-		String sql = "SELECT count(*) AS c FROM orderList WHERE refund = 0";
+		String sql = "SELECT count(*) AS c FROM pay WHERE refund = 0";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -183,14 +188,14 @@ public class PurchaseDAO {
 		return result;
 	}
 	public LinkedList[] selectPurchaseRefundList(int nowPage) {
-		String sql = "SELECT l.lecture_title, m.id, m.name, l.price, o.date, o.order_num FROM orderList AS o JOIN lecture AS l ON o.lecture_num = l.lecture_num JOIN member AS m ON o.number = m.number WHERE o.refund = 1 ORDER BY o.order_num DESC LIMIT ?, " + pageCount;
-		LinkedList[] purchaseList = null;
-		LinkedList<OrderList> orList = new LinkedList<>();
-		LinkedList<Member> memList = new LinkedList<>();
+		String sql = "SELECT * FROM pay AS p JOIN lecture AS l ON p.lecture_num = l.lecture_num JOIN member AS m ON p.number = m.number WHERE p.refund = 1 ORDER BY p.pay_number DESC LIMIT ?, " + pageCount;
+		LinkedList[] payList = null;
+		LinkedList<Pay> pList = new LinkedList<>();
 		LinkedList<Lecture> lecList = new LinkedList<>();
-		OrderList or = null;
-		Member mem = null;
+		LinkedList<Member> memList = new LinkedList<>();
+		Pay pay = null;
 		Lecture lec = null;
+		Member mem = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -200,41 +205,43 @@ public class PurchaseDAO {
 			
 			if(rs.next()) {
 				do {
-					or = new OrderList();
-					mem = new Member();
+					pay = new Pay();
 					lec = new Lecture();
-					or.setOrder_num(rs.getInt("order_num"));
-					or.setDate(rs.getString("date"));
-					mem.setName(rs.getString("name"));
-					mem.setId(rs.getString("id"));
+					mem = new Member();
+					pay.setPay_number(rs.getInt("pay_number"));
+					pay.setLecture_num(rs.getInt("lecture_num"));
+					pay.setNumber(rs.getInt("number"));
+					pay.setType(rs.getString("type"));
+					pay.setPay_code(rs.getString("pay_code"));
+					pay.setDate(rs.getString("date"));
 					lec.setLecture_title(rs.getString("lecture_title"));
-					lec.setPrice(rs.getInt("price"));
-					orList.add(or);
-					memList.add(mem);
+					mem.setId(rs.getString("id"));
+					pList.add(pay);
 					lecList.add(lec);
+					memList.add(mem);
 				} while(rs.next());
 			}
-			purchaseList = new LinkedList[] {orList, memList, lecList};
+			payList = new LinkedList[] {pList, lecList, memList};
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return purchaseList;
+		return payList;
 	}
 	public int getRefundNumber() {
-		String sql = "SELECT count(*) AS c FROM orderList WHERE refund = 1";
+		String sql = "SELECT count(*) AS c FROM pay WHERE refund = 1";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("c");
-				if (result % 5 != 0) {
-					result = (result / 5) + 1;
+				if (result % pageCount != 0) {
+					result = (result / pageCount) + 1;
 				} else {
-					result = result / 5;
+					result = result / pageCount;
 				}
 			}
 			
@@ -246,12 +253,12 @@ public class PurchaseDAO {
 		}
 		return result;
 	}
-	public int doRefund(int order_num) {
-		String sql = "DELETE FROM orderlist WHERE order_num = ?";
+	public int doRefund(int pay_number) {
+		String sql = "DELETE FROM pay WHERE pay_number = ?";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, order_num);
+			pstmt.setInt(1, pay_number);
 			result = pstmt.executeUpdate();
 			if(result > 0) {
 				commit(conn);

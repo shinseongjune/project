@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.LinkedList;
 
 import dao.PurchaseDAO;
+import vo.Pay;
 
 public class PurchaseRefundListService {
 
@@ -14,10 +15,10 @@ public class PurchaseRefundListService {
 		Connection conn = getConnection();
 		PurchaseDAO purchaseDAO = PurchaseDAO.getInstance();
 		purchaseDAO.setConnection(conn);
-		LinkedList[] purchaseList = purchaseDAO.selectPurchaseRefundList(nowPage);
+		LinkedList[] payList = purchaseDAO.selectPurchaseRefundList(nowPage);
 		close(conn);
 		
-		return purchaseList;
+		return payList;
 	}
 
 }

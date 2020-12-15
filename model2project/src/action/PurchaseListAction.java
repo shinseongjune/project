@@ -10,6 +10,7 @@ import svc.MyPurchaseLastPageService;
 import svc.MyPurchaseListService;
 import vo.ActionForward;
 import vo.Member;
+import vo.Pay;
 
 public class PurchaseListAction implements Action {
 
@@ -26,13 +27,13 @@ public class PurchaseListAction implements Action {
 			String id = loginMember.getId();
 			forward = new ActionForward();
 			MyPurchaseListService myPurchaseListService = new MyPurchaseListService();
-			LinkedList[] purchaseList = myPurchaseListService.getMyPurchaseList(id, nowPage);
+			LinkedList[] payList = myPurchaseListService.getMyPurchaseList(id, nowPage);
 			
 			MyPurchaseLastPageService myPurchaseLastPageService = new MyPurchaseLastPageService();
 			int lastPage = myPurchaseLastPageService.getMyPurchaseLastPage(id);
 			
 			session.setAttribute("lastPage", lastPage);
-			session.setAttribute("purchaseList", purchaseList);
+			session.setAttribute("payList", payList);
 			forward.setPath("myPurchase.jsp?page="+nowPage);
 			return forward;
 		} else {

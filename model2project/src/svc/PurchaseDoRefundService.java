@@ -9,11 +9,11 @@ import dao.PurchaseDAO;
 
 public class PurchaseDoRefundService {
 
-	public int doRefund(int order_num) {
+	public int doRefund(int pay_number) {
 		Connection conn = getConnection();
 		PurchaseDAO purchaseDAO = PurchaseDAO.getInstance();
 		purchaseDAO.setConnection(conn);
-		int result = purchaseDAO.doRefund(order_num);
+		int result = purchaseDAO.doRefund(pay_number);
 		close(conn);
 		
 		return result;

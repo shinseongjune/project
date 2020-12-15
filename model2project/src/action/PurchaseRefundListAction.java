@@ -10,6 +10,7 @@ import svc.PurchaseRefundLastPageService;
 import svc.PurchaseRefundListService;
 import vo.ActionForward;
 import vo.Member;
+import vo.Pay;
 
 public class PurchaseRefundListAction implements Action {
 
@@ -25,13 +26,13 @@ public class PurchaseRefundListAction implements Action {
 		if(loginMember != null) {
 			forward = new ActionForward();
 			PurchaseRefundListService purchaseRefundListService = new PurchaseRefundListService();
-			LinkedList[] purchaseList = purchaseRefundListService.getRefundList(nowPage);
+			LinkedList[] payList = purchaseRefundListService.getRefundList(nowPage);
 			
 			PurchaseRefundLastPageService purchaseRefundLastPageService = new PurchaseRefundLastPageService();
 			int lastPage = purchaseRefundLastPageService.getRefundLastPage();
 			
 			session.setAttribute("lastPage", lastPage);
-			session.setAttribute("purchaseList", purchaseList);
+			session.setAttribute("payList", payList);
 			forward.setPath("purchaseRefundList.jsp?page="+nowPage);
 			return forward;
 		} else {

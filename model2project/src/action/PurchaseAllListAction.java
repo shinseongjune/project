@@ -10,6 +10,7 @@ import svc.PurchaseAllLastPageService;
 import svc.PurchaseAllListService;
 import vo.ActionForward;
 import vo.Member;
+import vo.Pay;
 
 public class PurchaseAllListAction implements Action {
 
@@ -25,13 +26,13 @@ public class PurchaseAllListAction implements Action {
 		if(loginMember != null) {
 			forward = new ActionForward();
 			PurchaseAllListService purchaseAllListService = new PurchaseAllListService();
-			LinkedList[] purchaseList = purchaseAllListService.getPurchaseList(nowPage);
+			LinkedList[] payList = purchaseAllListService.getPurchaseList(nowPage);
 			
 			PurchaseAllLastPageService purchaseAllLastPageService = new PurchaseAllLastPageService();
 			int lastPage = purchaseAllLastPageService.getPurchaseLastPage();
 			
 			session.setAttribute("lastPage", lastPage);
-			session.setAttribute("purchaseList", purchaseList);
+			session.setAttribute("payList", payList);
 			forward.setPath("purchaseAllList.jsp?page="+nowPage);
 			return forward;
 		} else {
