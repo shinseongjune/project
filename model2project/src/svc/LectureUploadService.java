@@ -4,21 +4,21 @@ import static db.JdbcUtil.close;
 import static db.JdbcUtil.getConnection;
 
 import java.sql.Connection;
-import java.util.LinkedList;
 
 import dao.LectureDAO;
-import vo.Subject;
+import vo.Lecture;
+import vo.Lecture_Video;
 
-public class LectureUploadPageService {
+public class LectureUploadService {
 
-	public LinkedList<Subject> getSubList() {
+	public int lectureUpload(String id, Lecture lec, Lecture_Video vid) {
 		Connection conn = getConnection();
 		LectureDAO lectureDAO = LectureDAO.getInstance();
 		lectureDAO.setConnection(conn);
-		LinkedList<Subject> subList = lectureDAO.selectSubList();
+		int result = lectureDAO.lectureUpload(id, lec, vid);
 		close(conn);
 		
-		return subList;
+		return result;
 	}
 
 }

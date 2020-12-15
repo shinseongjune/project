@@ -51,25 +51,51 @@ a:hover {
 		</nav>
 	</header>
 		<!-- //header -->
-<div class="container" id="main">
 <%
 	if(loginMember == null){
 		out.println("<script>alert('로그인이 필요합니다.');location.href='loginPage.do';</script>");
 	} else {
 %>
+<div class="container" id="main">
+	
 	<div class="container mb-5" style="width:1200px;">
 		<div class="p-3 mb-2 d-flex flex-wrap bg-secondary text-light position-relative">
-			<form method="post" action="lectureUpload.do">
-				<div class="bg-light">
-					<input type="text" name="lecture_title" placeholder="LECTURE TITLE" />
+			<form method="post" action="lectureUpload.do" style="margin:auto;">
+				<div class="bg-light p-2">
+					<input type="text" class="form-control" name="lecture_title" placeholder="LECTURE TITLE" required="required" autocomplete="off" />
+				</div>
+				<div class="bg-light p-2">
+					<select class="form-control" name="subject">
+<%
+					for(int i = 0; i < subList.size(); i++) {
+%>
+						<option value="<%=subList.get(i).getCode() %>"><%=subList.get(i).getSubject_name() %></option>
+<%
+					}	
+%>
+					</select>
+				</div>
+				<div class="bg-light p-2">
+					<input type="text" class="form-control" name="video" placeholder="LECTURE URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
+				</div>
+				<div class="bg-light text-dark p-2">
+					<h6>CHAPTER 2 이후의 강의 영상은 해당 강의 페이지에서 추가하실 수 있습니다.</h6>
+				</div>
+				<div class="bg-light p-2">
+					<input type="number" class="form-control" name="price" placeholder="PRICE" min="0" required="required" autocomplete="off" />
+				</div>
+				<div style="text-align:center;">
+					<input type="submit" class="btn btn-primary" disabled value="강의 개설" />
 				</div>
 			</form>
 		</div>
+	</div>
+	
+</div>
 <%
 	}
 %>
 
-</div>
 	<script src="./js/jquery-1.12.4.min.js"></script>
 	<!-- Optional JavaScript; -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -80,14 +106,19 @@ a:hover {
 			$(window).resize(function(){
 				$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			});
-			$(".uploadLecture").click(function(){
-				location.href="lectureUploadPage.do";
-			});
-			$(".myLecture").click(function(){
-				location.href="myLecture.do?page=1";
-			});
-			$(".allLecture").click(function(){
-				location.href="lectureList.do?page=1";
+			$("input[name=video]").on("input",function(){
+				var str = $(this).val()
+				var index = str.indexOf("youtube.com/watch?v=");
+				if(index >= 0) {
+					var extra = str.substring(str.indexOf("=") + 1, str.length);
+					if(extra != "") {
+						$("input[type=submit]").attr("disabled", false);
+					} else {
+						$("input[type=submit]").attr("disabled", true);
+					}
+				} else {
+					$("input[type=submit]").attr("disabled", true);
+				}
 			});
 		});
 	</script>

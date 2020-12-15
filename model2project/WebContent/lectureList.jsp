@@ -97,16 +97,27 @@ a:hover {
 		</div>
 		
 		<div class="row">
-			<div class="col-12 d-flex flex-wrap  justify-content-between">
+			<div class="col-12 d-flex flex-wrap <% if(lecList.size() == 8) { %>justify-content-between<% } else { %>justify-content-start<% } %>">
 <%
 			if(lecList != null) {
 				for(int i = 0; i < lecList.size(); i++) {
-					String video = vidList.get(i).getVideo().substring(vidList.get(i).getVideo().indexOf("v=") + 2, vidList.get(i).getVideo().indexOf("&"));
+					String video = "";
+					if(vidList.get(i).getVideo().indexOf("&") > 0) {
+						video = vidList.get(i).getVideo().substring(vidList.get(i).getVideo().indexOf("v=") + 2, vidList.get(i).getVideo().indexOf("&"));
+					} else {
+						video = vidList.get(i).getVideo().substring(vidList.get(i).getVideo().indexOf("v=")+2);
+					}
+					String lecUrl = "";
+					if(lecList.get(i).getPrice() == 0) {
+						lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
+					} else {
+						lecUrl = "결제페이지.do?lecture_num=" + lecList.get(i).getLecture_num();
+					}
 %>
 				<div class="card my-2" style="width: 15rem;">
-				  <a href="#"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
+				  <a href="<%=lecUrl %>"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
 				  <div class="card-body">
-				    <h5 class="card-title"><a href="#"><%=lecList.get(i).getLecture_title() %></a></h5>
+				    <h5 class="card-title"><a href="<%=lecUrl %>"><%=lecList.get(i).getLecture_title() %></a></h5>
 				    <h6 class="card-text"><%if(lecList.get(i).getPrice() == 0) { %><span class="badge badge-pill badge-primary">FREE</span><%} else { %><span class="badge badge-pill badge-danger"><%=lecList.get(i).getPrice() %>원</span><%} %></h6>
 				    <p class="card-text"><span class="badge badge-pill badge-info"><%=subList.get(i).getSubject_name() %></span></p>
 				    <h5 class="card-text float-right"><%=memList.get(i).getName() %> 선생님</h5>
@@ -123,17 +134,17 @@ a:hover {
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center">
 						    <li class="page-item<%=prevDisabled %>">
-						      <a class="page-link" href="freeBoard.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
+						      <a class="page-link" href="lectureList.do?page=<%=nowPageNumber - 1 %>" tabindex="-1">Previous</a>
 						    </li>
 <%
 				for (int i = startNumber; i <= Math.min(endNumber, lastPage); i++) {					    
 %>
-						    <li class="page-item<% if(nowPageNumber==i){%> active<%} %>"><a class="page-link" href="freeBoard.do?page=<%=i%>"><%=i %></a></li>
+						    <li class="page-item<% if(nowPageNumber==i){%> active<%} %>"><a class="page-link" href="lectureList.do?page=<%=i%>"><%=i %></a></li>
 <%
 				}
 %>
 						    <li class="page-item<%=nextDisabled%>">
-						      <a class="page-link" href="freeBoard.do?page=<%=nowPageNumber + 1 %>">Next</a>
+						      <a class="page-link" href="lectureList.do?page=<%=nowPageNumber + 1 %>">Next</a>
 						    </li>
 						  </ul>
 						</nav>

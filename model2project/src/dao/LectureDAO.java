@@ -1,6 +1,8 @@
 package dao;
 
 import static db.JdbcUtil.close;
+import static db.JdbcUtil.commit;
+import static db.JdbcUtil.rollback;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,10 +92,10 @@ public class LectureDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("c");
-				if (result % 5 != 0) {
-					result = (result / 5) + 1;
+				if (result % pageCount != 0) {
+					result = (result / pageCount) + 1;
 				} else {
-					result = result / 5;
+					result = result / pageCount;
 				}
 			}
 			
@@ -195,10 +197,10 @@ public class LectureDAO {
 				result += r;
 			}
 			
-			if (result % 5 != 0) {
-				result = (result / 5) + 1;
+			if (result % pageCount != 0) {
+				result = (result / pageCount) + 1;
 			} else {
-				result = result / 5;
+				result = result / pageCount;
 			}
 			
 		} catch (Exception e) {
@@ -266,10 +268,10 @@ public class LectureDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("c");
-				if (result % 5 != 0) {
-					result = (result / 5) + 1;
+				if (result % pageCount != 0) {
+					result = (result / pageCount) + 1;
 				} else {
-					result = result / 5;
+					result = result / pageCount;
 				}
 			}
 			
@@ -290,10 +292,12 @@ public class LectureDAO {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				sub = new Subject();
-				sub.setCode(rs.getInt("code"));
-				sub.setSubject_name(rs.getString("subject_name"));
-				subList.add(sub);
+				do {
+					sub = new Subject();
+					sub.setCode(rs.getInt("code"));
+					sub.setSubject_name(rs.getString("subject_name"));
+					subList.add(sub);
+				} while(rs.next());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -302,5 +306,38 @@ public class LectureDAO {
 			close(rs);
 		}
 		return subList;
+	}
+
+	public int lectureUpload(String id, Lecture lec, Lecture_Video vid) {
+		String sql = "INSERT INTO lecture VALUES ((SELECT number FROM member WHERE id = ?), NULL, ?, ?, ?)";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, lec.getLecture_title());
+			pstmt.setInt(3, lec.getSubject_code());
+			pstmt.setInt(4, lec.getPrice());
+			result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, lec.getLecture_title());
+				pstmt.setString(2, vid.getVideo());
+				result = pstmt.executeUpdate();
+				if(result <= 0) {
+					rollback(conn);
+				}
+			} else {
+				rollback(conn);
+			}
+			
+			commit(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

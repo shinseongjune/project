@@ -23,7 +23,7 @@ public class LectureUploadPageAction implements Action {
 			forward = new ActionForward();
 			LinkedList<Subject> subList = null;
 			LectureUploadPageService lectureUploadPageService = new LectureUploadPageService();
-			subList = LectureUploadPageService.getSubList();
+			subList = lectureUploadPageService.getSubList();
 			
 			if (subList != null) {
 				session.setAttribute("subList", subList);
