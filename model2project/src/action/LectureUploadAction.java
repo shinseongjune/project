@@ -29,6 +29,10 @@ public class LectureUploadAction implements Action {
 			lec.setPrice(Integer.parseInt(request.getParameter("price")));
 			lec.setSubject_code(Integer.parseInt(request.getParameter("subject")));
 			vid.setVideo(request.getParameter("video"));
+			vid.setVideo2(request.getParameter("video2"));
+			vid.setVideo3(request.getParameter("video3"));
+			vid.setVideo4(request.getParameter("video4"));
+			vid.setVideo5(request.getParameter("video5"));
 			
 			LectureUploadService lectureUploadService = new LectureUploadService();
 			result = lectureUploadService.lectureUpload(id, lec, vid);

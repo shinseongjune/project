@@ -179,7 +179,7 @@ public class FrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.contentEquals("/quit.do")) {
+		} else if(command.contentEquals("/doQuit.do")) {
 			action = new QuitAction();
 			try {
 				forward = action.execute(request, response);
@@ -402,8 +402,8 @@ public class FrontController extends HttpServlet {
 		} else if (command.equals("/introDeleteForm.do")) {
 			String nowPage = request.getParameter("page");
 			request.setAttribute("page", nowPage);
-			int number = Integer.parseInt(request.getParameter("number"));
-			request.setAttribute("number", number);
+			int intro_num = Integer.parseInt(request.getParameter("intro_num"));
+			request.setAttribute("intro_num", intro_num);
 			forward = new ActionForward();
 			forward.setPath("/intro/intro_delete.jsp");
 		} else if (command.equals("/introDeletePro.do")) {
