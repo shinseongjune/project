@@ -79,18 +79,6 @@ a:hover {
 					<input type="text" class="form-control videoUrl" name="video" placeholder="CHAPTER1 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
 				</div>
 				<div class="bg-light p-2">
-					<input type="text" class="form-control videoUrl" name="video2" placeholder="CHAPTER2 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
-				</div>
-				<div class="bg-light p-2">
-					<input type="text" class="form-control videoUrl" name="video3" placeholder="CHAPTER3 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
-				</div>
-				<div class="bg-light p-2">
-					<input type="text" class="form-control videoUrl" name="video4" placeholder="CHAPTER4 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
-				</div>
-				<div class="bg-light p-2">
-					<input type="text" class="form-control videoUrl" name="video5" placeholder="CHAPTER5 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
-				</div>
-				<div class="bg-light p-2">
 					<input type="number" class="form-control" name="price" placeholder="PRICE" min="0" required="required" autocomplete="off" />
 				</div>
 				<div style="text-align:center;">

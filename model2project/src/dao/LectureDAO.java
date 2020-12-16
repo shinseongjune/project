@@ -328,38 +328,6 @@ public class LectureDAO {
 				if(result <= 0) {
 					rollback(conn);
 				}
-				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, lec.getLecture_title());
-				pstmt.setString(2, vid.getVideo2());
-				result = pstmt.executeUpdate();
-				if(result <= 0) {
-					rollback(conn);
-				}
-				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, lec.getLecture_title());
-				pstmt.setString(2, vid.getVideo3());
-				result = pstmt.executeUpdate();
-				if(result <= 0) {
-					rollback(conn);
-				}
-				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, lec.getLecture_title());
-				pstmt.setString(2, vid.getVideo4());
-				result = pstmt.executeUpdate();
-				if(result <= 0) {
-					rollback(conn);
-				}
-				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, lec.getLecture_title());
-				pstmt.setString(2, vid.getVideo5());
-				result = pstmt.executeUpdate();
-				if(result <= 0) {
-					rollback(conn);
-				}
 			} else {
 				rollback(conn);
 			}
