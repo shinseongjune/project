@@ -319,10 +319,11 @@ public class LectureDAO {
 			result = pstmt.executeUpdate();
 			
 			if(result > 0) {
-				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?)";
+				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?, ?)";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, lec.getLecture_title());
 				pstmt.setString(2, vid.getVideo());
+				pstmt.setString(3, vid.getChapter_title());
 				result = pstmt.executeUpdate();
 				if(result <= 0) {
 					rollback(conn);

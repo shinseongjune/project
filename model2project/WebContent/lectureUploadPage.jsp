@@ -76,6 +76,9 @@ a:hover {
 					</select>
 				</div>
 				<div class="bg-light p-2">
+					<input type="text" class="form-control videoUrl" name="chapter1" placeholder="CHAPTER1 TITLE" required="required" autocomplete="off" />
+				</div>
+				<div class="bg-light p-2">
 					<input type="text" class="form-control videoUrl" name="video" placeholder="CHAPTER1 URL(Youtube 주소만 입력해주세요!)" required="required" autocomplete="off" />
 				</div>
 				<div class="bg-light p-2">
