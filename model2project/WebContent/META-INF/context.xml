@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 	<Resource 
-		name="jdbc/project" 
+		name="jdbc/e1b_2lw" 
 		auth="Container"
 		type="javax.sql.DataSource" 
-		username="root" password="yt1234"
+		username="e1b2lw" password="e1b2lw"
 		driverClassName="com.mysql.cj.jdbc.Driver"
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-		url="jdbc:mysql://localhost:3306/project?useUnicode=true&amp;characterEncoding=UTF8&amp;
+		url="jdbc:mysql://118.131.179.138:3306/e1b_2lw?useUnicode=true&amp;characterEncoding=UTF8&amp;
 		useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Seoul"
 		maxActive="500"
 		maxIdle="100"
