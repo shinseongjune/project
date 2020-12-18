@@ -27,7 +27,7 @@ $(function(){
 	$("#idSlot1").on("change", function(){
 		var idReg = /^[A-za-z0-9]{5,15}/g;
         if( !idReg.test( $("#idSlot1").val() ) ) {
-			$("#alertDiv1").css("color","red").html("5~19자의 영문 및 숫자만 사용하실 수 있습니다.");
+			$("#alertDiv1").css("color","red").html("5~15자의 영문 및 숫자만 사용하실 수 있습니다.");
 			$("#joinSubmit1").prop("disabled", "true");
             return;
         } else {
@@ -38,7 +38,7 @@ $(function(){
 	$("#idSlot2").on("change", function(){
 		var idReg = /^[A-za-z0-9]{5,15}/g;
         if( !idReg.test( $("#idSlot1").val() ) ) {
-			$("#alertDiv2").css("color","red").html("5~19자의 영문 및 숫자만 사용하실 수 있습니다.");
+			$("#alertDiv2").css("color","red").html("5~15자의 영문 및 숫자만 사용하실 수 있습니다.");
 			$("#joinSubmit1").prop("disabled", "true");
             return;
         } else {
