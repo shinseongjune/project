@@ -69,7 +69,7 @@
 							<input type="radio" name="gender" value="남" checked /> 남<br />
 							<input type="radio" name="gender" value="여" /> 여
 						</div>
-						<input type="submit" disabled id="joinSubmit1" value="회원가입" />
+						<input type="submit" id="joinSubmit1" value="회원가입" />
 					</div>
 				</form>
 				<form action="join.do" method="post" class="teacherInfo">
@@ -103,7 +103,7 @@
 								<input type="text" class="inputSlot" name="education" placeholder="Education" required="required" autocomplete="off" />
 							</div>
 						</div>
-						<input type="submit" disabled id="joinSubmit2" value="회원가입" />
+						<input type="submit" id="joinSubmit2" value="회원가입" />
 					</div>
 				</form>
 			</div>
