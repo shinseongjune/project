@@ -118,9 +118,9 @@ a:hover {
 					}
 %>
 				<div class="card my-2" style="width: 15rem;">
-				  <a href="<%=lecUrl %>"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
+				  <a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
 				  <div class="card-body">
-				    <h5 class="card-title"><a href="<%=lecUrl %>"><%=lecList.get(i).getLecture_title() %></a></h5>
+				    <h5 class="card-title"><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><%=lecList.get(i).getLecture_title() %></a></h5>
 				    <h6 class="card-text"><%if(lecList.get(i).getPrice() == 0) { %><span class="badge badge-pill badge-primary">FREE</span><% } else { %><span class="badge badge-pill badge-danger"><%=lecList.get(i).getPrice() %>원</span><%} %></h6>
 				    <p class="card-text"><span class="badge badge-pill badge-info"><%=subList.get(i).getSubject_name() %></span></p>
 				    <h5 class="card-text float-right"><%=memList.get(i).getName() %> 선생님</h5>
