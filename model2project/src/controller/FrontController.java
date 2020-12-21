@@ -21,6 +21,7 @@ import action.EditProfilePageAction;
 import action.FaqAction;
 import action.FaqDeleteAction;
 import action.FaqWriteAction;
+import action.FavAddAction;
 import action.FavoritesAction;
 import action.FavoritesDeleteAction;
 import action.FreeBoardAction;
@@ -614,6 +615,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/lectureDetail.do")) {
 			action = new LectureDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/favAdd.do")) {
+			action = new FavAddAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
