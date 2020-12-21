@@ -181,36 +181,6 @@ public class LectureDAO {
 		return lectureList;
 	}
 
-	public int getLectureNumber(String[] subject) {
-		String sql = "SELECT count(*) AS c FROM lecture WHERE subject_code = ?";
-		int result = 0;
-		int r = 0;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			for(String s:subject) {
-				pstmt.setString(1, s);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					r = rs.getInt("c");
-				}
-				result += r;
-			}
-			
-			if (result % pageCount != 0) {
-				result = (result / pageCount) + 1;
-			} else {
-				result = result / pageCount;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
-
 	public LinkedList[] selectLectureList(String id, int nowPage) {
 		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num WHERE v.chapter = 1 AND l.number = (SELECT number FROM member WHERE id = ?) ORDER BY lecture_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
