@@ -108,7 +108,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList<Subject> getSubjectList() {
-		String sql = "SELECT * FROM subject ORDER BY code DESC";
+		String sql = "SELECT * FROM subject ORDER BY code";
 		LinkedList<Subject> subjectList = new LinkedList<>();
 		Subject sub = null;
 		try {
