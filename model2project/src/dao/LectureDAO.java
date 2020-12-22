@@ -39,7 +39,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList[] selectLectureList(int nowPage) {
-		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num WHERE v.chapter = 1 ORDER BY lecture_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Subject> subList = new LinkedList<Subject>();
