@@ -312,7 +312,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList<Lecture_Video> getLectureThumbnail() {
-		String sql = "SELECT v.video FROM lecture_video AS v JOIN lecture AS l ON v.lecture_num = l.lecture_num WHERE v.chapter = 1 AND l.price = 0 ORDER BY v.lecture_num DESC LIMIT 0, 8";
+		String sql = "SELECT v.lecture_num, v.video FROM lecture_video AS v JOIN lecture AS l ON v.lecture_num = l.lecture_num WHERE v.chapter = 1 AND l.price = 0 ORDER BY v.lecture_num DESC LIMIT 0, 8";
 		LinkedList<Lecture_Video> vidList = new LinkedList<Lecture_Video>();
 		Lecture_Video vid = null;
 		
@@ -323,6 +323,7 @@ public class LectureDAO {
 				do {
 					vid = new Lecture_Video();
 					vid.setVideo(rs.getString("video"));
+					vid.setLecture_num(rs.getInt("lecture_num"));
 					vidList.add(vid);
 				} while(rs.next());
 			}

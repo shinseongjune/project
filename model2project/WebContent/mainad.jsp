@@ -151,8 +151,10 @@
 						} else {
 							video = lecList.get(i).getVideo().substring(lecList.get(i).getVideo().indexOf("v=")+2);
 						}
+						String lecUrl = "";
+						lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
 %>
-						<img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200">
+						<a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"></a>
 <%
 					}
 %>
@@ -172,8 +174,10 @@
 						} else {
 							video = lecList.get(i).getVideo().substring(lecList.get(i).getVideo().indexOf("v=")+2);
 						}
+						String lecUrl = "";
+						lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
 %>
-						<img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200">
+						<a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"></a>
 <%
 					}
 %>
