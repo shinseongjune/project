@@ -39,7 +39,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList[] selectLectureList(int nowPage) {
-		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
+		String sql = "SELECT l.lecture_num, m.number, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Subject> subList = new LinkedList<Subject>();
@@ -65,6 +65,7 @@ public class LectureDAO {
 					lec.setLecture_title(rs.getString("lecture_title"));
 					lec.setPrice(rs.getInt("price"));
 					mem.setName(rs.getString("name"));
+					mem.setNumber(rs.getInt("number"));
 					sub.setSubject_name(rs.getString("subject_name"));
 					vid.setVideo(rs.getString("video"));
 					lecList.add(lec);
@@ -334,5 +335,74 @@ public class LectureDAO {
 			close(rs);
 		}
 		return vidList;
+	}
+
+	public Lecture getLecForMD(int lecture_num) {
+		String sql = "SELECT * FROM lecture WHERE lecture_num = ?";
+		Lecture lec = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				lec = new Lecture();
+				lec.setLecture_num(rs.getInt("lecture_num"));
+				lec.setLecture_title(rs.getString("lecture_title"));
+				lec.setPrice(rs.getInt("price"));
+				lec.setSubject_code(rs.getInt("subject_code"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return lec;
+	}
+
+	public int lectureModify(Lecture lec) {
+		String sql = "UPDATE lecture SET lecture_title = ?, price = ?, subject_code = ? WHERE lecture_num = ?";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, lec.getLecture_title());
+			pstmt.setInt(2, lec.getPrice());
+			pstmt.setInt(3, lec.getSubject_code());
+			pstmt.setInt(4, lec.getLecture_num());
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return result;
+	}
+
+	public int deleteLecture(int lecture_num) {
+		String sql = "DELETE FROM lecture WHERE lecture_num = ?";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return result;
 	}
 }

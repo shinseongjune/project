@@ -21,4 +21,14 @@ public class LectureUploadService {
 		return result;
 	}
 
+	public int lectureModify(Lecture lec) {
+		Connection conn = getConnection();
+		LectureDAO lectureDAO = LectureDAO.getInstance();
+		lectureDAO.setConnection(conn);
+		int result = lectureDAO.lectureModify(lec);
+		close(conn);
+		
+		return result;
+	}
+
 }

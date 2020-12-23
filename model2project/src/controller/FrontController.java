@@ -16,6 +16,7 @@ import action.BannerUploadAction;
 import action.CategoryDeleteAction;
 import action.CategoryInsertAction;
 import action.CategoryListAction;
+import action.DeleteLectureAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FaqAction;
@@ -39,6 +40,8 @@ import action.IntroWriteProAction;
 import action.JoinAction;
 import action.LectureListAction;
 import action.LectureListCheckedAction;
+import action.LectureMDAction;
+import action.LectureModifyAction;
 import action.LectureUploadAction;
 import action.LectureUploadPageAction;
 import action.LoginAction;
@@ -622,6 +625,27 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/favAdd.do")) {
 			action = new FavAddAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/lectureMD.do")) {
+			action = new LectureMDAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/lectureModify.do")) {
+			action = new LectureModifyAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/deleteLecture.do")) {
+			action = new DeleteLectureAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -14,7 +14,9 @@ radio {
 	margin-top: 40px;
 	margin-left: 0px;
 }
-
+.submitButton {
+	text-align: center;
+}
 input[type="submit"] {
 	width: 300px;
 	height: 60px;
@@ -22,6 +24,7 @@ input[type="submit"] {
 	font-weight: 600;
 	background: #adea98;
 	border: 0px;
+	margin:15px auto;
 }
 input[type="submit"]:hover {
 	box-shadow: 0px 0px 5px 5px gray;
