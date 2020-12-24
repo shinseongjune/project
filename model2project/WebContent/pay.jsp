@@ -86,7 +86,7 @@ button {
 }
 </style>
 </head>
-<body>
+<body onresize="parent.resizeTo(600,700)" onload="parent.resizeTo(600,700)">
 <h1 style="text-align: center;">결제화면</h1>
 <form action="doPay.do" method="post" name="introform">
 <section class="main">
