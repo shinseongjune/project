@@ -556,4 +556,25 @@ public class LectureDAO {
 		}
 		return deleteCount;
 	}
+
+	public boolean isFree(int lecture_num) {
+		String sql = "SELECT price FROM lecture WHERE lecture_num = ?";
+		boolean free = false;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if(rs.getInt("price") == 0) {
+					free = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return free;
+	}
 }
