@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import svc.LectureDetailListService;
 import vo.ActionForward;
 import vo.Lecture_Video;
 import vo.Member;

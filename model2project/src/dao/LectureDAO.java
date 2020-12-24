@@ -486,4 +486,74 @@ public class LectureDAO {
 		}
 		return result;
 	}
+	
+	
+	public LinkedList<Lecture_Video> getVid(int lecture_num) {
+		String sql = "SELECT * FROM lecture_video WHERE lecture_num = ? ORDER BY chapter";
+		LinkedList<Lecture_Video> vidList = new LinkedList<>();
+		Lecture_Video vid = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				do {
+					vid = new Lecture_Video();
+					vid.setChapter(rs.getInt("chapter"));
+					vid.setLecture_num(rs.getInt("lecture_num"));
+					vid.setVideo(rs.getString("video"));
+					vid.setChapter_title(rs.getString("chapter_title"));
+					vidList.add(vid);
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return vidList;
+	}
+
+	public int lectureDetailUpload(String id, Lecture lec, Lecture_Video vid) {
+		int result = 0;
+		try {
+			String sql = "INSERT INTO lecture_video VALUES (?, (SELECT chapter FROM (SELECT chapter FROM lecture_video WHERE lecture_num = ? ORDER BY chapter DESC LIMIT 0, 1) AS vid) + 1, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lec.getLecture_num());
+			pstmt.setInt(2, lec.getLecture_num());
+			pstmt.setString(3, vid.getVideo());
+			pstmt.setString(4, vid.getChapter_title());
+			result = pstmt.executeUpdate();
+			if (result <= 0) {
+				rollback(conn);
+			}
+
+			commit(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteArticle(int chapter, int lecture_num) {
+		int deleteCount = 0;
+		String Lecture_delete_sql = "DELETE FROM lecture_video WHERE chapter = ? and lecture_num=?";
+		try {
+			pstmt = conn.prepareStatement(Lecture_delete_sql);
+			pstmt.setInt(1, chapter);
+			pstmt.setInt(2, lecture_num);
+			deleteCount = pstmt.executeUpdate();
+		} catch (Exception ex) {
+			System.out.println("lectureDelete 에러 : " + ex);
+		} finally {
+			if (pstmt != null)
+				close(pstmt);
+		}
+		return deleteCount;
+	}
 }
