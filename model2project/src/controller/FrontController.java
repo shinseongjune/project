@@ -63,6 +63,7 @@ import action.NoticeUpdateAction;
 import action.NoticeUpdatePageAction;
 import action.NoticeViewAction;
 import action.NoticeWriteAction;
+import action.OneOnOneDeleteAction;
 import action.OneOnOneListAction;
 import action.OneOnOneSendAction;
 import action.One_on_oneAnswerAction;
@@ -646,6 +647,13 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/deleteLecture.do")) {
 			action = new DeleteLectureAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/oneDel.do")) {
+			action = new OneOnOneDeleteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

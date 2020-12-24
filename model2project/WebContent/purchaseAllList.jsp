@@ -105,10 +105,10 @@
 				<table class="table table-sm bg-white">
 				  <thead>
 				    <tr>
-				      <th scope="col">ORDER NUMBER</th>
-				      <th scope="col">BUYER NUMBER</th>
-				      <th scope="col">BUYER ID</th>
-				      <th scope="col">LECTURE NUMBER</th>
+				      <th scope="col">ORDER NUM</th>
+				      <th scope="col">BUYER NUM</th>
+				      <th scope="col">BUYER NAME</th>
+				      <th scope="col">LECTURE NUM</th>
 				      <th scope="col">LECTURE TITLE</th>
 				      <th scope="col">TEACHER</th>
 				      <th scope="col">TYPE</th>

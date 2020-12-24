@@ -36,7 +36,7 @@ public class FreeDAO {
 		this.conn = conn;
 	}
 	public LinkedList[] selectFreeList(int nowPage) {
-		String sql = "SELECT m.name, f.title, f.contents, f.free_num FROM member AS m JOIN freeboard AS f ON m.number = f.number ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT m.name, q.name AS qname, f.title, f.contents, f.free_num FROM member AS m RIGHT JOIN freeboard AS f ON m.number = f.number LEFT JOIN quitter AS q ON q.number = f.number ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Free> freeContentList = new LinkedList<Free>();
 		LinkedList[] freeList = null;
@@ -52,7 +52,11 @@ public class FreeDAO {
 				do {
 					mem = new Member();
 					fr = new Free();
-					mem.setName(rs.getString("name"));
+					if(rs.getString("name") != null) {
+						mem.setName(rs.getString("name"));
+					} else {
+						mem.setName(rs.getString("qname"));
+					}
 					fr.setTitle(rs.getString("title"));
 					fr.setContents(rs.getString("contents"));
 					fr.setFree_num(rs.getInt("free_num"));
@@ -118,7 +122,7 @@ public class FreeDAO {
 	}
 
 	public LinkedList<Object> selectFreeView(int free_num) {
-		String sql = "SELECT F.free_num, f.title, f.contents, m.name FROM freeboard AS f JOIN member AS m ON f.number = m.number WHERE f.free_num = ?";
+		String sql = "SELECT f.free_num, f.title, f.contents, m.name, q.name AS qname FROM member AS m RIGHT JOIN freeboard AS f ON f.number = m.number LEFT JOIN quitter AS q ON f.number = q.number WHERE f.free_num = ?";
 		LinkedList<Object> freeViewList = null;
 		Member mem = null;
 		Free fr = null;
@@ -130,7 +134,11 @@ public class FreeDAO {
 			if(rs.next()) {
 				mem = new Member();
 				fr = new Free();
-				mem.setName(rs.getString("name"));
+				if(rs.getString("name") != null) {
+					mem.setName(rs.getString("name"));
+				} else {
+					mem.setName(rs.getString("qname"));
+				}
 				fr.setTitle(rs.getString("title"));
 				fr.setContents(rs.getString("contents"));
 				fr.setFree_num(rs.getInt("free_num"));

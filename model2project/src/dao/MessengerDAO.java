@@ -62,7 +62,7 @@ public class MessengerDAO {
 	}
 
 	public LinkedList[] selectMessageList(String id, int nowPageNumber) {
-		String sql = "SELECT member.name, message.title, message.contents, message.time, message.message_num from member join message on member.number = message.sender and message.receiver = (SELECT number FROM member WHERE ID = ?) ORDER BY message.message_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT q.name AS qname, member.name, message.title, message.contents, message.time, message.message_num FROM member RIGHT JOIN message ON member.number = message.sender LEFT JOIN quitter AS q ON q.number = message.sender WHERE message.receiver = (SELECT number FROM member WHERE ID = ?) ORDER BY message.message_num DESC LIMIT ?, " + pageCount;
 		
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Message> mesList = new LinkedList<Message>();
@@ -80,8 +80,12 @@ public class MessengerDAO {
 				do {
 					mem = new Member();
 					mes = new Message();
-
-					mem.setName(rs.getString("name"));
+					
+					if(rs.getString("name") != null) {
+						mem.setName(rs.getString("name"));
+					} else {
+						mem.setName(rs.getString("qname"));
+					}
 					mes.setTitle(rs.getString("title"));
 					mes.setContents(rs.getString("contents"));
 					mes.setTime(rs.getString("time"));

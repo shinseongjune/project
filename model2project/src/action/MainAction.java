@@ -32,18 +32,19 @@ public class MainAction implements Action {
 		LinkedList<Lecture_Video> lecList = null;
 		
 		String id = "";
-		Member loginMember = null;
 		
 		Cookie[] cookieArray = request.getCookies();
-		if (cookieArray != null) {
+		if (cookieArray != null && session.getAttribute("loginMember") == null) {
 			for (int i = 0; i < cookieArray.length; i++) {
 				if(cookieArray[i].getName().equals("id")) {
 					id = cookieArray[i].getValue();
 				}
 			}
-			LoginService loginService = new LoginService();
-			loginMember = loginService.getAutoLogin(id);
-			session.setAttribute("loginMember", loginMember);
+			if(id != null) {
+				LoginService loginService = new LoginService();
+				Member loginMember = loginService.getAutoLogin(id);
+				session.setAttribute("loginMember", loginMember);
+			}
 		}
 		
 		MainNoticeService mainNoticeService = new MainNoticeService();

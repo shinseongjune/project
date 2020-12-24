@@ -115,6 +115,7 @@
 %>
 				    <div class="col-sm-12 bg-white py-3 shadow mb-3">
 				    	<h5 class="Q"><%=oneList.get(i).getTitle() %></h5>
+				    	<button class="btn btn-danger float-right delButton" value="<%=oneList.get(i).getOne_on_one_num() %>">삭제</button>
 <%
 				    if(oneList.get(i).getAnswer() != null) {				    	
 %>
@@ -185,14 +186,17 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script>
 		$(function(){
-			$(".Q").click(function(){
-					$(this).siblings(".popup").slideToggle();
-			});
-		});
-		$(function(){
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			$(window).resize(function(){
 				$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
+			});
+			$(".Q").click(function(){
+					$(this).siblings(".popup").slideToggle();
+			});
+			$(".delButton").click(function(){
+				if(confirm("정말 삭제하시겠습니까?")) {
+					location.href="oneDel.do?one_on_one_num=" + $(this).val();
+				}
 			});
 		});
 	</script>
