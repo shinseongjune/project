@@ -7,6 +7,7 @@ import static db.JdbcUtil.rollback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import vo.Lecture;
@@ -393,6 +394,86 @@ public class LectureDAO {
 			pstmt.setInt(1, lecture_num);
 			result = pstmt.executeUpdate();
 			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return result;
+	}
+
+	public LinkedList<Object> lecture4Pay(int lecture_num) {
+		String sql = "SELECT l.lecture_num, l.lecture_title, m.name, q.name AS qname, l.price FROM lecture AS l LEFT JOIN member AS m ON l.number = m.number LEFT JOIN quitter AS q ON l.number = q.number WHERE lecture_num = ?";
+		LinkedList<Object> lectureList = null;
+		Lecture lec = null;
+		Member mem = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				lec = new Lecture();
+				mem = new Member();
+				lec.setLecture_num(rs.getInt("lecture_num"));
+				lec.setLecture_title(rs.getString("lecture_title"));
+				lec.setPrice(rs.getInt("price"));
+				if(rs.getString("name") != null) {
+					mem.setName(rs.getString("name"));
+				} else {
+					mem.setName(rs.getString("qname"));
+				}
+				lectureList = new LinkedList<Object>(Arrays.asList(lec, mem));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return lectureList;
+	}
+
+	public boolean paidCheck(String id, int lecture_num) {
+		String sql = "SELECT * FROM pay WHERE lecture_num = ? AND number = (SELECT number FROM member WHERE id = ?)";
+		boolean paid = false;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			pstmt.setString(2, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				paid = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return paid;
+	}
+
+	public int doPay(String id, int lecture_num, String type, String pay_code) {
+		String sql = "INSERT INTO pay VALUES (?, (SELECT number FROM member WHERE id = ?), ?, ?, 0, null, now());";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			pstmt.setString(2, id);
+			pstmt.setString(3, type);
+			if(pay_code != null) {
+				pstmt.setString(4, pay_code);
+			} else {
+				pstmt.setString(4, "계좌이체");
+			}
+			result = pstmt.executeUpdate();
+			if (result > 0) {
 				commit(conn);
 			} else {
 				rollback(conn);

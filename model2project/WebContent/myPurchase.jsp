@@ -101,7 +101,7 @@
 				<table class="table table-sm bg-white">
 				  <thead>
 				    <tr>
-				      <th scope="col">LECTURE NUMBER</th>
+				      <th scope="col">LECTURE NUM</th>
 				      <th scope="col">LECTURE TITLE</th>
 				      <th scope="col">TYPE</th>
 				      <th scope="col">PAYCODE</th>

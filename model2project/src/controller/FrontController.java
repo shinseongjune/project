@@ -17,6 +17,7 @@ import action.CategoryDeleteAction;
 import action.CategoryInsertAction;
 import action.CategoryListAction;
 import action.DeleteLectureAction;
+import action.DoPayAction;
 import action.EditProfileAction;
 import action.EditProfilePageAction;
 import action.FaqAction;
@@ -68,6 +69,7 @@ import action.OneOnOneListAction;
 import action.OneOnOneSendAction;
 import action.One_on_oneAnswerAction;
 import action.One_on_oneadListAction;
+import action.PayPageAction;
 import action.PurchaseAllListAction;
 import action.PurchaseDoRefundAction;
 import action.PurchaseListAction;
@@ -654,6 +656,20 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/oneDel.do")) {
 			action = new OneOnOneDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/payPage.do")) {
+			action = new PayPageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/doPay.do")) {
+			action = new DoPayAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

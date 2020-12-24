@@ -114,11 +114,11 @@ a:hover {
 					if(lecList.get(i).getPrice() == 0) {
 						lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
 					} else {
-						lecUrl = "결제페이지.do?lecture_num=" + lecList.get(i).getLecture_num();
+						lecUrl = "payPage.do?lecture_num=" + lecList.get(i).getLecture_num();
 					}
 %>
 				<div class="card my-2" style="width: 15rem;">
-				  <a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
+				  <a href="<%=lecUrl %>" onClick="window.open(this.href, '', resizable='no'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
 				  <div class="card-body">
 				    <h5 class="card-title"><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><%=lecList.get(i).getLecture_title() %></a></h5>
 				  	<% if(memList.get(i).getNumber() == loginMember.getNumber() ) { %><button class="btn btn-danger float-right mDButton" value="<%=lecList.get(i).getLecture_num() %>">수정/삭제</button><% } %>
