@@ -24,8 +24,8 @@ public class FreeBoardWriteAction implements Action {
 			Free fr = new Free();
 			
 			fr.setTitle(request.getParameter("title"));
-			fr.setContents(request.getParameter("contents"));
-			
+			fr.setContents(request.getParameter("contents").replace("\n", "<br/>"));
+			//리스트 br->삭제, 업데이트페이지 br->\n, 업데이트 \n->br
 			FreeBoardWriteService freeBoardWriteService = new FreeBoardWriteService();
 			result = freeBoardWriteService.writeFree(id, fr);
 			
