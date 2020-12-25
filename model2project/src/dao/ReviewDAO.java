@@ -1,8 +1,8 @@
 package dao;
 
 import static db.JdbcUtil.close;
-import static db.JdbcUtil.rollback;
 import static db.JdbcUtil.commit;
+import static db.JdbcUtil.rollback;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -89,7 +89,7 @@ public class ReviewDAO {
 						mem.setName(rs.getString("qname"));
 					}
 					re.setTitle(rs.getString("title"));
-					re.setContents(rs.getString("contents"));
+					re.setContents(rs.getString("contents").replace("<br/>", " "));
 					re.setReview_num(rs.getInt("review_num"));
 					lecList.add(lec);
 					memList.add(mem);

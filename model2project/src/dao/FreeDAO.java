@@ -58,7 +58,7 @@ public class FreeDAO {
 						mem.setName(rs.getString("qname"));
 					}
 					fr.setTitle(rs.getString("title"));
-					fr.setContents(rs.getString("contents"));
+					fr.setContents(rs.getString("contents").replace("<br/>", " "));
 					fr.setFree_num(rs.getInt("free_num"));
 					memList.add(mem);
 					freeContentList.add(fr);
@@ -186,7 +186,7 @@ public class FreeDAO {
 			if(rs.next()) {
 				fr = new Free();
 				fr.setTitle(rs.getString("title"));
-				fr.setContents(rs.getString("contents"));
+				fr.setContents(rs.getString("contents").replace("<br/>", "\n"));
 				fr.setFree_num(rs.getInt("free_num"));
 			}
 		} catch (Exception e) {
