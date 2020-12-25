@@ -26,7 +26,7 @@ public class MessageSendAction implements Action {
 			
 			mem.setName(request.getParameter("receiver"));
 			mes.setTitle(request.getParameter("title"));
-			mes.setContents(request.getParameter("contents"));
+			mes.setContents(request.getParameter("contents").replace("\n", "<br/>"));
 			
 			MessageSendService messageSendService = new MessageSendService();
 			result = messageSendService.sendMessage(id, mem, mes);
