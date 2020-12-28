@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import svc.IsAuthorService;
 import svc.IsFreeService;
 import svc.LectureDetailListService;
 import svc.PaidCheckService;
@@ -20,13 +21,22 @@ public class LectureDetailAction implements Action {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
+		boolean free = false;
+		boolean author = false;
 		if(loginMember != null) {
 			forward = new ActionForward();
 			String id = loginMember.getId();
 			int lecture_num = Integer.parseInt(request.getParameter("lecture_num"));
 			
 			IsFreeService isFreeService = new IsFreeService();
-			boolean free = isFreeService.isFree(lecture_num);
+			free = isFreeService.isFree(lecture_num);
+			
+			IsAuthorService isAuthorService = new IsAuthorService();
+			author = isAuthorService.authorCheck(id, lecture_num);
+			if(author) {
+				free = true;
+			}
+			
 			if(free) {
 				LectureDetailListService lectureDetailListService = new LectureDetailListService();
 				LinkedList<Lecture_Video> vidList = lectureDetailListService.getVid(lecture_num);

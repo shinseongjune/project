@@ -129,6 +129,7 @@ a:hover {
 }
 .bbsViewBody {
 	width: 100%;
+	min-height: 300px;
 	padding: 25px;
 	background-color: #ffffff;
 	color: black;

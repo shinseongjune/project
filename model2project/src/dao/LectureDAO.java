@@ -40,7 +40,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList[] selectLectureList(int nowPage) {
-		String sql = "SELECT l.lecture_num, m.number, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
+		String sql = "SELECT l.lecture_num, m.number, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num GROUP BY l.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Subject> subList = new LinkedList<Subject>();
@@ -576,5 +576,36 @@ public class LectureDAO {
 			close(rs);
 		}
 		return free;
+	}
+
+	public boolean isAuthor(String id, int lecture_num) {
+		String sql = "SELECT number FROM lecture WHERE lecture_num = ?";
+		boolean author = false;
+		int lecAuthor = 0;
+		int memNumber = -1;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecture_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				lecAuthor = rs.getInt("number");
+			}
+			sql = "SELECT number FROM member WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memNumber = rs.getInt("number");
+			}
+			if (lecAuthor == memNumber) {
+				author = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return author;
 	}
 }

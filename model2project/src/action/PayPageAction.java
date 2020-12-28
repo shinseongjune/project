@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import svc.IsAuthorService;
 import svc.PaidCheckService;
 import svc.PayPageService;
 import vo.ActionForward;
@@ -18,15 +19,24 @@ public class PayPageAction implements Action {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
+		boolean paid = false;
+		boolean author = false;
 		if(loginMember != null) {
 			forward = new ActionForward();
 			String id = loginMember.getId();
 			int lecture_num = Integer.parseInt(request.getParameter("lecture_num"));
 			
 			PaidCheckService paidCheckService = new PaidCheckService();
-			boolean paid = paidCheckService.paidCheck(id, lecture_num);
+			paid = paidCheckService.paidCheck(id, lecture_num);
+			
+			IsAuthorService isAuthorService = new IsAuthorService();
+			author = isAuthorService.authorCheck(id, lecture_num);
+			if(author) {
+				forward.setPath("lectureDetail.do?lecture_num =" + lecture_num);
+				return forward;
+			}
 			if(paid) {
-				forward.setPath("lecture_Detail.jsp?lecture_num=" + lecture_num);
+				forward.setPath("lectureDetail.do?lecture_num=" + lecture_num);
 				return forward;
 			} else {
 				PayPageService payPageService = new PayPageService();
