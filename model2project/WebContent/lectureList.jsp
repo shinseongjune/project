@@ -100,7 +100,7 @@ a:hover {
 		</div>
 		
 		<div class="row">
-			<div class="col-12 d-flex flex-wrap <% if(lecList.size() == 8) { %>justify-content-between<% } else { %>justify-content-start<% } %>">
+			<div class="col-12 d-flex flex-wrap justify-content-between">
 <%
 			if(lecList != null) {
 				for(int i = 0; i < lecList.size(); i++) {
