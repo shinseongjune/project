@@ -126,11 +126,11 @@ public class MessengerDAO {
 
 	public int sendMessage(String id, Member mem, Message mes) {
 		int result = 0;
-		String sql = "INSERT INTO message VALUES ((SELECT number FROM member WHERE id = ?), (SELECT number FROM member WHERE name = ?), ?, ?, NOW(), NULL)";
+		String sql = "INSERT INTO message VALUES ((SELECT number FROM member WHERE id = ?), (SELECT number FROM member WHERE id = ?), ?, ?, NOW(), NULL)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.setString(2, mem.getName());
+			pstmt.setString(2, mem.getId());
 			pstmt.setString(3, mes.getTitle());
 			pstmt.setString(4, mes.getContents());
 			result = pstmt.executeUpdate();

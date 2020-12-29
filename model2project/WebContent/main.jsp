@@ -195,9 +195,9 @@
 			<p class="btm_logo"><img src="./images/logo_btm.png" alt="JUST쇼핑몰"></p>
 			<dl class="btm_menu">
 				<dt class="blind"><strong>바닥메뉴</strong></dt>
-				<dd><a href="https://www.instagram.com/"><img src="./images/ico_in.png" alt="인스타그램으로 이동"></a></dd>
-				<dd><a href="https://twitter.com/"><img src="./images/ico_tw.png" alt="트위터로 이동"></a></dd>
-				<dd><a href="https://www.facebook.com/"><img src="./images/ico_fb.png" alt="페이스북으로 이동"></a></dd>
+				<dd><a href="https://www.instagram.com/" target="_blank"><img src="./images/ico_in.png" alt="인스타그램으로 이동"></a></dd>
+				<dd><a href="https://twitter.com/" target="_blank"><img src="./images/ico_tw.png" alt="트위터로 이동"></a></dd>
+				<dd><a href="https://www.facebook.com/" target="_blank"><img src="./images/ico_fb.png" alt="페이스북으로 이동"></a></dd>
 			</dl>
 			<p class="copy">copyright &copy; 2LW, All rights reserved.</p>
 		</footer>

@@ -171,7 +171,7 @@ public class ReviewDAO {
 			if(rs.next()) {
 				re = new Review();
 				re.setTitle(rs.getString("title"));
-				re.setContents(rs.getString("contents"));
+				re.setContents(rs.getString("contents").replace("<br/>", "\n"));
 				re.setReview_num(rs.getInt("review_num"));
 			}
 		} catch (Exception e) {
