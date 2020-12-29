@@ -155,7 +155,7 @@
 						}
 						String lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
 %>
-						<a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"></a>
+						<%if(loginMember != null) { %><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><% } %><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"><%if(loginMember != null) { %></a><% } %>
 <%
 					}
 %>
@@ -178,7 +178,7 @@
 						String lecUrl = "";
 						lecUrl = "lectureDetail.do?lecture_num=" + lecList.get(i).getLecture_num();
 %>
-						<a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"></a>
+						<%if(loginMember != null) { %><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><% } %><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" alt="thumb<%=i%>" width="296" height="200"><%if(loginMember != null) { %></a><% } %>
 <%
 					}
 %>
