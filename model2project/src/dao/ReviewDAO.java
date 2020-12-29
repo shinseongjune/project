@@ -207,7 +207,7 @@ public class ReviewDAO {
 	}
 
 	public LinkedList<Lecture> selectLectureList() {
-		String sql = "SELECT lecture_title, lecture_num FROM Lecture order by lecture_num desc";
+		String sql = "SELECT lecture_title, lecture_num FROM lecture order by lecture_num desc";
 		Lecture lec = null;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		try {

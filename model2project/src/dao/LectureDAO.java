@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import com.mysql.cj.util.TestUtils;
+
 import vo.Lecture;
 import vo.Lecture_Video;
 import vo.Member;
@@ -467,10 +469,10 @@ public class LectureDAO {
 			pstmt.setInt(1, lecture_num);
 			pstmt.setString(2, id);
 			pstmt.setString(3, type);
-			if(pay_code != null) {
-				pstmt.setString(4, pay_code);
+			if(pay_code.length() == 0) {
+				pstmt.setString(4, "<계좌이체>");
 			} else {
-				pstmt.setString(4, "계좌이체");
+				pstmt.setString(4, pay_code);
 			}
 			result = pstmt.executeUpdate();
 			if (result > 0) {

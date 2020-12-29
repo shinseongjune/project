@@ -26,9 +26,8 @@ public class DoPayAction implements Action {
 			
 			DoPayService doPayService = new DoPayService();
 			int result = doPayService.doPay(id, lecture_num, type, pay_code);
-			
 			if(result > 0) {
-				forward.setPath("lecture_Detail.jsp?lecture_num=" + lecture_num);
+				forward.setPath("lectureDetail.do?lecture_num=" + lecture_num);
 				return forward;
 			} else {
 				response.setContentType("text/html;charset=utf-8");

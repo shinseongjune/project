@@ -31,12 +31,8 @@ public class PayPageAction implements Action {
 			
 			IsAuthorService isAuthorService = new IsAuthorService();
 			author = isAuthorService.authorCheck(id, lecture_num);
-			if(author) {
+			if(paid || author) {
 				forward.setPath("lectureDetail.do?lecture_num =" + lecture_num);
-				return forward;
-			}
-			if(paid) {
-				forward.setPath("lectureDetail.do?lecture_num=" + lecture_num);
 				return forward;
 			} else {
 				PayPageService payPageService = new PayPageService();

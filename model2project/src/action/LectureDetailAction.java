@@ -33,11 +33,8 @@ public class LectureDetailAction implements Action {
 			
 			IsAuthorService isAuthorService = new IsAuthorService();
 			author = isAuthorService.authorCheck(id, lecture_num);
-			if(author) {
-				free = true;
-			}
 			
-			if(free) {
+			if(free || author) {
 				LectureDetailListService lectureDetailListService = new LectureDetailListService();
 				LinkedList<Lecture_Video> vidList = lectureDetailListService.getVid(lecture_num);
 				session.setAttribute("vidList", vidList);
