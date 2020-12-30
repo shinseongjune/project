@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="vo.Member, vo.Free, java.util.LinkedList" %>
+    pageEncoding="UTF-8" import="vo.Member, vo.Free, vo.Free_Comment, java.util.LinkedList" %>
 <!DOCTYPE html>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
@@ -13,6 +13,11 @@
 	<link rel="stylesheet" href="css/sidebar.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/freeBoard.css">
+	<style>
+	.depth1, .depth2, .depth3, .depth4, .depth5, .depth6, .depth7, .depth8, .depth9, .depth10 {
+    padding-left: 2%;
+}
+	</style>
 </head>
 <body>
 	<header>
@@ -55,6 +60,14 @@
 				Member mem = (Member) freeViewList.get(1);
 				session.setAttribute("free_num", fr.getFree_num());
 				if(!mem.getName().equals(loginMember.getName())) opt = " invisible";
+				
+				LinkedList[] freeComList = (LinkedList[])session.getAttribute("freeComList");
+				LinkedList<Member> cMemList = null;
+				LinkedList<Free_Comment> fCList = null;
+				if (freeComList != null) {
+					cMemList = freeComList[0];
+					fCList = freeComList[1];
+				}
 %>
 	<div class="topbar">
 		<ul>
@@ -100,10 +113,51 @@
 										<li class="bbsViewTitleText"><%=fr.getTitle() %></li>
 									</ul>
 								</li>
-								<li class="bbsViewBody">
+								<li class="bbsViewBody" style="border-bottom:1px solid gray;">
 									<div>
 										<%=fr.getContents() %>
 									</div>
+								</li>
+								<li class="comments" style="width:100%;text-align:left;background:white;">
+									<script>
+										function comment_step(parent, me, step) {
+											var oCur = document.getElementById("IAMCOMMENT_"+me);
+											if(parent>0 && step>0) {
+												var oOrg = document.getElementById("comCont" + parent);
+												var oCom = document.getElementById("com" + me);
+												oOrg.className = "depth"+step;
+												oOrg.innerHTML += oCur.innerHTML;
+												oCur.parentNode.removeChild(oCur);
+												document.getElementById("deleteButton_"+parent).style.display = "none";
+											} else {
+												oCur.style.display="";
+											}
+										}
+									</script>
+<%
+								if(freeComList != null) {
+									for(int i=0; i < cMemList.size(); i++){
+%>
+									<div id="IAMCOMMENT_<%=fCList.get(i).getComment_num() %>">
+										<div id="com<%=fCList.get(i).getComment_num() %>">
+											<span class="float-right"><%=fCList.get(i).getTime() %></span>
+											<h6><b><%=cMemList.get(i).getName() %></b></h6>
+											<button id="deleteButton<%=fCList.get(i).getComment_num() %>" class="btn btn-danger float-right">삭제</button>
+											<div style="border-bottom:1px solid gray; min-height:50px;"><%=fCList.get(i).getContents() %></div>
+										</div>
+										<form style="display:none;"></form>
+										<div id="comCont<%=fCList.get(i).getComment_num() %>">
+											
+										</div>
+									</div>
+									<script>
+										comment_step(<%=fCList.get(i).getParent() %>,<%=fCList.get(i).getComment_num() %>,<%=fCList.get(i).getStep() %>);
+									</script>
+<%
+									}
+								}
+%>
+										
 								</li>
 							</ul>
 						</div>

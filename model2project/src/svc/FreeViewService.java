@@ -20,4 +20,14 @@ public class FreeViewService {
 		return freeList;
 	}
 
+	public LinkedList[] getFreeCom(int free_num) {
+		Connection conn = getConnection();
+		FreeDAO freeDAO = FreeDAO.getInstance();
+		freeDAO.setConnection(conn);
+		LinkedList[] freeComList = freeDAO.selectFreeCom(free_num);
+		close(conn);
+		
+		return freeComList;
+	}
+
 }

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 
 import vo.Free;
+import vo.Free_Comment;
 import vo.Member;
 
 public class FreeDAO {
@@ -305,6 +306,42 @@ public class FreeDAO {
 		}
 		
 		return freeList;
+	}
+
+	public LinkedList[] selectFreeCom(int free_num) {
+		String sql = "SELECT m.name, fc.contents, fc.comment_num, fc.time, fc.parent, fc.step FROM free_comment AS fc LEFT JOIN member AS m ON fc.number = m.number WHERE fc.free_num = ?";
+		LinkedList[] freeComList = null;
+		LinkedList<Member> memList = new LinkedList<>();
+		LinkedList<Free_Comment> fCList = new LinkedList<>();
+		Member mem = null;
+		Free_Comment fc = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, free_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				do {
+					mem = new Member();
+					fc = new Free_Comment();
+					mem.setName(rs.getString("name"));
+					fc.setContents(rs.getString("contents"));
+					fc.setComment_num(rs.getInt("comment_num"));
+					fc.setTime(rs.getString("time"));
+					fc.setParent(rs.getInt("parent"));
+					fc.setStep(rs.getInt("step"));
+					memList.add(mem);
+					fCList.add(fc);
+				} while (rs.next());
+				freeComList = new LinkedList[]{memList, fCList};
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return freeComList;
 	}
 
 }
