@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import vo.Lecture;
 import vo.Member;
 import vo.Review;
+import vo.Review_Comment;
 
 public class ReviewDAO {
 	private static ReviewDAO reviewDAO;
@@ -144,14 +145,44 @@ public class ReviewDAO {
 	public int deleteReview(int review_num) {
 		String sql = "DELETE FROM review WHERE review_num = ?";
 		int result = 0;
+		boolean hasReply = false;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, review_num);
 			result = pstmt.executeUpdate();
-			if (result <= 0) {
+			if (result > 0) {
+				sql = "SELECT comment_num FROM review_comment WHERE review_num = ?";
+				try {
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, review_num);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						hasReply = true;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(hasReply) {
+					sql = "DELETE FROM review_comment WHERE review_num = ?";
+					result = 0;
+					try {
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setInt(1, review_num);
+						result = pstmt.executeUpdate();
+						if(result > 0) {
+							commit(conn);
+						} else {
+							rollback(conn);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					commit(conn);
+				}
+			} else {
 				rollback(conn);
 			}
-			commit(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -321,5 +352,143 @@ public class ReviewDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int exComment(Review_Comment rc, int number, int parent, int review_num) {
+		String sql = "INSERT INTO review_comment VALUES(?, ?, ?, NULL, NOW(), ?, (SELECT * FROM (SELECT step FROM review_comment WHERE comment_num = ?) AS x) + 1)";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_num);
+			pstmt.setInt(2, number);
+			pstmt.setString(3, rc.getContents());
+			pstmt.setInt(4, parent);
+			pstmt.setInt(5, parent);
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int delComment(int review_num, int comment_num) {
+		String sql = "SELECT review_num FROM review_comment WHERE review_num = ? AND parent = ?";
+		int result = 0;
+		boolean hasReply = false;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_num);
+			pstmt.setInt(2, comment_num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				hasReply = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(hasReply) {
+			sql = "UPDATE review_comment SET contents = '<삭제됨>' WHERE review_num = ? AND comment_num = ?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, review_num);
+				pstmt.setInt(2, comment_num);
+				result = pstmt.executeUpdate();
+				if (result > 0) {
+					commit(conn);
+				} else {
+					rollback(conn);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			sql = "DELETE FROM review_comment WHERE review_num = ? AND comment_num = ?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, review_num);
+				pstmt.setInt(2, comment_num);
+				result = pstmt.executeUpdate();
+				if(result > 0) {
+					commit(conn);
+				} else {
+					rollback(conn);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		return result;
+	}
+
+	public int writeComment(int review_num, int number, String contents) {
+		String sql = "INSERT INTO review_comment VALUES (?, ?, ?, NULL, NOW(), 0, 0)";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_num);
+			pstmt.setInt(2, number);
+			pstmt.setString(3, contents);
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public LinkedList[] selectReviewCom(int review_num) {
+		String sql = "SELECT m.number, m.name, rc.contents, rc.comment_num, rc.time, rc.parent, rc.step FROM review_comment AS rc LEFT JOIN member AS m ON rc.number = m.number WHERE rc.review_num = ? ORDER BY comment_num";
+		LinkedList[] reviewComList = null;
+		LinkedList<Member> memList = new LinkedList<>();
+		LinkedList<Review_Comment> rCList = new LinkedList<>();
+		Member mem = null;
+		Review_Comment rc = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				do {
+					mem = new Member();
+					rc = new Review_Comment();
+					mem.setNumber(rs.getInt("number"));
+					if(rs.getString("name") == null) {
+						mem.setName("<탈퇴한 회원>");
+					} else {
+						mem.setName(rs.getString("name"));
+					}
+					rc.setContents(rs.getString("contents"));
+					rc.setComment_num(rs.getInt("comment_num"));
+					rc.setTime(rs.getString("time"));
+					rc.setParent(rs.getInt("parent"));
+					rc.setStep(rs.getInt("step"));
+					memList.add(mem);
+					rCList.add(rc);
+				} while (rs.next());
+				reviewComList = new LinkedList[]{memList, rCList};
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return reviewComList;
 	}
 }

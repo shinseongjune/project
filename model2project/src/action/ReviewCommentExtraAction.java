@@ -4,29 +4,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import svc.ReviewDeleteService;
-import svc.ReviewLastPageService;
+import svc.ReviewCommentService;
 import vo.ActionForward;
 import vo.Member;
+import vo.Review_Comment;
 
-public class ReviewDeleteAction implements Action {
+public class ReviewCommentExtraAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		int review_num = (int) session.getAttribute("review_num");
-		int result = 0;
+		Review_Comment rc = new Review_Comment();
 		
 		if(loginMember != null) {
 			forward = new ActionForward();
-			ReviewDeleteService reviewDeleteService = new ReviewDeleteService();
-			result = reviewDeleteService.deleteReview(review_num);
+			rc.setContents(request.getParameter("contents").replace("\n", "<br/>"));
+			int number = loginMember.getNumber();
+			int parent = Integer.parseInt(request.getParameter("parent"));
+			int review_num = Integer.parseInt(request.getParameter("review_num"));
+			int page = Integer.parseInt(request.getParameter("page"));
 			
+			ReviewCommentService reviewCommentService = new ReviewCommentService();
+			int result = reviewCommentService.reviewCommentExtra(rc, number, parent, review_num);
 			if (result > 0) {
 				forward.setRedirect(true);
-				forward.setPath("review.do?page=1");
+				forward.setPath("reviewView.do?page=" + page + "&review_num=" + review_num);
 				return forward;
 			} else {
 				forward.setRedirect(true);

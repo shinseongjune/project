@@ -29,10 +29,10 @@ public class FreeBoardViewAction implements Action {
 			session.setAttribute("freeComList", freeComList);
 			session.setAttribute("freeViewList", freeViewList);
 			if(loginMember.getId().equals("admin")) {
-				forward.setPath("freeBoardViewad.jsp?page=" + request.getParameter("page"));
+				forward.setPath("freeBoardViewad.jsp?free_num=" + free_num + "&page=" + request.getParameter("page"));
 				return forward;
 			}
-			forward.setPath("freeBoardView.jsp?page=" + request.getParameter("page"));
+			forward.setPath("freeBoardView.jsp?free_num=" + free_num + "&page=" + request.getParameter("page"));
 			return forward;
 		} else {
 			forward = new ActionForward();

@@ -135,4 +135,5 @@ a:hover {
 	background-color: #ffffff;
 	color: black;
 	word-break:break-all;
+	border-bottom:1px solid gray;
 }

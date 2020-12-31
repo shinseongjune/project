@@ -32,6 +32,9 @@ import action.FreeBoardUpdateAction;
 import action.FreeBoardUpdatePageAction;
 import action.FreeBoardViewAction;
 import action.FreeBoardWriteAction;
+import action.FreeCommentDeleteAction;
+import action.FreeCommentExtraAction;
+import action.FreeCommentWriteAction;
 import action.IntroDeleteProAction;
 import action.IntroDetailAction;
 import action.IntroListAction;
@@ -82,6 +85,9 @@ import action.PwCheckAction;
 import action.QuitAction;
 import action.QuittersListAction;
 import action.ReviewAction;
+import action.ReviewCommentDeleteAction;
+import action.ReviewCommentExtraAction;
+import action.ReviewCommentWriteAction;
 import action.ReviewDeleteAction;
 import action.ReviewUpdateAction;
 import action.ReviewUpdatePageAction;
@@ -686,6 +692,48 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/lectureDetailUpload.do")) {
 			action = new LectureDetailUploadAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/freeExtraComment.do")) {
+			action = new FreeCommentExtraAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/deleteFreeComment.do")) {
+			action = new FreeCommentDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/freeCommentWrite.do")) {
+			action = new FreeCommentWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/reviewExtraComment.do")) {
+			action = new ReviewCommentExtraAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/deleteReviewComment.do")) {
+			action = new ReviewCommentDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/reviewCommentWrite.do")) {
+			action = new ReviewCommentWriteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

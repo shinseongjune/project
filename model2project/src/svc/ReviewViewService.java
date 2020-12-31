@@ -20,4 +20,14 @@ public class ReviewViewService {
 		return reviewList;
 	}
 
+	public LinkedList[] getReviewCom(int review_num) {
+		Connection conn = getConnection();
+		ReviewDAO reviewDAO = ReviewDAO.getInstance();
+		reviewDAO.setConnection(conn);
+		LinkedList[] reviewComList = reviewDAO.selectReviewCom(review_num);
+		close(conn);
+		
+		return reviewComList;
+	}
+
 }
