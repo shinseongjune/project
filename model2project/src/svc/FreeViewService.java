@@ -11,21 +11,35 @@ import dao.FreeDAO;
 public class FreeViewService {
 
 	public LinkedList<Object> getFreeView(int free_num) {
-		Connection conn = getConnection();
-		FreeDAO freeDAO = FreeDAO.getInstance();
-		freeDAO.setConnection(conn);
-		LinkedList<Object> freeList = freeDAO.selectFreeView(free_num);
-		close(conn);
+		LinkedList<Object> freeList = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			FreeDAO freeDAO = FreeDAO.getInstance();
+			freeDAO.setConnection(conn);
+			freeList = freeDAO.selectFreeView(free_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return freeList;
 	}
 
 	public LinkedList[] getFreeCom(int free_num) {
-		Connection conn = getConnection();
-		FreeDAO freeDAO = FreeDAO.getInstance();
-		freeDAO.setConnection(conn);
-		LinkedList[] freeComList = freeDAO.selectFreeCom(free_num);
-		close(conn);
+		LinkedList[] freeComList = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			FreeDAO freeDAO = FreeDAO.getInstance();
+			freeDAO.setConnection(conn);
+			freeComList = freeDAO.selectFreeCom(free_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return freeComList;
 	}

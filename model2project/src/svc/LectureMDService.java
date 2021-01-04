@@ -11,11 +11,18 @@ import vo.Lecture;
 public class LectureMDService {
 
 	public Lecture getLecForMD(int lecture_num) {
-		Connection conn = getConnection();
-		LectureDAO lectureDAO = LectureDAO.getInstance();
-		lectureDAO.setConnection(conn);
-		Lecture lec = lectureDAO.getLecForMD(lecture_num);
-		close(conn);
+		Lecture lec = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			LectureDAO lectureDAO = LectureDAO.getInstance();
+			lectureDAO.setConnection(conn);
+			lec = lectureDAO.getLecForMD(lecture_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return lec;
 	}

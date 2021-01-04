@@ -10,11 +10,18 @@ import dao.LectureDAO;
 public class DeleteLectureService {
 
 	public int deleteLecture(int lecture_num) {
-		Connection conn = getConnection();
-		LectureDAO lectureDAO = LectureDAO.getInstance();
-		lectureDAO.setConnection(conn);
-		int result = lectureDAO.deleteLecture(lecture_num);
-		close(conn);
+		int result = 0;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			LectureDAO lectureDAO = LectureDAO.getInstance();
+			lectureDAO.setConnection(conn);
+			result = lectureDAO.deleteLecture(lecture_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return result;
 	}

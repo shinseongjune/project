@@ -11,11 +11,18 @@ import dao.LectureDAO;
 public class PayPageService {
 
 	public LinkedList<Object> getLecList(int lecture_num) {
-		Connection conn = getConnection();
-		LectureDAO lectureDAO = LectureDAO.getInstance();
-		lectureDAO.setConnection(conn);
-		LinkedList<Object> lectureList = lectureDAO.lecture4Pay(lecture_num);
-		close(conn);
+		LinkedList<Object> lectureList = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			LectureDAO lectureDAO = LectureDAO.getInstance();
+			lectureDAO.setConnection(conn);
+			lectureList = lectureDAO.lecture4Pay(lecture_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return lectureList;
 	}

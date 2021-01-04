@@ -12,11 +12,18 @@ import vo.Lecture_Video;
 public class LectureDetailListService {
 
 	public LinkedList<Lecture_Video> getVid(int lecture_num) {
-		Connection conn = getConnection();
-		LectureDAO lectureDAO = LectureDAO.getInstance();
-		lectureDAO.setConnection(conn);
-		LinkedList<Lecture_Video> vidList = lectureDAO.getVid(lecture_num);
-		close(conn);
+		LinkedList<Lecture_Video> vidList = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			LectureDAO lectureDAO = LectureDAO.getInstance();
+			lectureDAO.setConnection(conn);
+			vidList = lectureDAO.getVid(lecture_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return vidList;
 	}

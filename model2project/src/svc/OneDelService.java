@@ -10,11 +10,18 @@ import dao.OneOnOneDAO;
 public class OneDelService {
 
 	public int deleteOne(int one_on_one_num) {
-		Connection conn = getConnection();
-		OneOnOneDAO oneOnOneDAO = OneOnOneDAO.getInstance();
-		oneOnOneDAO.setConnection(conn);
-		int result = oneOnOneDAO.delOne(one_on_one_num);
-		close(conn);
+		int result = 0;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			OneOnOneDAO oneOnOneDAO = OneOnOneDAO.getInstance();
+			oneOnOneDAO.setConnection(conn);
+			result = oneOnOneDAO.delOne(one_on_one_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) close(conn);
+		}
 		
 		return result;
 	}
