@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import com.mysql.cj.util.TestUtils;
-
 import vo.Lecture;
 import vo.Lecture_Video;
 import vo.Member;
@@ -42,7 +40,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList[] selectLectureList(int nowPage) {
-		String sql = "SELECT l.lecture_num, m.number, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num GROUP BY l.lecture_num ORDER BY lecture_num DESC, v.chapter LIMIT ?, " + pageCount;
+		String sql = "SELECT l.lecture_num, m.number, m.name, v.chapter, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num GROUP BY l.lecture_num ORDER BY lecture_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Subject> subList = new LinkedList<Subject>();
