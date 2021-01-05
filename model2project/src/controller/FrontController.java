@@ -59,6 +59,7 @@ import action.MainadAction;
 import action.MembersListAction;
 import action.MessageDeleteAction;
 import action.MessageSendAction;
+import action.MessageSendPageAction;
 import action.MessengerAction;
 import action.MyFreeAction;
 import action.MyLectureAction;
@@ -734,6 +735,13 @@ public class FrontController extends HttpServlet {
 			}	
 		} else if(command.contentEquals("/reviewCommentWrite.do")) {
 			action = new ReviewCommentWriteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/messageSend.do")) {
+			action = new MessageSendPageAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -127,7 +127,7 @@
 											<a href="freeView.do?page=<%=nowPageNumber %>&free_num=<%=frList.get(i).getFree_num() %>"><%=frList.get(i).getTitle() %></a>
 											<div class="bbsTitleDetail"><%=frList.get(i).getContents() %></div>
 										</li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="bbsWriter"><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)</li>
 									</ul>
 								</li>
 								

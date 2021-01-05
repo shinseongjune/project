@@ -123,7 +123,7 @@
 											<a href="freeView.do?page=<%=nowPageNumber %>&free_num=<%=frList.get(i).getFree_num() %>"><%=frList.get(i).getTitle() %></a>
 											<div class="bbsTitleDetail"><%=frList.get(i).getContents() %></div>
 										</li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="bbsWriter"><% if(memList.get(i).getId().equals("admin") || memList.get(i).getId().equals(loginMember.getId())) { %><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)<% } else { %><a class="namePopover" role="button" data-placement="bottom" data-content="<div><a href='messageSend.do?receiver=<%=memList.get(i).getId() %>'>쪽지 보내기</a></div><hr/><div><a role='button' class='popoverClose'>닫기</a></div>"><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)</a><% } %></li>
 									</ul>
 								</li>
 								
@@ -173,6 +173,15 @@
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			$(window).resize(function(){
 				$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
+			});
+			$(".namePopover").on("click", function(){
+				$(".namePopover").popover("hide");
+			}).popover({
+				html: true,
+				container: "body"
+			});
+			$(document).on('click', '.popoverClose', function(){
+			    $('.namePopover').popover('hide');
 			});
 		});
 	</script>

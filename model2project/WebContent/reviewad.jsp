@@ -132,7 +132,7 @@
 											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
 										</li>
 										<li class="bbsLecture"><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><%=lecList.get(i).getLecture_title() %></a></li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="bbsWriter"><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)</li>
 									</ul>
 								</li>
 								

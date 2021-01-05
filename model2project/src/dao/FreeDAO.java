@@ -37,7 +37,7 @@ public class FreeDAO {
 		this.conn = conn;
 	}
 	public LinkedList[] selectFreeList(int nowPage) {
-		String sql = "SELECT m.name, q.name AS qname, f.title, f.contents, f.free_num FROM member AS m RIGHT JOIN freeboard AS f ON m.number = f.number LEFT JOIN quitter AS q ON q.number = f.number ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT m.id, m.name, q.id AS qid, q.name AS qname, f.title, f.contents, f.free_num FROM member AS m RIGHT JOIN freeboard AS f ON m.number = f.number LEFT JOIN quitter AS q ON q.number = f.number ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Free> freeContentList = new LinkedList<Free>();
 		LinkedList[] freeList = null;
@@ -57,6 +57,11 @@ public class FreeDAO {
 						mem.setName(rs.getString("name"));
 					} else {
 						mem.setName(rs.getString("qname"));
+					}
+					if(rs.getString("id") != null) {
+						mem.setId(rs.getString("id"));
+					} else {
+						mem.setId(rs.getString("qid"));
 					}
 					fr.setTitle(rs.getString("title"));
 					fr.setContents(rs.getString("contents").replace("<br/>", " "));
@@ -123,7 +128,7 @@ public class FreeDAO {
 	}
 
 	public LinkedList<Object> selectFreeView(int free_num) {
-		String sql = "SELECT f.free_num, f.title, f.contents, m.name, q.name AS qname FROM member AS m RIGHT JOIN freeboard AS f ON f.number = m.number LEFT JOIN quitter AS q ON f.number = q.number WHERE f.free_num = ?";
+		String sql = "SELECT f.free_num, f.title, f.contents, m.id, m.name, q.id AS qid, q.name AS qname FROM member AS m RIGHT JOIN freeboard AS f ON f.number = m.number LEFT JOIN quitter AS q ON f.number = q.number WHERE f.free_num = ?";
 		LinkedList<Object> freeViewList = null;
 		Member mem = null;
 		Free fr = null;
@@ -139,6 +144,11 @@ public class FreeDAO {
 					mem.setName(rs.getString("name"));
 				} else {
 					mem.setName(rs.getString("qname"));
+				}
+				if(rs.getString("id") != null) {
+					mem.setId(rs.getString("id"));
+				} else {
+					mem.setId(rs.getString("qid"));
 				}
 				fr.setTitle(rs.getString("title"));
 				fr.setContents(rs.getString("contents"));
@@ -253,7 +263,7 @@ public class FreeDAO {
 	}
 
 	public LinkedList[] selectMyFreeList(String id, int nowPage) {
-		String sql = "SELECT f.title, f.contents, f.free_num, m.name FROM freeboard AS f JOIN member AS m on f.number = m.number WHERE f.number = (SELECT number FROM member WHERE id = ?) ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT f.title, f.contents, f.free_num, m.id, m.name FROM freeboard AS f JOIN member AS m on f.number = m.number WHERE f.number = (SELECT number FROM member WHERE id = ?) ORDER BY f.free_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Free> freeContentList = new LinkedList<Free>();
 		LinkedList[] freeList = null;
@@ -270,6 +280,7 @@ public class FreeDAO {
 				do {
 					mem = new Member();
 					fr = new Free();
+					mem.setId(rs.getString("id"));
 					mem.setName(rs.getString("name"));
 					fr.setTitle(rs.getString("title"));
 					fr.setContents(rs.getString("contents"));
@@ -339,7 +350,7 @@ public class FreeDAO {
 	}
 
 	public LinkedList[] selectFreeCom(int free_num) {
-		String sql = "SELECT m.number, m.name, fc.contents, fc.comment_num, fc.time, fc.parent, fc.step FROM free_comment AS fc LEFT JOIN member AS m ON fc.number = m.number WHERE fc.free_num = ? ORDER BY comment_num";
+		String sql = "SELECT m.id, m.number, m.name, fc.contents, fc.comment_num, fc.time, fc.parent, fc.step FROM free_comment AS fc LEFT JOIN member AS m ON fc.number = m.number WHERE fc.free_num = ? ORDER BY comment_num";
 		LinkedList[] freeComList = null;
 		LinkedList<Member> memList = new LinkedList<>();
 		LinkedList<Free_Comment> fCList = new LinkedList<>();
@@ -354,6 +365,11 @@ public class FreeDAO {
 					mem = new Member();
 					fc = new Free_Comment();
 					mem.setNumber(rs.getInt("number"));
+					if(rs.getString("id") == null) {
+						mem.setId("");
+					} else {
+						mem.setId(rs.getString("id"));
+					}
 					if(rs.getString("name") == null) {
 						mem.setName("<탈퇴한 회원>");
 					} else {

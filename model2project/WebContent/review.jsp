@@ -136,7 +136,7 @@
 											<div class="bbsTitleDetail"><%=reList.get(i).getContents() %></div>
 										</li>
 										<li class="bbsLecture"><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><%=lecList.get(i).getLecture_title() %></a></li>
-										<li class="bbsWriter"><%=memList.get(i).getName() %></li>
+										<li class="bbsWriter"><% if(memList.get(i).getId().equals(loginMember.getId())) { %><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)<% } else { %><a class="namePopover" role="button" data-placement="bottom" data-content="<div><a href='messageSend.do?receiver=<%=memList.get(i).getId() %>'>쪽지 보내기</a></div><hr/><div><a role='button' class='popoverClose'>닫기</a></div>"><%=memList.get(i).getName() %>(<%=memList.get(i).getId() %>)</a><% } %></li>
 									</ul>
 								</li>
 								
@@ -187,6 +187,15 @@
 			$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 			$(window).resize(function(){
 				$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
+			});
+			$(".namePopover").on("click", function(){
+				$(".namePopover").popover("hide");
+			}).popover({
+				html: true,
+				container: "body"
+			});
+			$(document).on('click', '.popoverClose', function(){
+			    $('.namePopover').popover('hide');
 			});
 		});
 	</script>

@@ -63,7 +63,7 @@ public class ReviewDAO {
 	}
 
 	public LinkedList[] selectReviewList(int nowPageNumber) {
-		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.name, q.name AS qname FROM member AS m RIGHT JOIN review AS r ON r.number = m.number LEFT JOIN quitter AS q ON q.number = r.number JOIN lecture AS l ON r.lecture_num = l.lecture_num ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.id, m.name, q.id AS qid, q.name AS qname FROM member AS m RIGHT JOIN review AS r ON r.number = m.number LEFT JOIN quitter AS q ON q.number = r.number JOIN lecture AS l ON r.lecture_num = l.lecture_num ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Review> reviewContentList = new LinkedList<Review>();
@@ -84,6 +84,11 @@ public class ReviewDAO {
 					re = new Review();
 					lec.setLecture_title(rs.getString("lecture_title"));
 					lec.setLecture_num(rs.getInt("lecture_num"));
+					if(rs.getString("id") != null) {
+						mem.setId(rs.getString("id"));
+					} else {
+						mem.setId(rs.getString("qid"));
+					}
 					if(rs.getString("name") != null) {
 						mem.setName(rs.getString("name"));
 					} else {
@@ -108,7 +113,7 @@ public class ReviewDAO {
 	}
 
 	public LinkedList<Object> selectReviewView(int review_num) {
-		String sql = "SELECT r.review_num, r.title, r.contents, m.name, q.name AS qname FROM member AS m RIGHT JOIN review AS r ON r.number = m.number LEFT JOIN quitter AS q ON q.number = r.number WHERE r.review_num = ?";
+		String sql = "SELECT r.review_num, r.title, r.contents, m.id, m.name, q.id AS qid, q.name AS qname FROM member AS m RIGHT JOIN review AS r ON r.number = m.number LEFT JOIN quitter AS q ON q.number = r.number WHERE r.review_num = ?";
 		LinkedList<Object> reviewViewList = null;
 		Member mem = null;
 		Review re = null;
@@ -120,6 +125,11 @@ public class ReviewDAO {
 			if(rs.next()) {
 				mem = new Member();
 				re = new Review();
+				if(rs.getString("id") != null) {
+					mem.setId(rs.getString("id"));
+				} else {
+					mem.setId(rs.getString("qid"));
+				}
 				if(rs.getString("name") != null) {
 					mem.setName(rs.getString("name"));
 				} else {
@@ -288,7 +298,7 @@ public class ReviewDAO {
 	}
 
 	public LinkedList[] selectMyReviewList(String id, int nowPage) {
-		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.name FROM review AS r JOIN member AS m on r.number = m.number JOIN lecture AS l ON r.lecture_num = l.lecture_num WHERE r.number = (SELECT number FROM member WHERE id = ?) ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT r.title, r.contents, r.review_num, l.lecture_title, l.lecture_num, m.id, m.name FROM review AS r JOIN member AS m on r.number = m.number JOIN lecture AS l ON r.lecture_num = l.lecture_num WHERE r.number = (SELECT number FROM member WHERE id = ?) ORDER BY r.review_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Review> reviewContentList = new LinkedList<Review>();
@@ -310,9 +320,10 @@ public class ReviewDAO {
 					re = new Review();
 					lec.setLecture_title(rs.getString("lecture_title"));
 					lec.setLecture_num(rs.getInt("lecture_num"));
+					mem.setId(rs.getString("id"));
 					mem.setName(rs.getString("name"));
 					re.setTitle(rs.getString("title"));
-					re.setContents(rs.getString("contents"));
+					re.setContents(rs.getString("contents").replace("<br/>", "\n"));
 					re.setReview_num(rs.getInt("review_num"));
 					lecList.add(lec);
 					memList.add(mem);
@@ -452,7 +463,7 @@ public class ReviewDAO {
 	}
 
 	public LinkedList[] selectReviewCom(int review_num) {
-		String sql = "SELECT m.number, m.name, rc.contents, rc.comment_num, rc.time, rc.parent, rc.step FROM review_comment AS rc LEFT JOIN member AS m ON rc.number = m.number WHERE rc.review_num = ? ORDER BY comment_num";
+		String sql = "SELECT m.number, m.id, m.name, rc.contents, rc.comment_num, rc.time, rc.parent, rc.step FROM review_comment AS rc LEFT JOIN member AS m ON rc.number = m.number WHERE rc.review_num = ? ORDER BY comment_num";
 		LinkedList[] reviewComList = null;
 		LinkedList<Member> memList = new LinkedList<>();
 		LinkedList<Review_Comment> rCList = new LinkedList<>();
@@ -467,6 +478,11 @@ public class ReviewDAO {
 					mem = new Member();
 					rc = new Review_Comment();
 					mem.setNumber(rs.getInt("number"));
+					if(rs.getString("id") == null) {
+						mem.setId("");
+					} else {
+						mem.setId(rs.getString("id"));
+					}
 					if(rs.getString("name") == null) {
 						mem.setName("<탈퇴한 회원>");
 					} else {
