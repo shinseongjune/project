@@ -11,7 +11,7 @@ import vo.Free;
 public class FreeUpdatePageService {
 
 	public Free updateFree(int free_num) {
-		free fr = null;
+		Free fr = null;
 		Connection conn = null;
 		try {
 			conn = getConnection();
