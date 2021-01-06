@@ -90,7 +90,7 @@
 			if(banList != null) {
 				for (int i = 0; i < banList.size(); i++) {
 %>
-				<li><a href="#"><img src="./banner/<%=banList.get(i).getImg() %>" width="1200px" height="300px" alt="<%=banList.get(i).getImg() %>"></a></li>
+				<li><img src="./banner/<%=banList.get(i).getImg() %>" width="1200px" height="300px" alt="<%=banList.get(i).getImg() %>"></li>
 <%
 				}
 			}				
