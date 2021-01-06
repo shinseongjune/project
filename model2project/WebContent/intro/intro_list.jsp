@@ -30,10 +30,12 @@
 <head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
- 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/story-show-gallery@2/dist/ssg.min.css">
- 		<link rel="stylesheet" href="src/ssg.css" type="text/css" media="all">
-		<link rel='stylesheet' href='./css/index.css' type='text/css' media='all' />
+<!--   	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+ 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/story-show-gallery@2/dist/ssg.min.css">-->
+ 		<link rel='stylesheet' href='./css/bootstrap.css' type='text/css' media='all' />
+		<link rel='stylesheet' href='./css/ssg.css' type='text/css' media='all' />
+		<link rel='stylesheet' href='./css/picture.css' type='text/css' media='all' />
+		
 		<title>강사소개</title>
 <style>
 body {
@@ -84,7 +86,7 @@ body {
 					<div class="gallery ssg wider vipssg fs" style="margin-top:10px;">
 						<a href='/upload/<%=articleList.get(i).getImg1() %>'>
 						<img src="/upload/<%=articleList.get(i).getImg1() %>" alt="<%=articleList.get(i).getImgex1() %>" 
-						style="width : 355px; height:410px; align:center;"/></a>
+						style="width : 355px; height:410px;"/></a>
 						
 						<a href='/upload/<%=articleList.get(i).getImg2() %>'>
 						<img src="/upload/<%=articleList.get(i).getImg2() %>" alt="<%=articleList.get(i).getImgex2() %>" 
@@ -129,15 +131,15 @@ body {
 	}
 %>
 	<nav aria-label="Page navigation example">
-		<ul class="pagination pagination-sm justify-content-center">
+		<ul style="margin-right: 35px;" class="pagination pagination-sm justify-content-center">
 <%
 	if (nowPage <= 1) {
 %>
-	    	<li class="page-item disabled"><a class="page-link" href="introList.do?page=<%=nowPage-1 %>">Previous</a></li>
+	    	<li class="page-item disabled"><a class="page-link" href="introList.do?page=<%=nowPage-1 %>">Prev</a></li>
 <%
 	}else{
 %>
-	  	 	 <li class="page-item"><a class="page-link" href="introList.do?page=<%=nowPage-1 %>">Previous</a></li>
+	  	 	 <li class="page-item"><a class="page-link" href="introList.do?page=<%=nowPage-1 %>">Prev</a></li>
 <%
 	}for(int a = startPage;a<=endPage;a++){
 		if(a==nowPage){
@@ -166,7 +168,7 @@ body {
 <%
 	if(classify != null && (!classify.equals("학생"))){
 %>
-		<div class="ml-auto"><a href="introWriteForm.do"><input type="button" class="btn btn-primary" value="작성하기"/></a></div>
+		<div style="margin-bottom: 70px; margin-right: 56px; margin-top: 20px;" class="ml-auto"><a href="introWriteForm.do" class="btn btn-primary">작성하기</a></div>
 <% 		
 	}
 %>		
@@ -182,7 +184,7 @@ body {
 				$(window).resize(function(){
 					$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 				});
-			});
+			});			
 		</script>
 </body>
 </html>

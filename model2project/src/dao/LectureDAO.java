@@ -7,9 +7,11 @@ import static db.JdbcUtil.rollback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import vo.Intro;
 import vo.Lecture;
 import vo.Lecture_Video;
 import vo.Member;
@@ -253,6 +255,12 @@ public class LectureDAO {
 			close(pstmt);
 		}
 		return result;
+//칸수 맞추기용		
+		//칸수 맞추기용		
+		//칸수 맞추기용		
+		//칸수 맞추기용		
+		//칸수 맞추기용		
+		//칸수 맞추기용		
 	}
 
 	public LinkedList<Subject> selectSubList() {
@@ -486,12 +494,14 @@ public class LectureDAO {
 		}
 		return result;
 	}
-	
-	
-	public LinkedList<Lecture_Video> getVid(int lecture_num) {
-		String sql = "SELECT * FROM lecture_video WHERE lecture_num = ? ORDER BY chapter";
+		
+	public LinkedList[] getVid(int lecture_num) {
+		String sql = "SELECT v.chapter, v.lecture_num, v.video, v.chapter_title, l.number FROM lecture_video AS v JOIN lecture AS l ON v.lecture_num = l.lecture_num WHERE v.lecture_num = ? ORDER BY chapter";
+		LinkedList[] lvList = null;
 		LinkedList<Lecture_Video> vidList = new LinkedList<>();
+		LinkedList<Lecture> lecList = new LinkedList<>();
 		Lecture_Video vid = null;
+		Lecture lec = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -500,12 +510,16 @@ public class LectureDAO {
 			if (rs.next()) {
 				do {
 					vid = new Lecture_Video();
+					lec = new Lecture();
 					vid.setChapter(rs.getInt("chapter"));
 					vid.setLecture_num(rs.getInt("lecture_num"));
 					vid.setVideo(rs.getString("video"));
 					vid.setChapter_title(rs.getString("chapter_title"));
+					lec.setNumber(rs.getInt("number"));
 					vidList.add(vid);
+					lecList.add(lec);
 				} while (rs.next());
+				lvList = new LinkedList[] {vidList, lecList};
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -514,7 +528,7 @@ public class LectureDAO {
 			close(rs);
 		}
 
-		return vidList;
+		return lvList;
 	}
 
 	public int lectureDetailUpload(String id, Lecture lec, Lecture_Video vid) {
