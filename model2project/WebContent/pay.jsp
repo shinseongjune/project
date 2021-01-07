@@ -105,7 +105,7 @@ button {
 </label>
 <fieldset class="cardForm">
 	<legend>카드선택</legend>
-	 신한<input type="radio" name="type" value="신한카드" checked />
+	 신한<input type="radio" name="type" value="신한카드" />
 	  현대<input type="radio" name="type" value="현대카드" />
 	  하나<input type="radio" name="type" value="하나카드" />
 	  우리<input type="radio" name="type" value="우리카드" />
@@ -113,20 +113,8 @@ button {
 	  IBK기업<input type="radio" name="type" value="IBK기업카드" />
 </fieldset>
 <fieldset class="bankingForm">
-	<legend>은행선택</legend>
-	 신한<input type="radio" name="type" value="신한은행" checked />
-	  하나<input type="radio" name="type" value="하나은행" />
-	  우리<input type="radio" name="type" value="우리은행" />
-	  KB국민<input type="radio" name="type" value="KB국민" />
-	  IBK기업<input type="radio" name="type" value="IBK기업은행" />
-	  카카오뱅크<input type="radio" name="type" value="카카오뱅크" />
 </fieldset>
 <fieldset class="phoneForm">
-	<legend>통신사선택</legend>
-	 SKT<input type="radio" name="type" value="SKT" checked />
-	  KT<input type="radio" name="type" value="KT" />
-	  LG U+<input type="radio" name="type" value="LG U+" />
-	  알뜰폰<input type="radio" name="type" value="알뜰폰" />
 </fieldset>
 <fieldset>
 	<legend>정보 입력</legend>
@@ -134,10 +122,8 @@ button {
 	<a>카드번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" placeholder="-없이 입력" required="required"></textarea><br>
 </div>
 <div class="bankingCode">
-	<a>계좌번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" placeholder="신한은행 150-248-945238" readonly></textarea><br>
 </div>	
 <div class="phoneCode">
-	<a>전화번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" placeholder="-없이 입력" required="required"></textarea><br>
 </div>		
 </fieldset>
 <div class="btn">
@@ -155,30 +141,64 @@ $(function(){
 	$("#class").change(function(){
 		let select = $(this).val();
 		if(select == "card") {
+			$(".cardForm").html('<legend>카드선택</legend>신한<input type="radio" name="type" value="신한카드" />현대<input type="radio" name="type" value="현대카드" />하나<input type="radio" name="type" value="하나카드" />우리<input type="radio" name="type" value="우리카드" />KB국민<input type="radio" name="type" value="KB국민카드" />IBK기업<input type="radio" name="type" value="IBK기업카드" />');
 			$(".cardForm").show();
+			$(".bankingForm").empty();
 			$(".bankingForm").hide();
+			$(".phoneForm").empty();
 			$(".phoneForm").hide();
+			$(".cardCode").html('<a>카드번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" placeholder="-없이 입력" required="required"></textarea><br>');
 			$(".cardCode").show();
+			$(".bankingCode").empty();
 			$(".bankingCode").hide();
+			$(".phoneCode").empty();
 			$(".phoneCode").hide();
 		} else if(select == "banking") {
+			$(".cardForm").empty();
 			$(".cardForm").hide();
+			$(".bankingForm").html('<legend>은행선택</legend>신한<input type="radio" name="type" value="신한은행" />하나<input type="radio" name="type" value="하나은행" />우리<input type="radio" name="type" value="우리은행" />KB국민<input type="radio" name="type" value="KB국민" />IBK기업<input type="radio" name="type" value="IBK기업은행" />카카오뱅크<input type="radio" name="type" value="카카오뱅크" />');
 			$(".bankingForm").show();
+			$(".phoneForm").empty();
 			$(".phoneForm").hide();
+			$(".cardCode").empty();
 			$(".cardCode").hide();
+			$(".bankingCode").html('<a>계좌번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" readonly>신한은행 150-248-945238</textarea><br>');
 			$(".bankingCode").show();
+			$(".phoneCode").empty();
 			$(".phoneCode").hide();
 		} else {
+			$(".cardForm").empty();
 			$(".cardForm").hide();
+			$(".bankingForm").empty();
 			$(".bankingForm").hide();
+			$(".phoneForm").html('<legend>통신사선택</legend>SKT<input type="radio" name="type" value="SKT" />KT<input type="radio" name="type" value="KT" />LG U+<input type="radio" name="type" value="LG U+" />알뜰폰<input type="radio" name="type" value="알뜰폰" />');
 			$(".phoneForm").show();
+			$(".cardCode").empty();
 			$(".cardCode").hide();
+			$(".bankingCode").empty();
 			$(".bankingCode").hide();
+			$(".phoneCode").html('<a>전화번호</a><br><textarea style="height: 25px; width: 400px; resize: none; font-size: 20px;" name="pay_code" placeholder="-없이 입력" required="required"></textarea><br>');
 			$(".phoneCode").show();
 		}
 	});
 	$("#submitButton").click(function(){
-		document.introform.submit();
+		if($("input:radio[name='type']").is(":checked")) {
+			if($("textarea[name='pay_code']").val().length != 0) {
+				document.introform.submit();
+			} else {
+				alert("필수 항목을 입력해주세요.")
+			}
+		} else {
+			alert("은행 또는 통신사를 선택해주세요.");
+		}
+	});
+	$(document).on("keydown", "textarea[name='pay_code']", function(e) {
+		if(!((e.which >= 37 && e.which <= 40) || e.which == 46 || e.which == 8 || e.which == 0 || (e.which >= 48 && e.which <= 57) || (e.which >= 96 && e.which <= 105))) {
+			return false;
+		}
+	});
+	$(document).on("paste", "textarea[name='pay_code']", function(){
+		return false;
 	});
 });
 </script>

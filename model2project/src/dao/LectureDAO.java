@@ -475,7 +475,7 @@ public class LectureDAO {
 			pstmt.setInt(1, lecture_num);
 			pstmt.setString(2, id);
 			pstmt.setString(3, type);
-			if(pay_code.length() == 0) {
+			if(pay_code.equals("신한은행 150-248-945238")) {
 				pstmt.setString(4, "<계좌이체>");
 			} else {
 				pstmt.setString(4, pay_code);
