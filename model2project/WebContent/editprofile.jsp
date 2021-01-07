@@ -87,6 +87,7 @@
 			<div class="contents">
 				<div class="bigEdit">Edit Profile</div>
 				<form action="editProfile.do" method="post">
+					<input type="hidden" name="number" value="<%=loginMember.getNumber() %>">
 					<input type="hidden" name="id" value="<%=(String)loginMember.getId() %>">
 					<div class="inputSlot">
 						Password : <br />
