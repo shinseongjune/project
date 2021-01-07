@@ -41,6 +41,21 @@ $(".lu").hide();
 	});	
 });
 
+	$(function(){
+		$(".lec").click(function(){
+			let nowUrl = $(this).attr("data-url");
+			if(nowUrl.indexOf("&") > 0) {
+				nowUrl = nowUrl.substring(nowUrl.indexOf("v=") + 2, nowUrl.indexOf("&"));
+			} else {
+				nowUrl = nowUrl.substring(nowUrl.indexOf("v=")+2);
+			}
+
+			let showUrl = "https://www.youtube.com/embed/" + nowUrl;
+			console.log(showUrl);
+			$("#showLecture").attr("src", showUrl);
+		});
+	});
+
 $(function () {
 	var num = 0;
 	var $move = $(".photoList > ul > li");
