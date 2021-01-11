@@ -44,6 +44,7 @@ import action.IntroWriteProAction;
 import action.JoinAction;
 import action.LectureDetailAction;
 import action.LectureDetailDeleteAction;
+import action.LectureDetailModifyAction;
 import action.LectureDetailUploadAction;
 import action.LectureListAction;
 import action.LectureListCheckedAction;
@@ -742,6 +743,13 @@ public class FrontController extends HttpServlet {
 			}	
 		} else if(command.contentEquals("/messageSend.do")) {
 			action = new MessageSendPageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		} else if(command.contentEquals("/lectureDetailModify.do")) {
+			action = new LectureDetailModifyAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

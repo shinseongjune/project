@@ -622,4 +622,27 @@ public class LectureDAO {
 		}
 		return author;
 	}
+
+	public int lectureDetailModify(Lecture_Video vid) {
+		String sql = "UPDATE lecture_video SET chapter_title = ?, video = ? WHERE lecture_num = ? AND chapter = ?";
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vid.getChapter_title());
+			pstmt.setString(2, vid.getVideo());
+			pstmt.setInt(3, vid.getLecture_num());
+			pstmt.setInt(4, vid.getChapter());
+			result = pstmt.executeUpdate();
+			if (result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import vo.Intro;
+import vo.Lecture;
 import vo.Member;
+import vo.Review;
 
 public class IntroDAO {
 
@@ -65,7 +67,7 @@ public class IntroDAO {
 		ArrayList[] bigArticleList = null;
 		Intro intro = null;
 		Member mem = null;
-		int startrow = (page - 1) * 10; //읽기 시작할 row 번호
+		int startrow = (page - 1) * 12; //읽기 시작할 row 번호
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -179,8 +181,12 @@ public class IntroDAO {
 		ResultSet rs = null;
 		Intro intro = null;
 		Member member = null;
+		Lecture lecture = null;
+		Review review = null;
 		ArrayList<Intro> intList = new ArrayList<Intro>();
 		ArrayList<Member> memList = new ArrayList<Member>();
+		ArrayList<Lecture> lecList = new ArrayList<Lecture>();
+		ArrayList<Review> revList = new ArrayList<Review>();
 		ArrayList[] articleList = null;
 		
 		try {
@@ -206,7 +212,7 @@ public class IntroDAO {
 					intro.setImgex4(rs.getString("imgex4"));
 					intro.setImgex5(rs.getString("imgex5"));
 					intro.setImgex6(rs.getString("imgex6"));
-					intro.setReadcount(rs.getInt("readcount"));	//강사만 볼 수 있게 설정
+					intro.setReadcount(rs.getInt("readcount"));
 					member.setName(rs.getString("name"));
 					member.setEmail(rs.getString("email"));
 					member.setGender(rs.getString("gender"));
@@ -216,7 +222,35 @@ public class IntroDAO {
 					memList.add(member);
 				} while(rs.next());
 			}
-			articleList = new ArrayList[] {intList, memList};
+			
+			String lec_sql = "SELECT l.lecture_num, l.lecture_title FROM lecture AS l WHERE l.number = ?";
+			pstmt = conn.prepareStatement(lec_sql);
+			pstmt.setInt(1, intro_num);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					lecture = new Lecture();
+					lecture.setLecture_num(rs.getInt("lecture_num"));
+					lecture.setLecture_title(rs.getString("lecture_title"));
+					lecList.add(lecture);
+				} while(rs.next());
+			}
+			
+			String rev_sql = "SELECT r.title, r.review_num FROM lecture AS l JOIN review AS r ON l.lecture_num = r.lecture_num WHERE l.number = ?";
+			pstmt = conn.prepareStatement(rev_sql);
+			pstmt.setInt(1, intro_num);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					review = new Review();
+					review.setTitle(rs.getString("title"));
+					review.setReview_num(rs.getInt("review_num"));
+					revList.add(review);
+				} while(rs.next());
+			}
+			articleList = new ArrayList[] {intList, memList, lecList, revList};
 		} catch (Exception ex) {
 			System.out.println("getDetail 에러 : " + ex);
 		} finally {
@@ -283,14 +317,14 @@ public class IntroDAO {
 	//글 삭제
 	public int deleteArticle(int intro_num) {
 		PreparedStatement pstmt = null;
-		String intro_delete_sql = "DELETE FROM intro WHERE intro_num = ?";
 		int deleteCount = 0;
+		String intro_delete_sql = "DELETE FROM intro WHERE intro_num = ?";
 		try {
 			pstmt = conn.prepareStatement(intro_delete_sql);
 			pstmt.setInt(1, intro_num);
 			deleteCount = pstmt.executeUpdate();
 		} catch(Exception ex) {
-			System.out.println("boardDelete 에러 : " + ex);
+			System.out.println("introDelete 에러 : " + ex);
 		} finally {
 			if (pstmt != null) close(pstmt);
 		}
@@ -329,6 +363,30 @@ public class IntroDAO {
 			if(pstmt != null) close(pstmt);
 		}
 		return intro;
+	}
+//소개 글 중복되지 않게 하기위해 확인하는 절차
+	public boolean ArticleIntroWriter(int intro_num, String password) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String intro_sql = "SELECT * FROM member JOIN intro ON member.number = intro.number WHERE intro_num = ?";
+		boolean isWriter = false;
+		
+		try {
+			pstmt = conn.prepareStatement(intro_sql);
+			pstmt.setInt(1, intro_num);
+			rs = pstmt.executeQuery();
+			rs.next();
+
+			
+			if(password.equals(rs.getString("password"))) {
+				isWriter = true;
+			}
+		} catch (SQLException ex) {
+			System.out.println("introWriter 에러 : " + ex);
+		} finally {
+			if(pstmt != null) close(pstmt);
+		}
+		return isWriter;
 	}
 }
 

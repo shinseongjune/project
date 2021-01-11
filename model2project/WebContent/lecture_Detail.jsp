@@ -241,6 +241,7 @@ textarea:focus {
 }
 
 .lecList>ul>li>a {
+	position: relative;
 	display: block;
 	width: 345px;
 	height: 58px;
@@ -250,11 +251,20 @@ textarea:focus {
 	color: #000;
 	-webkit-transition: all 0.4s;
 	transition: all 0.4s;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.lecList>ul>li>a>button {
+	position: absolute;
+	top:0px;
+	right:0px;
 }
 
 .lecList>ul>li.on {
 	background: rgba(0, 0, 0, .1);
 }
+
 </style>
 </head>
 <!-- onresize="parent.resizeTo(1698,790)" -->
@@ -285,10 +295,10 @@ textarea:focus {
 					<a href="#">▲</a>
 				</div>
 				<div class="lecList">
-<% if (vidList != null) { %>
+<% if (vidList.size() != 0) { %>
 					<ul>
 <% for (int i = 0; i < vidList.size(); i++) { %>
-						<li class="colorCont"><a href="#" onclick="return false;" style="margin-left: 25px;" class="lec"
+						<li class="colorCont cont<%=i %><%if(i == 0) {%> on<% } %>"><a class="vid<%=i %>" href="#" onclick="return false;" style="margin-left: 25px;" class="lec"
 							data-url="<%=vidList.get(i).getVideo()%>"><%=vidList.get(i).getChapter_title()%></a></li>
 <% } %>
 					</ul>
@@ -305,13 +315,27 @@ textarea:focus {
 					<a href="#">▲</a>
 				</div>
 				<div class="lecList">
-<% if (vidList != null) { %>
+<% if (vidList.size() != 0) { %>
 					<ul>
-<% for (int i = 0; i < vidList.size(); i++) { %>
-						<li><a style="margin-left: 25px;" href="#" onclick="false"><%=vidList.get(i).getChapter_title()%>
+<%	 for (int i = 0; i < vidList.size(); i++) { %>
+						<li class="colorCont cont<%=i %><%if(i == 0) {%> on<% } %>"><a class="vid<%=i %>" data-url="<%=vidList.get(i).getVideo()%>" style="margin-left: 25px;" href="#" onclick="false"><%=vidList.get(i).getChapter_title()%>
 								<button onclick="location.href ='lectureDetailDelete.do?chapter=<%=vidList.get(i).getChapter()%>&lecture_num=<%=vidList.get(i).getLecture_num()%>'"
-								style="float: right; margin-top: 20px; margin-right: 25px;">X</button></a></li>
-<% } %>
+								style="float: right; margin-top: 20px; margin-right: 25px;">X</button>
+								<button class="modButton<%=i %>" style="float: right; margin-top: 20px; margin-right: 60px;">R</button>
+								</a>
+						</li>
+						<div class="modForm<%=i %>" style="display:none;">
+							<form action="lectureDetailModify.do?chapter=<%=vidList.get(i).getChapter()%>&lecture_num=<%=vidList.get(i).getLecture_num()%>" method="post" name="ldinfo">
+								<input type="hidden" name="lecture_num"
+									value="<%=vidList.get(0).getLecture_num()%>" />
+								<textarea style="margin-top: 15px;" class="inputSlot"
+									name="chapter_title" placeholder="강의제목" autocomplete="off" required="required"/></textarea>
+								<textarea style="margin-top: 5px;" class="inputSlot"
+									name="video" placeholder="강의 URL" autocomplete="off" required="required"/></textarea>
+								<button style="margin-top: 5px; margin-bottom: 5px; margin-left: 113px; height: 30px;">수정하기</button>
+							</form>
+						</div>
+<%	 } %>
 						<li class="lug" style="text-align: center;"><p>+</p></li>
 <% } else { %>
 <% } %>
@@ -384,24 +408,32 @@ $(function(){
 		$(".back").click(function(){
 			$(".lu").hide();
 			$(".lug").show();
+		});
+<%
+	for(int i=0; i < vidList.size();i++) {
+%>
+		$(document).on("click", ".vid<%=i %>", function(){
+			$(".colorCont").removeClass("on");
+			$(".cont<%=i %>").addClass("on");
+			let nowUrl = $(this).attr("data-url");
+			if(nowUrl.indexOf("&") > 0) {
+				nowUrl = nowUrl.substring(nowUrl.indexOf("v=") + 2, nowUrl.indexOf("&"));
+			} else {
+				nowUrl = nowUrl.substring(nowUrl.indexOf("v=")+2);
+			}
+
+			let showUrl = "https://www.youtube.com/embed/" + nowUrl;
+			console.log(showUrl);
+			$("#showLecture").attr("src", showUrl);
 		});	
+		$(document).on("click", ".modButton<%=i %>", function(){
+			$(".modForm<%=i %>").toggle();
+		});
+<%
+	}
+%>
 	});
 
-
-		$(function(){
-			$(".lec").click(function(){
-				let nowUrl = $(this).attr("data-url");
-				if(nowUrl.indexOf("&") > 0) {
-					nowUrl = nowUrl.substring(nowUrl.indexOf("v=") + 2, nowUrl.indexOf("&"));
-				} else {
-					nowUrl = nowUrl.substring(nowUrl.indexOf("v=")+2);
-				}
-
-				let showUrl = "https://www.youtube.com/embed/" + nowUrl;
-				console.log(showUrl);
-				$("#showLecture").attr("src", showUrl);
-			});
-		});
 </script>
 </body>
 </html>
