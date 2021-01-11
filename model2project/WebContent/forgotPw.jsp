@@ -11,6 +11,7 @@
 	<style>
 		body {
 			background: black;
+			margin: 8px;
 		}
 		.logoToMain {
 			cursor: pointer;
@@ -30,7 +31,7 @@
 	</style>
 </head>
 <body>
-	<img src="images/logo_black.png" onclick="location.href='index.do'" class="logoToMain" />
+	<img src="images/mainl.png" onclick="location.href='index.do'" class="logoToMain" />
 	<div class="forgotCont">
 		<form action="pwCheck.do">
 			<input type="text" class="form-control" name="id" placeholder="ID" autocomplete="off" required="required" />
