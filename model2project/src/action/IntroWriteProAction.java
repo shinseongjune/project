@@ -23,7 +23,7 @@ public class IntroWriteProAction implements Action {
 		Intro intro = null;
 		int fileSize = 10 * 1920 * 1080;
 		HttpSession session = request.getSession();
-		String realFolder = session.getServletContext().getRealPath("/intro/Upload");
+		String realFolder = session.getServletContext().getRealPath("/Upload");
 		MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
 		intro = new Intro(); 
 		Member loginMember = (Member) session.getAttribute("loginMember");
