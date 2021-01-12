@@ -24,7 +24,7 @@ public class IntroWriteProAction implements Action {
 		Intro intro = null;
 		int fileSize = 10 * 1920 * 1080;
 		HttpSession session = request.getSession();
-		String savePath = "upload";
+		String savePath = "/intro/upload";
 		ServletContext context = request.getServletContext();
 		String uploadPath = context.getRealPath(savePath);
 		
