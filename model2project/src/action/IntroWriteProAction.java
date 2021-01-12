@@ -3,7 +3,6 @@ package action;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +22,10 @@ public class IntroWriteProAction implements Action {
 		ActionForward forward = null;
 		Intro intro = null;
 		int fileSize = 10 * 1920 * 1080;
-		String realFolder = "C:/Upload";
+		HttpSession session = request.getSession();
+		String realFolder = session.getServletContext().getRealPath("/intro/Upload");
 		MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
 		intro = new Intro(); 
-		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String id = null;
 		if(loginMember != null) id = loginMember.getId();

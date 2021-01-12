@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import svc.IntroDetailService;
 import vo.ActionForward;
-import vo.Intro;
 import vo.Member;
 
 public class IntroDetailAction implements Action {
