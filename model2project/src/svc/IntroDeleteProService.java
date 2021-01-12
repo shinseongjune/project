@@ -11,23 +11,6 @@ import dao.IntroDAO;
 
 public class IntroDeleteProService {
 
-	public boolean isArticleWriter(int number, String pass) {
-		boolean isArticleWriter = false;
-		Connection conn = null;
-		try {
-			conn = getConnection();
-			IntroDAO introDAO = IntroDAO.getInstance();
-			introDAO.setConnection(conn);
-			isArticleWriter = introDAO.isArticleIntroWriter(number, pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null) close(conn);
-		}
-		
-		return isArticleWriter;
-	}
-
 	public boolean removeArticle(int number) {
 		boolean isRemoveSuccess = false;
 		Connection conn = null;
