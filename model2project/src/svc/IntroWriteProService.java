@@ -11,7 +11,7 @@ import dao.IntroDAO;
 import vo.Intro;
 public class IntroWriteProService {
 	
-	public static boolean registArticle(String id, Intro intro) throws Exception {
+	public boolean registArticle(String id, Intro intro) throws Exception {
 		
 		boolean isWriteSuccess = false;
 		Connection conn = null;
