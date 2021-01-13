@@ -279,6 +279,9 @@ a:hover {
 	border-bottom: 1px solid black;
 }
 @media (max-width:576px) {
+	.inner {
+		width: 450px !important;
+	}
 	.topbar {
 		display: block;
 	}
@@ -296,7 +299,7 @@ a:hover {
 		max-width: 576px;
 	}
 	#container {
-		max-width: 576px;
+		width: 450px !important;
 	}
 	#container>section {
 		max-width: 576px;

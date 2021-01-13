@@ -24,10 +24,9 @@ public class IntroWriteProAction implements Action {
 		Intro intro = null;
 		int fileSize = 10 * 1920 * 1080;
 		HttpSession session = request.getSession();
-		String savePath = "/intro/upload";
-		ServletContext context = request.getServletContext();
+		String savePath = "intro/upload";
+		ServletContext context = session.getServletContext();
 		String uploadPath = context.getRealPath(savePath);
-		
 		MultipartRequest multi = new MultipartRequest(request, uploadPath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
 		intro = new Intro(); 
 		Member loginMember = (Member) session.getAttribute("loginMember");
@@ -36,17 +35,17 @@ public class IntroWriteProAction implements Action {
 		intro.setContents(multi.getParameter("contents"));
 		Enumeration<?> images = multi.getFileNames();
 		if(images.hasMoreElements())
-		intro.setImg6(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg6(multi.getFilesystemName((String)images.nextElement()));
 		if(images.hasMoreElements())
-		intro.setImg5(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg5(multi.getFilesystemName((String)images.nextElement()));
 		if(images.hasMoreElements())
-		intro.setImg4(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg4(multi.getFilesystemName((String)images.nextElement()));
 		if(images.hasMoreElements())
-		intro.setImg3(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg3(multi.getFilesystemName((String)images.nextElement()));
 		if(images.hasMoreElements())
-		intro.setImg2(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg2(multi.getFilesystemName((String)images.nextElement()));
 		if(images.hasMoreElements())
-		intro.setImg1(multi.getOriginalFileName((String)images.nextElement()));
+		intro.setImg1(multi.getFilesystemName((String)images.nextElement()));
 		intro.setImgex1(multi.getParameter("imgex1"));
 		intro.setImgex2(multi.getParameter("imgex2"));
 		intro.setImgex3(multi.getParameter("imgex3"));

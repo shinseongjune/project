@@ -8,7 +8,7 @@
 		driverClassName="com.mysql.cj.jdbc.Driver"
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 		url="jdbc:mysql://118.131.179.138:3306/e1b_2lw?useUnicode=true&amp;characterEncoding=UTF8&amp;
-		useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Seoul"
+ 		useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Seoul"
 		maxActive="500"
 		maxIdle="100"
 	/>

@@ -175,7 +175,7 @@ button {
 <body>
 <section id="container">
 	<section class="img">
-		<img src="/upload/<%=article.getImg1()%>" alt="-" style="width: 355px; height: 410px;;" />
+		<img src="intro/upload/<%=article.getImg1()%>" alt="-" style="width: 355px; height: 410px;;" />
 	</section>
 	<section class="introInfo">
 		<div class="infoList">

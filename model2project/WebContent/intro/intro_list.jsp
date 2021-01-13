@@ -84,28 +84,28 @@ body {
 %>
 					<td style="text-align: center;">
 					<div class="gallery ssg wider vipssg fs" style="margin-top:10px;">
-						<a href='/upload/<%=articleList.get(i).getImg1() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg1() %>" alt="<%=articleList.get(i).getImgex1() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg1() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg1() %>" alt="<%=articleList.get(i).getImgex1() %>" 
 						style="width : 355px; height:410px;"/></a>
 						
-						<a href='/upload/<%=articleList.get(i).getImg2() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg2() %>" alt="<%=articleList.get(i).getImgex2() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg2() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg2() %>" alt="<%=articleList.get(i).getImgex2() %>" 
 						style="display:none"/></a>
 						
-						<a href='/upload/<%=articleList.get(i).getImg3() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg3() %>" alt="<%=articleList.get(i).getImgex3() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg3() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg3() %>" alt="<%=articleList.get(i).getImgex3() %>" 
 						style="display:none"/></a>
 						
-						<a href='/upload/<%=articleList.get(i).getImg4() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg4() %>" alt="<%=articleList.get(i).getImgex4() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg4() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg4() %>" alt="<%=articleList.get(i).getImgex4() %>" 
 						style="display:none"/></a>
 						
-						<a href='/upload/<%=articleList.get(i).getImg5() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg5() %>" alt="<%=articleList.get(i).getImgex5() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg5() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg5() %>" alt="<%=articleList.get(i).getImgex5() %>" 
 						style="display:none"/></a>
 						
-						<a href='/upload/<%=articleList.get(i).getImg6() %>'>
-						<img src="/upload/<%=articleList.get(i).getImg6() %>" alt="<%=articleList.get(i).getImgex6() %>" 
+						<a href='intro/upload/<%=articleList.get(i).getImg6() %>'>
+						<img src="intro/upload/<%=articleList.get(i).getImg6() %>" alt="<%=articleList.get(i).getImgex6() %>" 
 						style="display:none"/></a>
 					</div>
 						<br><a href="introDetail.do?intro_num=<%=articleList.get(i).getIntro_num() %>&page=<%=nowPage %>">
@@ -184,7 +184,7 @@ body {
 				$(window).resize(function(){
 					$("#main").css("margin-top", $("nav").outerHeight(true) + "px");
 				});
-			});			
+			});
 		</script>
 </body>
 </html>
