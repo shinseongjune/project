@@ -7,11 +7,9 @@ import static db.JdbcUtil.rollback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import vo.Intro;
 import vo.Lecture;
 import vo.Lecture_Video;
 import vo.Member;
@@ -186,7 +184,7 @@ public class LectureDAO {
 	}
 
 	public LinkedList[] selectLectureList(String id, int nowPage) {
-		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num WHERE v.chapter = 1 AND l.number = (SELECT number FROM member WHERE id = ?) ORDER BY lecture_num DESC LIMIT ?, " + pageCount;
+		String sql = "SELECT l.lecture_num, m.name, l.lecture_title, l.price, s.subject_name, v.video FROM member AS m JOIN lecture AS l ON m.number = l.number JOIN subject AS s ON l.subject_code = s.code JOIN lecture_video AS v ON l.lecture_num = v.lecture_num WHERE l.number = (SELECT number FROM member WHERE id = ?) GROUP BY lecture_num ORDER BY lecture_num DESC LIMIT ?, " + pageCount;
 		LinkedList<Lecture> lecList = new LinkedList<Lecture>();
 		LinkedList<Member> memList = new LinkedList<Member>();
 		LinkedList<Subject> subList = new LinkedList<Subject>();

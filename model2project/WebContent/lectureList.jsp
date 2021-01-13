@@ -72,7 +72,7 @@ a:hover {
 				LinkedList<Member> memList = lectureList[1];
 				LinkedList<Subject> subList = lectureList[2];
 				LinkedList<Lecture_Video> vidList = lectureList[3];
-				
+
 				LinkedList<Integer> favList = (LinkedList<Integer>)session.getAttribute("favList");
 				int startNumber = (nowPageNumber - 1) / pageCount * range + 1;
 				int endNumber = startNumber + range - 1;
