@@ -235,7 +235,7 @@
 						top: $now * -$height
 					});
 				}
-			}, 2500);
+			}, 5000);
 			$(".hamburger").click(function(){
 				$(".topbarMenu").stop().slideToggle();
 			});
