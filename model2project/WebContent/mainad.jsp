@@ -132,7 +132,7 @@
 			</section>
 			<section class="quick">
 				<h4>News</h4>
-				<p><a href="#"><img src="./images/news.png" alt="뉴스 바로가기"></a></p>
+				<p><a href="https://www.wsj.com/" target="_blank"><img src="./images/news.png" alt="뉴스 바로가기"></a></p>
 			</section>
 		</section>
 <%
