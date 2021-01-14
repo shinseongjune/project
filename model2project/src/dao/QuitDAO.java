@@ -43,6 +43,13 @@ public class QuitDAO {
 			} else {
 				sql = "DELETE FROM member WHERE id = ?";
 				try {
+					if(pstmt != null) {
+						try {
+							close(pstmt);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, id);
 					
@@ -54,14 +61,19 @@ public class QuitDAO {
 					
 				} catch (Exception e) {
 					e.printStackTrace();
-				} finally {
-					close(pstmt);
-					close(conn);
 				}
 				return result;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

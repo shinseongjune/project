@@ -51,8 +51,20 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return subList;
 	}
@@ -71,8 +83,20 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -91,8 +115,20 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;

@@ -61,8 +61,20 @@ public class FavoritesDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return favorList;
 	}
@@ -82,8 +94,20 @@ public class FavoritesDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -108,8 +132,20 @@ public class FavoritesDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return favList;
@@ -131,8 +167,20 @@ public class FavoritesDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;

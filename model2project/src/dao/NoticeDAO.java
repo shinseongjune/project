@@ -57,8 +57,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return noticeList;
 	}
@@ -82,7 +94,20 @@ public class NoticeDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -105,8 +130,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return not;
 	}
@@ -125,8 +162,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -147,8 +196,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return not;
 	}
@@ -169,8 +230,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -191,7 +264,20 @@ public class NoticeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

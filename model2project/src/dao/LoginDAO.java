@@ -54,11 +54,19 @@ public class LoginDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				close(rs);
-				close(pstmt);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return loginMember;
@@ -87,11 +95,19 @@ public class LoginDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				close(rs);
-				close(pstmt);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return loginMember;

@@ -1,5 +1,6 @@
 package dao;
 
+import static db.JdbcUtil.close;
 import static db.JdbcUtil.commit;
 import static db.JdbcUtil.rollback;
 
@@ -48,6 +49,14 @@ public class EditProfileDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

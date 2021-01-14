@@ -20,10 +20,7 @@
 </head>
 <body>
 	<section class="container">
-		<form method="post" action="introModifyPro.do">
-			<input type="hidden" name="intro_num"
-				value="<%=article.getIntro_num()%>" /><input type="hidden"
-				name="page" value="<%=nowPage%>" />
+		<form method="post" enctype="multipart/form-data" action="introModifyPro.do?intro_num=<%=article.getIntro_num() %>&page=<%=nowPage %>">
 			<section>
 				<ul>
 					<li style="margin-top: 10px;"><input name="img1" type="file"

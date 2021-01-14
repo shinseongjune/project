@@ -79,8 +79,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lectureList;
 	}
@@ -104,7 +116,20 @@ public class LectureDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -127,8 +152,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return subjectList;
 	}
@@ -177,8 +214,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lectureList;
 	}
@@ -224,8 +273,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lectureList;
 	}
@@ -250,7 +311,20 @@ public class LectureDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 //칸수 맞추기용		
@@ -279,8 +353,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return subList;
 	}
@@ -298,13 +384,24 @@ public class LectureDAO {
 			
 			if(result > 0) {
 				sql = "INSERT INTO lecture_video VALUES ((SELECT lecture_num FROM lecture WHERE lecture_title = ?), 1, ?, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, lec.getLecture_title());
-				pstmt.setString(2, vid.getVideo());
-				pstmt.setString(3, vid.getChapter_title());
-				result = pstmt.executeUpdate();
-				if(result <= 0) {
-					rollback(conn);
+				try {
+					if(pstmt != null) {
+						try {
+							close(pstmt);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, lec.getLecture_title());
+					pstmt.setString(2, vid.getVideo());
+					pstmt.setString(3, vid.getChapter_title());
+					result = pstmt.executeUpdate();
+					if(result <= 0) {
+						rollback(conn);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			} else {
 				rollback(conn);
@@ -314,7 +411,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -338,8 +448,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return vidList;
 	}
@@ -361,8 +483,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lec;
 	}
@@ -385,8 +519,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -407,8 +553,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -438,8 +596,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lectureList;
 	}
@@ -458,8 +628,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return paid;
@@ -487,8 +669,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -522,8 +716,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return lvList;
@@ -547,7 +753,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -563,8 +782,20 @@ public class LectureDAO {
 		} catch (Exception ex) {
 			System.out.println("lectureDelete 에러 : " + ex);
 		} finally {
-			if (pstmt != null)
-				close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return deleteCount;
 	}
@@ -584,8 +815,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return free;
 	}
@@ -615,8 +858,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return author;
 	}
@@ -639,7 +894,20 @@ public class LectureDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

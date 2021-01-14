@@ -57,7 +57,20 @@ public class ReviewDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -106,8 +119,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return reviewList;
 	}
@@ -146,8 +171,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return reviewViewList;
 	}
@@ -161,6 +198,13 @@ public class ReviewDAO {
 			pstmt.setInt(1, review_num);
 			result = pstmt.executeUpdate();
 			if (result > 0) {
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				sql = "SELECT comment_num FROM review_comment WHERE review_num = ?";
 				try {
 					pstmt = conn.prepareStatement(sql);
@@ -176,6 +220,13 @@ public class ReviewDAO {
 					sql = "DELETE FROM review_comment WHERE review_num = ?";
 					result = 0;
 					try {
+						if(pstmt != null) {
+							try {
+								close(pstmt);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, review_num);
 						result = pstmt.executeUpdate();
@@ -196,8 +247,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -218,8 +281,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return re;
 	}
@@ -240,8 +315,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -267,8 +354,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return lecList;
 	}
@@ -290,8 +389,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -334,8 +445,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return reviewList;
 	}
@@ -360,7 +483,20 @@ public class ReviewDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -384,7 +520,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -407,6 +556,13 @@ public class ReviewDAO {
 		if(hasReply) {
 			sql = "UPDATE review_comment SET contents = '<삭제됨>' WHERE review_num = ? AND comment_num = ?";
 			try {
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, review_num);
 				pstmt.setInt(2, comment_num);
@@ -418,10 +574,32 @@ public class ReviewDAO {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		} else {
 			sql = "DELETE FROM review_comment WHERE review_num = ? AND comment_num = ?";
 			try {
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, review_num);
 				pstmt.setInt(2, comment_num);
@@ -434,7 +612,20 @@ public class ReviewDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				close(pstmt);
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		return result;
@@ -457,7 +648,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -501,8 +705,20 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return reviewComList;

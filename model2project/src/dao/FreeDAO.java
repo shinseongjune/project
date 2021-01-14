@@ -74,8 +74,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return freeList;
 	}
@@ -99,7 +111,20 @@ public class FreeDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -120,8 +145,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -161,8 +198,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return freeViewList;
 	}
@@ -178,6 +227,13 @@ public class FreeDAO {
 			if (result > 0) {
 				sql = "SELECT comment_num FROM free_comment WHERE free_num = ?";
 				try {
+					if(pstmt != null) {
+						try {
+							close(pstmt);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, free_num);
 					rs = pstmt.executeQuery();
@@ -191,6 +247,13 @@ public class FreeDAO {
 					sql = "DELETE FROM free_comment WHERE free_num = ?";
 					result = 0;
 					try {
+						if(pstmt != null) {
+							try {
+								close(pstmt);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, free_num);
 						result = pstmt.executeUpdate();
@@ -211,8 +274,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -233,8 +308,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return fr;
 	}
@@ -255,8 +342,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return result;
@@ -293,8 +392,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return freeList;
 	}
@@ -319,7 +430,20 @@ public class FreeDAO {
 			e.printStackTrace();
 			return -1;
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -342,8 +466,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return freeList;
@@ -388,8 +524,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return freeComList;
@@ -414,7 +562,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}
@@ -437,6 +598,20 @@ public class FreeDAO {
 		if(hasReply) {
 			sql = "UPDATE free_comment SET contents = '<삭제됨>' WHERE free_num = ? AND comment_num = ?";
 			try {
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, free_num);
 				pstmt.setInt(2, comment_num);
@@ -448,6 +623,21 @@ public class FreeDAO {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		} else {
 			sql = "DELETE FROM free_comment WHERE free_num = ? AND comment_num = ?";
@@ -464,7 +654,20 @@ public class FreeDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				close(pstmt);
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		return result;
@@ -487,7 +690,20 @@ public class FreeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

@@ -21,7 +21,13 @@ public class PwCheckService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(conn != null) close(conn);
+			if(conn != null) {
+				try {
+					close(conn);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return isIdEmailRight;
@@ -38,7 +44,13 @@ public class PwCheckService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(conn != null) close(conn);
+			if(conn != null) {
+				try {
+					close(conn);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return pw;

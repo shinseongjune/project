@@ -51,8 +51,20 @@ public class IntroDAO {
 		} catch (Exception ex) {
 			System.out.println("getListCount 에러 : " + ex);
 		} finally {
-			if (rs != null) close(rs);
-			if (pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return listCount;
 	}
@@ -103,8 +115,20 @@ public class IntroDAO {
 		} catch (Exception ex) {
 			System.out.println("getintroList 에러 : " + ex);
 		} finally {
-			if (rs != null) close(rs);
-			if (pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return bigArticleList;
@@ -130,30 +154,52 @@ public class IntroDAO {
 			
 			
 			sql = "INSERT INTO intro VALUES (?,?,?,null,?,?,?,?,?,?,?,?,?,?,?,?)";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			pstmt.setInt(2, num);
-			pstmt.setString(3,article.getContents());
-			pstmt.setString(4,article.getImg1());
-			pstmt.setString(5,article.getImg2());
-			pstmt.setString(6,article.getImg3());
-			pstmt.setString(7,article.getImg4());
-			pstmt.setString(8,article.getImg5());
-			pstmt.setString(9,article.getImg6());
-			pstmt.setString(10,article.getImgex1());
-			pstmt.setString(11,article.getImgex2());
-			pstmt.setString(12,article.getImgex3());
-			pstmt.setString(13,article.getImgex4());
-			pstmt.setString(14,article.getImgex5());
-			pstmt.setString(15,article.getImgex6());
-			
-			insertCount = pstmt.executeUpdate();
+			try {
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				pstmt.setInt(2, num);
+				pstmt.setString(3,article.getContents());
+				pstmt.setString(4,article.getImg1());
+				pstmt.setString(5,article.getImg2());
+				pstmt.setString(6,article.getImg3());
+				pstmt.setString(7,article.getImg4());
+				pstmt.setString(8,article.getImg5());
+				pstmt.setString(9,article.getImg6());
+				pstmt.setString(10,article.getImgex1());
+				pstmt.setString(11,article.getImgex2());
+				pstmt.setString(12,article.getImgex3());
+				pstmt.setString(13,article.getImgex4());
+				pstmt.setString(14,article.getImgex5());
+				pstmt.setString(15,article.getImgex6());
+				
+				insertCount = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} catch (Exception ex) {
 			System.out.println("introInsert 에러 : " + ex);
 		} finally {
-			if (rs != null) close(rs);
-			if (pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return insertCount;
@@ -170,7 +216,13 @@ public class IntroDAO {
 		} catch (SQLException ex) {
 			System.out.println("setReadCountUpdate 에러 : " + ex);
 		} finally {
-			if(pstmt != null) close(pstmt);
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return updateCount;
@@ -224,38 +276,86 @@ public class IntroDAO {
 			}
 			
 			String lec_sql = "SELECT l.lecture_num, l.lecture_title FROM lecture AS l WHERE l.number = ?";
-			pstmt = conn.prepareStatement(lec_sql);
-			pstmt.setInt(1, intro_num);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				do {
-					lecture = new Lecture();
-					lecture.setLecture_num(rs.getInt("lecture_num"));
-					lecture.setLecture_title(rs.getString("lecture_title"));
-					lecList.add(lecture);
-				} while(rs.next());
+			try {
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				pstmt = conn.prepareStatement(lec_sql);
+				pstmt.setInt(1, intro_num);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						lecture = new Lecture();
+						lecture.setLecture_num(rs.getInt("lecture_num"));
+						lecture.setLecture_title(rs.getString("lecture_title"));
+						lecList.add(lecture);
+					} while(rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			
 			String rev_sql = "SELECT r.title, r.review_num FROM lecture AS l JOIN review AS r ON l.lecture_num = r.lecture_num WHERE l.number = ?";
-			pstmt = conn.prepareStatement(rev_sql);
-			pstmt.setInt(1, intro_num);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				do {
-					review = new Review();
-					review.setTitle(rs.getString("title"));
-					review.setReview_num(rs.getInt("review_num"));
-					revList.add(review);
-				} while(rs.next());
+			try {
+				if(rs != null) {
+					try {
+						close(rs);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						close(pstmt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				pstmt = conn.prepareStatement(rev_sql);
+				pstmt.setInt(1, intro_num);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						review = new Review();
+						review.setTitle(rs.getString("title"));
+						review.setReview_num(rs.getInt("review_num"));
+						revList.add(review);
+					} while(rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			articleList = new ArrayList[] {intList, memList, lecList, revList};
 		} catch (Exception ex) {
 			System.out.println("getDetail 에러 : " + ex);
 		} finally {
-			if(rs != null) close(rs);
-			if(pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return articleList;
 	}
@@ -279,7 +379,20 @@ public class IntroDAO {
 		} catch (SQLException ex) {
 			System.out.println("isintroWriter 에러 : " + ex);
 		} finally {
-			if(pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return isWriter;
 	}
@@ -310,7 +423,13 @@ public class IntroDAO {
 		} catch (Exception e) {
 			System.out.println("introModify 에러 : " + e);
 		} finally {
-			if(pstmt != null) close(pstmt);
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return updateCount;
 	}
@@ -326,7 +445,13 @@ public class IntroDAO {
 		} catch(Exception ex) {
 			System.out.println("introDelete 에러 : " + ex);
 		} finally {
-			if (pstmt != null) close(pstmt);
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return deleteCount;
 	}
@@ -360,7 +485,20 @@ public class IntroDAO {
 		} catch (Exception e) {
 			System.out.println("introModify 에러 : " + e);
 		} finally {
-			if(pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return intro;
 	}
@@ -384,7 +522,20 @@ public class IntroDAO {
 		} catch (SQLException ex) {
 			System.out.println("introWriter 에러 : " + ex);
 		} finally {
-			if(pstmt != null) close(pstmt);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return isWriter;
 	}

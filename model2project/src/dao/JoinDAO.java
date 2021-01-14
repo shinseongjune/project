@@ -48,20 +48,31 @@ public class JoinDAO {
 			int result = pstmt.executeUpdate();
 			if (result > 0) {
 				sql = "SELECT * FROM member WHERE id = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					joinedMember = new Member();
-					joinedMember.setNumber(rs.getInt("number"));
-					joinedMember.setId(id);
-					joinedMember.setPassword(pw);
-					joinedMember.setClassify(classify);
-					joinedMember.setEducation(education);
-					joinedMember.setEmail(email);
-					joinedMember.setGender(gender);
-					joinedMember.setMajor(major);
-					joinedMember.setName(name);
+				try {
+					if(pstmt != null) {
+						try {
+							close(pstmt);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, id);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						joinedMember = new Member();
+						joinedMember.setNumber(rs.getInt("number"));
+						joinedMember.setId(id);
+						joinedMember.setPassword(pw);
+						joinedMember.setClassify(classify);
+						joinedMember.setEducation(education);
+						joinedMember.setEmail(email);
+						joinedMember.setGender(gender);
+						joinedMember.setMajor(major);
+						joinedMember.setName(name);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			} else {
 				rollback(conn);
@@ -71,9 +82,20 @@ public class JoinDAO {
 			rollback(conn);
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
-			close(conn);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return joinedMember;
 	}
@@ -117,9 +139,20 @@ public class JoinDAO {
 			rollback(conn);
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
-			close(conn);
+			if(rs != null) {
+				try {
+					close(rs);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					close(pstmt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return joinedMember;
 	}
