@@ -319,8 +319,8 @@ textarea:focus {
 					<ul>
 <%	 for (int i = 0; i < vidList.size(); i++) { %>
 						<li class="colorCont cont<%=i %><%if(i == 0) {%> on<% } %>"><a class="vid<%=i %>" data-url="<%=vidList.get(i).getVideo()%>" style="margin-left: 25px;" href="#" onclick="false"><%=vidList.get(i).getChapter_title()%>
-								<button onclick="location.href ='lectureDetailDelete.do?chapter=<%=vidList.get(i).getChapter()%>&lecture_num=<%=vidList.get(i).getLecture_num()%>'"
-								style="float: right; margin-top: 20px; margin-right: 25px;">X</button>
+								<% if(vidList.size() != 1) { %><button onclick="location.href ='lectureDetailDelete.do?chapter=<%=vidList.get(i).getChapter()%>&lecture_num=<%=vidList.get(i).getLecture_num()%>'"
+								style="float: right; margin-top: 20px; margin-right: 25px;">X</button><% } %>
 								<button class="modButton<%=i %>" style="float: right; margin-top: 20px; margin-right: 60px;">R</button>
 								</a>
 						</li>

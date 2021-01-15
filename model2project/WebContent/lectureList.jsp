@@ -118,15 +118,16 @@ a:hover {
 					}
 %>
 				<div class="card my-2" style="width: 15rem;">
+				    <div class="position-absolute" style="top:0px; right:0px;">
+					  	<button class="badge badge-pill favButton<%if(favList.contains(lecList.get(i).getLecture_num())) { %> badge-light<% } else { %> badge-primary<% } %>" value="<%=lecList.get(i).getLecture_num() %>"><%if(favList.contains(lecList.get(i).getLecture_num())) { %>추가됨<% } else { %>즐겨찾기 추가<% } %></button>
+				    </div>
 				  <a href="<%=lecUrl %>" onClick="window.open(this.href, '', resizable='no'); return false;"><img src="https://img.youtube.com/vi/<%=video %>/0.jpg" class="card-img-top" alt="..."></a>
-				  <div class="card-body">
+				  <div class="card-body position-relative">
 				    <h5 class="card-title"><a href="<%=lecUrl %>" onClick="window.open(this.href, '', 'resizable=no width=1340, height=730'); return false;"><%=lecList.get(i).getLecture_title() %></a></h5>
 				  	<% if(memList.get(i).getNumber() == loginMember.getNumber() ) { %><button class="btn btn-danger float-right mDButton" value="<%=lecList.get(i).getLecture_num() %>">수정/삭제</button><% } %>
 				    <h6 class="card-text"><%if(lecList.get(i).getPrice() == 0) { %><span class="badge badge-pill badge-primary">FREE</span><% } else { %><span class="badge badge-pill badge-danger"><%=lecList.get(i).getPrice() %>원</span><%} %></h6>
 				    <p class="card-text"><span class="badge badge-pill badge-info"><%=subList.get(i).getSubject_name() %></span></p>
-				    <h5 class="card-text float-right"><%=memList.get(i).getName() %></h5><br/>
-				  	<button class="btn btn-primary float-right favButton"<%if(favList.contains(lecList.get(i).getLecture_num())) { %> disabled<% } %> value="<%=lecList.get(i).getLecture_num() %>">즐겨찾기 추가</button>
-				    <input type="hidden" name="subject"/>
+				    <h5 class="card-text float-right"><%=memList.get(i).getName() %></h5>
 				  </div>
 				</div>
 <%
@@ -186,7 +187,7 @@ a:hover {
 			$(".allLecture").click(function(){
 				location.href="lectureList.do?page=1";
 			});
-			$(".favButton").click(function(){
+			$(".favButton.badge-primary").click(function(){
 				location.href="favAdd.do?lecture_num=" + $(this).val() + "&page=" + <%=nowPageNumber%>;
 			});
 			$(".mDButton").click(function(){
