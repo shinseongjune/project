@@ -37,7 +37,7 @@
 					<li class="nav-item"><a class="nav-link" href="lectureList.do">강의목록</a></li>
 					<li class="nav-item active"><a class="nav-link" href="editProfilePage.do">마이페이지
 							<span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="faq.html">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link" href="faq.do">고객센터</a></li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"
