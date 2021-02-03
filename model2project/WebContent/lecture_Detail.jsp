@@ -192,7 +192,7 @@ textarea:focus {
 	float: left;
 	text-align: center;
 	font-size: 10px;
-	line-height: 650px;
+	line-height: 825px;
 	text-decoration: none;
 }
 
