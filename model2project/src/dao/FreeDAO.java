@@ -382,7 +382,7 @@ public class FreeDAO {
 					mem.setId(rs.getString("id"));
 					mem.setName(rs.getString("name"));
 					fr.setTitle(rs.getString("title"));
-					fr.setContents(rs.getString("contents"));
+					fr.setContents(rs.getString("contents").replace("<br/>", " "));
 					fr.setFree_num(rs.getInt("free_num"));
 					memList.add(mem);
 					freeContentList.add(fr);
